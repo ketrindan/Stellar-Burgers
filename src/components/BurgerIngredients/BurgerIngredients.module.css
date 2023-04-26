@@ -1,0 +1,34 @@
+.container {
+  width: 600px;
+}
+
+.navtab {
+  display: flex;
+}
+
+.items_box {
+  max-height: 715px;
+  overflow-y: scroll;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 32px 24px;
+  list-style: none;
+  justify-items: center;
+  align-content: center;
+}
+
+.items_box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.items_box::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.items_box::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  border: 3px solid #8585AD;
+}

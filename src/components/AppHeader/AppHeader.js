@@ -12,11 +12,11 @@ function AppHeader() {
         <nav className={headerStyles.navigation}>
           <NavLink to='#' className={`pt-4 pl-5 pb-4 pr-5 ${headerStyles.link} ${headerStyles.link_active}`}>
             <BurgerIcon type="primary" />
-            <span className={`text text_type_main-default ml-2`}>Конструктор</span>
+            <span className="text text_type_main-default ml-2">Конструктор</span>
           </NavLink>
           <NavLink to='#' className={`pt-4 pl-5 pb-4 pr-5 ${headerStyles.link}`}>
             <ListIcon type="secondary" />
-            <span className={`text text_type_main-default ml-2`}>Лента заказов</span>
+            <span className="text text_type_main-default ml-2">Лента заказов</span>
           </NavLink>
         </nav>
         <div className={headerStyles.logo}>
@@ -24,7 +24,7 @@ function AppHeader() {
         </div>
         <Link to='#' className={`pt-4 pl-5 pb-4 pr-5 ${headerStyles.link} ${headerStyles.profile}`}>
           <ProfileIcon type="secondary" />
-          <span className={`text text_type_main-default ml-2`}>Личный кабинет</span>
+          <span className="text text_type_main-default ml-2">Личный кабинет</span>
         </Link>
       </div>
     </header>
