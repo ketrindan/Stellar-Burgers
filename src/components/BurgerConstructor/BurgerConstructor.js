@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientPropTypes } from '../../utils/prop-types';
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 
 function BurgerConstructor(props) {
   const chosenBun = props.data.find(i => i.type === "bun");
+  const chosenIngs = props.data.filter(i => i.type !== "bun");
 
-  const chosenIngs = props.data.filter(i => i.type !== "bun")
-
-  const total = chosenBun.price + chosenIngs.reduce((sum, current) => sum + current.price, 0) + chosenBun.price
+  const total = chosenBun.price + chosenIngs.reduce((sum, current) => sum + current.price, 0) + chosenBun.price;
 
   return (
     <section className={`${BurgerConstructorStyles.container} pt-25 pl-4 pb-13`}>
@@ -46,7 +46,7 @@ function BurgerConstructor(props) {
       <div className={`${BurgerConstructorStyles.infobox} mt-10`}>
         <div className={BurgerConstructorStyles.pricebox}>
           <p className="text text_type_digits-medium mr-2">{total}</p>
-          <CurrencyIcon type="primary" className={BurgerConstructorStyles.icon}/>
+          <CurrencyIcon type="primary" />
         </div>
         <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
       </div>
@@ -56,11 +56,6 @@ function BurgerConstructor(props) {
 
 export default BurgerConstructor;
 
-
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-  })),
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)),
 };

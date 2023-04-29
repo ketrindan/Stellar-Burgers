@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from "prop-types";
 import Ingredient from '../Ingredient/Ingredient';
+import { ingredientPropTypes } from '../../utils/prop-types';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = useState('bun')
+
+  const buns = props.data.filter((item) => item.type === 'bun');
+  const mains = props.data.filter((item) => item.type === 'main');
+  const sauces = props.data.filter((item) => item.type === 'sauce');
 
   return (
     <section className={`pt-10 ${burgerIngredientsStyles.container}`}>
@@ -23,20 +29,20 @@ function BurgerIngredients(props) {
       <div className={`mt-10 ${burgerIngredientsStyles.items_box}`}>
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10 pr-4 pl-4`}>
-          {props.data.map((item) => (
-            item.type === 'bun' && <Ingredient key={item._id} item={item} />
+          {buns.map((item) => (
+            <Ingredient key={item._id} data={item} />
           ))}
         </ul>
         <h2 className="text text_type_main-medium mb-6">Соусы</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
-          {props.data.map((item) => (
-            item.type === 'sauce' && <Ingredient key={item._id} item={item} />
+          {sauces.map((item) => (
+            <Ingredient key={item._id} data={item} />
           ))}
         </ul>
         <h2 className="text text_type_main-medium mb-6">Начинки</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
-          {props.data.map((item) => (
-            item.type === 'main' && <Ingredient key={item._id} item={item} />
+          {mains.map((item) => (
+            <Ingredient key={item._id} data={item} />
           ))}
         </ul>
       </div>
@@ -45,3 +51,7 @@ function BurgerIngredients(props) {
 }
 
 export default BurgerIngredients;
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)),
+};
