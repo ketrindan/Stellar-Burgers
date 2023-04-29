@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 600px;
+}
+
+.scrollbox {
+  max-height: 448px;
+  display: grid;
+  overflow-y: scroll;
+}
+
+.scrollbox::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbox::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.scrollbox::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  border: 3px solid #8585AD;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+}
+
+.infobox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 40px;
+}
+
+.pricebox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.icon {
+  width: 36px;
+}
