@@ -20,5 +20,5 @@ function Ingredient(props) {
 export default Ingredient;
 
 Ingredient.propTypes = {
-  data: PropTypes.shape(ingredientPropTypes),
+  data: PropTypes.shape(ingredientPropTypes).isRequired,
 };
