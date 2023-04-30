@@ -1,0 +1,6 @@
+.main {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  max-width: 1240px;
+}
