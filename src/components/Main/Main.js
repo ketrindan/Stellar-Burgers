@@ -1,16 +1,20 @@
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import PropTypes from "prop-types";
+import { ingredientPropTypes } from '../../utils/prop-types';
 import mainStyles from './Main.module.css';
 
-import {data} from '../../utils/data';
-
-function Main() {
+function Main(props) {
   return (
     <section className={mainStyles.main}>
-      <BurgerIngredients data={data} /> 
-      <BurgerConstructor data={data} />   
+      <BurgerIngredients data={props.data} /> 
+      <BurgerConstructor data={props.data} /> 
     </section>
   )
 }
 
 export default Main;
+
+Main.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired,
+};
