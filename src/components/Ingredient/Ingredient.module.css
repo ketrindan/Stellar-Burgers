@@ -5,6 +5,7 @@
   justify-items: center;
   position: relative;
   gap: 4px;
+  cursor: pointer;
 }
 
 .price_box {
@@ -15,5 +16,9 @@
 
 .text {
   text-align: center;
+}
+
+.item:hover {
+  opacity: 0.6;
 }
 

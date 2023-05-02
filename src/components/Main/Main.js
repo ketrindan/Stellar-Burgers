@@ -7,8 +7,8 @@ import mainStyles from './Main.module.css';
 function Main(props) {
   return (
     <section className={mainStyles.main}>
-      <BurgerIngredients data={props.data} /> 
-      <BurgerConstructor data={props.data} /> 
+      <BurgerIngredients data={props.data} onModalOpen={props.onIngredientModalOpen} onIgredientClick={props.onIgredientClick}/> 
+      <BurgerConstructor data={props.data} onModalOpen={props.onOrderModalOpen}/> 
     </section>
   )
 }
@@ -17,4 +17,7 @@ export default Main;
 
 Main.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired,
+  onIngredientModalOpen: PropTypes.func.isRequired,
+  onOrderModalOpen: PropTypes.func.isRequired,
+  onIgredientClick: PropTypes.func.isRequired,
 };

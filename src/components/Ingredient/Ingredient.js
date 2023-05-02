@@ -4,8 +4,14 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { ingredientPropTypes } from '../../utils/prop-types';
 
 function Ingredient(props) {
+
+  function handleClick() {
+    props.onIgredientClick(props.data)
+    props.onModalOpen()
+  }
+
   return (
-    <article className={ingredientStyles.item}>
+    <article className={ingredientStyles.item} onClick={handleClick}>
       <Counter count={1} size="default" />
       <img className={`ml-4 mr-4`} src={props.data.image} alt={`картинка ${props.data.name}`} />
       <div className={ingredientStyles.price_box}>
@@ -21,4 +27,6 @@ export default Ingredient;
 
 Ingredient.propTypes = {
   data: PropTypes.shape(ingredientPropTypes).isRequired,
+  onIgredientClick: PropTypes.func.isRequired,
+  onModalOpen: PropTypes.func.isRequired,
 };

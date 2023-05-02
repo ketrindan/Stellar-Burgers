@@ -1,32 +1,15 @@
-import { useEffect} from 'react';
+import PropTypes from "prop-types";
 import modalOverlayStyles from './ModalOverlay.module.css';
 
 function ModalOverlay (props) {
-  useEffect(() => {
-    if (!props.isOpen) return;
-
-    function closeByEscape(e) {
-      if (e.key === 'Escape') {
-        props.onClose();
-      }
-    }
-
-    document.addEventListener('keydown', closeByEscape)
-   
-    return () => document.removeEventListener('keydown', closeByEscape)
-  }, [props.isOpen, props.onClose])
-
-  function handleClick(e) {
-    if (e.target === e.currentTarget) {
-      {props.onClose()}
-    }
-  }
-
   return (
-    <div className={modalOverlayStyles.overlay} onClick={handleClick}>
-      
-    </div>
+    <div className={`${modalOverlayStyles.overlay} ${props.isOpen ? `${modalOverlayStyles.overlay_opened}` : ""}`}  onClick={props.onClose}> </div>
   );
 };
 
 export default ModalOverlay;
+
+ModalOverlay.propTypes = {
+  isOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
