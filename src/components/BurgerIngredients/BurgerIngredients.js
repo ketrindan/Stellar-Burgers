@@ -30,19 +30,19 @@ function BurgerIngredients(props) {
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10 pr-4 pl-4`}>
           {buns.map((item) => (
-            <Ingredient key={item._id} data={item} />
+            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} onIgredientClick={props.onIgredientClick} />
           ))}
         </ul>
         <h2 className="text text_type_main-medium mb-6">Соусы</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
           {sauces.map((item) => (
-            <Ingredient key={item._id} data={item} />
+            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} onIgredientClick={props.onIgredientClick}/>
           ))}
         </ul>
         <h2 className="text text_type_main-medium mb-6">Начинки</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
           {mains.map((item) => (
-            <Ingredient key={item._id} data={item} />
+            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} onIgredientClick={props.onIgredientClick}/>
           ))}
         </ul>
       </div>
@@ -54,4 +54,6 @@ export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired,
+  onModalOpen: PropTypes.func.isRequired,
+  onIgredientClick: PropTypes.func.isRequired,
 };

@@ -48,7 +48,7 @@ function BurgerConstructor(props) {
           <p className="text text_type_digits-medium mr-2">{total}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="large" onClick={props.onModalOpen}>Оформить заказ</Button>
       </div>
     </section>
   )
@@ -58,4 +58,5 @@ export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired,
+  onModalOpen: PropTypes.func.isRequired,
 };

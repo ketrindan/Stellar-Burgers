@@ -1,0 +1,18 @@
+.container {
+  width: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subtitle {
+  text-align: center;
+}
+
+.infobox {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 20px;
+  list-style: none;
+  text-align: center;
+}
