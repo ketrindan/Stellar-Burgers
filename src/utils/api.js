@@ -1,4 +1,4 @@
-const baseUrl = 'https://norma.nomoreparties.space/api/ingredients';
+const baseUrl = 'https://norma.nomoreparties.space/api';
 
 class Api {
   constructor(data) {
@@ -14,8 +14,19 @@ class Api {
   }
 
   getData() {
-    return fetch(this._baseUrl)
+    return fetch(`${this._baseUrl}/ingredients`)
     .then(res => this._serverResponse(res))
+  }
+
+  submitOrder(ids) {
+    return fetch(`${this._baseUrl}/orders`, 
+    { method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({'ingredients': ids})
+    })
+    .then((res) => this._serverResponse(res));
   }
 }
 

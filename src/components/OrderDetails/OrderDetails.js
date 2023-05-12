@@ -19,5 +19,5 @@ function OrderDetails(props) {
 export default OrderDetails;
 
 OrderDetails.propTypes = {
-  orderID: PropTypes.string.isRequired,
+  orderID: PropTypes.number.isRequired,
 };

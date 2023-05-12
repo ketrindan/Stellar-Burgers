@@ -7,11 +7,14 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredirntDetails from '../IngredientDetails/IngredientDetails';
 import api from '../../utils/api';
 
+import { IngredientsContext } from '../../services/IngredientsContext';
+
 function App() {
   const [ingredients, setIngredients] = useState([]);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
-  const [ingredient, setIngredient] = useState({})
+  const [ingredient, setIngredient] = useState({});
+  const [order, setOrder] = useState({});
 
   function handleOrderModalOpen() {
     setIsOrderModalOpen(true)
@@ -31,6 +34,17 @@ function App() {
     setIngredient(item);
   }
 
+  function handleOrderSubmit(orderIds) {
+    api.submitOrder(orderIds)
+    .then((data) => {
+      setOrder(data);
+      setIsOrderModalOpen(true);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   useEffect(() => {    
     api.getData()
     .then((data) => {
@@ -44,20 +58,23 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
+
       {ingredients.length > 0 && 
-        <Main 
-          data={ingredients} 
-          onIngredientModalOpen={handleIngredientModalOpen}
-          onOrderModalOpen={handleOrderModalOpen}
-          onIgredientClick={handleIngredientClick}
-        />
+        <IngredientsContext.Provider value={ingredients}>
+          <Main 
+            onIngredientModalOpen={handleIngredientModalOpen}
+            onIgredientClick={handleIngredientClick}
+            onOrderSubmit={handleOrderSubmit}
+          />
+        </IngredientsContext.Provider>
       }
 
       {isOrderModalOpen && 
         <Modal isOpen={handleOrderModalOpen} onClose={handleAllModalClose}>
-          <OrderDetails orderID={'034536'}/>
+          <OrderDetails orderID={order.order.number}/>
         </Modal>
       }
+      
       {isIngredientModalOpen && 
         <Modal isOpen={handleIngredientModalOpen} onClose={handleAllModalClose} title={"Детали ингредиента"}>
           <IngredirntDetails data={ingredient}/>
