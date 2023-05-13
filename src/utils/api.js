@@ -5,7 +5,7 @@ class Api {
     this._baseUrl = data;
   }
 
-  _serverResponse(res) {
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
@@ -15,7 +15,7 @@ class Api {
 
   getData() {
     return fetch(`${this._baseUrl}/ingredients`)
-    .then(res => this._serverResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
   submitOrder(ids) {
@@ -26,7 +26,7 @@ class Api {
       },
       body: JSON.stringify({'ingredients': ids})
     })
-    .then((res) => this._serverResponse(res));
+    .then((res) => this._checkResponse(res));
   }
 }
 

@@ -16,14 +16,9 @@ function App() {
   const [ingredient, setIngredient] = useState({});
   const [order, setOrder] = useState({});
 
-  function handleOrderModalOpen() {
-    setIsOrderModalOpen(true)
-  }
-
   function handleIngredientModalOpen() {
     setIsIngredientModalOpen(true)
   }
-
 
   function handleAllModalClose() {
     setIsOrderModalOpen(false)
@@ -70,13 +65,13 @@ function App() {
       }
 
       {isOrderModalOpen && 
-        <Modal isOpen={handleOrderModalOpen} onClose={handleAllModalClose}>
+        <Modal onClose={handleAllModalClose}>
           <OrderDetails orderID={order.order.number}/>
         </Modal>
       }
       
       {isIngredientModalOpen && 
-        <Modal isOpen={handleIngredientModalOpen} onClose={handleAllModalClose} title={"Детали ингредиента"}>
+        <Modal onClose={handleAllModalClose} title={"Детали ингредиента"}>
           <IngredirntDetails data={ingredient}/>
         </Modal>
       }

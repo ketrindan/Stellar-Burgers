@@ -9,8 +9,6 @@ const modalRoot = document.getElementById("react-modals");
 
 function Modal(props) {
   useEffect(() => {
-    if (!props.isOpen) return;
-
     function closeByEscape(e) {
       if (e.key === 'Escape') {
         props.onClose();
@@ -32,7 +30,7 @@ function Modal(props) {
           </div>
           {props.children}
         </div>
-        <ModalOverlay isOpen={props.isOpen} onClose={props.onClose}/>
+        <ModalOverlay onClose={props.onClose}/>
       </>
     ),
     modalRoot
@@ -42,7 +40,6 @@ function Modal(props) {
 export default Modal;
 
 Modal.propTypes = {
-  isOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   children: PropTypes.element.isRequired,
