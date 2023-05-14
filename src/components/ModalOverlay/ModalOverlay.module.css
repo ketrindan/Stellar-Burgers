@@ -7,12 +7,4 @@
   top: 0;
   left: 0;
   z-index: 1;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0.1s, opacity 0.3s linear;
-}
-
-.overlay_opened {
-  visibility: visible;
-  opacity: 1;
 }

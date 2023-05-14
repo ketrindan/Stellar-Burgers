@@ -7,20 +7,18 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredirntDetails from '../IngredientDetails/IngredientDetails';
 import api from '../../utils/api';
 
+import { IngredientsContext } from '../../services/IngredientsContext';
+
 function App() {
   const [ingredients, setIngredients] = useState([]);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
-  const [ingredient, setIngredient] = useState({})
-
-  function handleOrderModalOpen() {
-    setIsOrderModalOpen(true)
-  }
+  const [ingredient, setIngredient] = useState({});
+  const [order, setOrder] = useState({});
 
   function handleIngredientModalOpen() {
     setIsIngredientModalOpen(true)
   }
-
 
   function handleAllModalClose() {
     setIsOrderModalOpen(false)
@@ -29,6 +27,17 @@ function App() {
 
   function handleIngredientClick(item) {
     setIngredient(item);
+  }
+
+  function handleOrderSubmit(orderIds) {
+    api.submitOrder(orderIds)
+    .then((data) => {
+      setOrder(data);
+      setIsOrderModalOpen(true);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   useEffect(() => {    
@@ -44,22 +53,25 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
+
       {ingredients.length > 0 && 
-        <Main 
-          data={ingredients} 
-          onIngredientModalOpen={handleIngredientModalOpen}
-          onOrderModalOpen={handleOrderModalOpen}
-          onIgredientClick={handleIngredientClick}
-        />
+        <IngredientsContext.Provider value={ingredients}>
+          <Main 
+            onIngredientModalOpen={handleIngredientModalOpen}
+            onIgredientClick={handleIngredientClick}
+            onOrderSubmit={handleOrderSubmit}
+          />
+        </IngredientsContext.Provider>
       }
 
       {isOrderModalOpen && 
-        <Modal isOpen={handleOrderModalOpen} onClose={handleAllModalClose}>
-          <OrderDetails orderID={'034536'}/>
+        <Modal onClose={handleAllModalClose}>
+          <OrderDetails orderID={order.order.number}/>
         </Modal>
       }
+      
       {isIngredientModalOpen && 
-        <Modal isOpen={handleIngredientModalOpen} onClose={handleAllModalClose} title={"Детали ингредиента"}>
+        <Modal onClose={handleAllModalClose} title={"Детали ингредиента"}>
           <IngredirntDetails data={ingredient}/>
         </Modal>
       }

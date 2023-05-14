@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import PropTypes from "prop-types";
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropTypes } from '../../utils/prop-types';
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 
-function BurgerConstructor(props) {
-  const chosenBun = props.data.find(i => i.type === "bun");
-  const chosenIngs = props.data.filter(i => i.type !== "bun");
+import { IngredientsContext } from '../../services/IngredientsContext';
 
-  const total = chosenBun.price + chosenIngs.reduce((sum, current) => sum + current.price, 0) + chosenBun.price;
+function BurgerConstructor(props) {
+  const data = useContext(IngredientsContext);
+
+  const chosenBun = data.find(i => i.type === "bun");
+
+  const chosenIngs = data.filter(i => i.type !== "bun");
+
+  const total = useMemo(() => chosenBun.price * 2 + chosenIngs.reduce((sum, current) => sum + current.price, 0), [chosenBun, chosenIngs]);
+
+  function submitOrder() {
+    const orderIds = chosenIngs.map(i => i._id).concat(chosenBun._id);
+    props.onOrderSubmit(orderIds)
+  }
 
   return (
     <section className={`${BurgerConstructorStyles.container} pt-25 pl-4 pb-13`}>
@@ -48,7 +57,7 @@ function BurgerConstructor(props) {
           <p className="text text_type_digits-medium mr-2">{total}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={props.onModalOpen}>Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="large" onClick={submitOrder}>Оформить заказ</Button>
       </div>
     </section>
   )
@@ -57,6 +66,5 @@ function BurgerConstructor(props) {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired,
-  onModalOpen: PropTypes.func.isRequired,
+  onOrderSubmit: PropTypes.func.isRequired,
 };
