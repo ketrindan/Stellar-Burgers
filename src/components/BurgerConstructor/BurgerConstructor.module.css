@@ -6,9 +6,11 @@
 }
 
 .scrollbox {
+  min-height: 100px;
   max-height: 448px;
   display: grid;
   overflow-y: scroll;
+  justify-content: center;
 }
 
 .scrollbox::-webkit-scrollbar {
@@ -47,4 +49,8 @@
 .pricebox svg {
   width: 36px;
   height: 36px;
+}
+
+.text {
+  text-align: center;
 }

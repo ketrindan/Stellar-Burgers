@@ -1,19 +1,20 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
 import Ingredient from '../Ingredient/Ingredient';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 
-import { IngredientsContext } from '../../services/IngredientsContext';
+
 
 function BurgerIngredients(props) {
-  const data = useContext(IngredientsContext);
+  const ingredients = useSelector(state => state.ingredients.ingredients)
 
   const [current, setCurrent] = useState('bun');
 
-  const buns = data.filter((item) => item.type === 'bun');
-  const mains = data.filter((item) => item.type === 'main');
-  const sauces = data.filter((item) => item.type === 'sauce');
+  const buns = ingredients.filter((item) => item.type === 'bun');
+  const mains = ingredients.filter((item) => item.type === 'main');
+  const sauces = ingredients.filter((item) => item.type === 'sauce');
 
   return (
     <section className={`pt-10 ${burgerIngredientsStyles.container}`}>
@@ -33,19 +34,19 @@ function BurgerIngredients(props) {
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10 pr-4 pl-4`}>
           {buns.map((item) => (
-            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} onIgredientClick={props.onIgredientClick} />
+            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
           ))}
         </ul>
         <h2 className="text text_type_main-medium mb-6">Соусы</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
           {sauces.map((item) => (
-            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} onIgredientClick={props.onIgredientClick}/>
+            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
           ))}
         </ul>
         <h2 className="text text_type_main-medium mb-6">Начинки</h2>
         <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
           {mains.map((item) => (
-            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} onIgredientClick={props.onIgredientClick}/>
+            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
           ))}
         </ul>
       </div>
@@ -57,5 +58,4 @@ export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
   onModalOpen: PropTypes.func.isRequired,
-  onIgredientClick: PropTypes.func.isRequired,
 };

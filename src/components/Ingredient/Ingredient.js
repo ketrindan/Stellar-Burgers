@@ -1,12 +1,15 @@
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 import ingredientStyles from './Ingredient.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/prop-types';
+import { selectIngredient } from '../../services/actions/ingredients';
 
 function Ingredient(props) {
+  const dispatch = useDispatch();
 
-  function handleClick() {
-    props.onIgredientClick(props.data)
+  function handleClick(e) {
+    dispatch(selectIngredient(props.data));
     props.onModalOpen()
   }
 
@@ -27,6 +30,5 @@ export default Ingredient;
 
 Ingredient.propTypes = {
   data: PropTypes.shape(ingredientPropTypes).isRequired,
-  onIgredientClick: PropTypes.func.isRequired,
   onModalOpen: PropTypes.func.isRequired,
 };

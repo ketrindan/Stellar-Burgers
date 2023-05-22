@@ -1,37 +1,40 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
-
-import { IngredientsContext } from '../../services/IngredientsContext';
+import { setOrder } from '../../services/actions/order';
 
 function BurgerConstructor(props) {
-  const data = useContext(IngredientsContext);
+  const ingredients = useSelector(state => state.ingredients.ingredients)
+  const chosenBun = useSelector(state => state.ingredients.chosenBun);
+  const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
 
-  const chosenBun = data.find(i => i.type === "bun");
+  const dispatch = useDispatch();
 
-  const chosenIngs = data.filter(i => i.type !== "bun");
-
-  const total = useMemo(() => chosenBun.price * 2 + chosenIngs.reduce((sum, current) => sum + current.price, 0), [chosenBun, chosenIngs]);
+  const total = useMemo(() => chosenBun.price * 2 + chosenIngredients.reduce((sum, current) => sum + current.price, 0), [chosenBun, chosenIngredients]) || 0;
 
   function submitOrder() {
-    const orderIds = chosenIngs.map(i => i._id).concat(chosenBun._id);
-    props.onOrderSubmit(orderIds)
+    const orderIds = chosenIngredients.map(i => i._id).concat(chosenBun._id);
+    dispatch(setOrder(orderIds))
+    props.onOrderModalOpen()
   }
 
   return (
     <section className={`${BurgerConstructorStyles.container} pt-25 pl-4 pb-13`}>
       <div className="ml-8 pr-4">
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${chosenBun.name} (верх)`}
-            price={chosenBun.price}
-            thumbnail={chosenBun.image}
-          />
+          {chosenBun.name ? 
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${chosenBun.name} (верх)`}
+              price={chosenBun.price}
+              thumbnail={chosenBun.image}
+            /> : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите булку</p>
+          }
       </div>
       <div className={BurgerConstructorStyles.scrollbox}>
-        {chosenIngs.map((item) => (
+        {chosenIngredients.length>0 ? chosenIngredients.map((item) => (
           item.type !== 'bun' && 
           <ul key={item._id} className={BurgerConstructorStyles.item}>
             <DragIcon type="primary" />
@@ -41,9 +44,11 @@ function BurgerConstructor(props) {
               thumbnail={item.image}
             />
           </ul>
-        ))}
+        )) : <p className="text text_type_main-large text_color_inactive">Выберите ингредиенты</p>
+        }
       </div>
       <div className="ml-8 pr-4">
+        {chosenBun.name && 
           <ConstructorElement
             type="bottom"
             isLocked={true}
@@ -51,6 +56,7 @@ function BurgerConstructor(props) {
             price={chosenBun.price}
             thumbnail={chosenBun.image}
           />
+        }
       </div>
       <div className={`${BurgerConstructorStyles.infobox} mt-10`}>
         <div className={BurgerConstructorStyles.pricebox}>
@@ -66,5 +72,5 @@ function BurgerConstructor(props) {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  onOrderSubmit: PropTypes.func.isRequired,
+  onOrderModalOpen: PropTypes.func.isRequired,
 };

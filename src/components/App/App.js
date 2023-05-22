@@ -1,78 +1,59 @@
 import React, {useState, useEffect} from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredirntDetails from '../IngredientDetails/IngredientDetails';
-import api from '../../utils/api';
 
-import { IngredientsContext } from '../../services/IngredientsContext';
+import { getIngredients } from '../../services/actions/ingredients';
+import { deleteSelectedIngredient } from '../../services/actions/ingredients';
+import { deleteOrder } from '../../services/actions/order';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
-  const [ingredient, setIngredient] = useState({});
-  const [order, setOrder] = useState({});
+
+  const dispatch = useDispatch();
 
   function handleIngredientModalOpen() {
     setIsIngredientModalOpen(true)
   }
 
+  function handleOrderModalOpen() {
+    setIsOrderModalOpen(true)
+  }
+
   function handleAllModalClose() {
-    setIsOrderModalOpen(false)
-    setIsIngredientModalOpen(false)
-  }
-
-  function handleIngredientClick(item) {
-    setIngredient(item);
-  }
-
-  function handleOrderSubmit(orderIds) {
-    api.submitOrder(orderIds)
-    .then((data) => {
-      setOrder(data);
-      setIsOrderModalOpen(true);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    dispatch(deleteSelectedIngredient());
+    dispatch(deleteOrder());
+    setIsOrderModalOpen(false);
+    setIsIngredientModalOpen(false);
   }
 
   useEffect(() => {    
-    api.getData()
-    .then((data) => {
-      setIngredients(data.data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }, [])
+   dispatch(getIngredients())
+  }, [dispatch])
 
   return (
     <div className={styles.app}>
       <AppHeader />
 
-      {ingredients.length > 0 && 
-        <IngredientsContext.Provider value={ingredients}>
-          <Main 
-            onIngredientModalOpen={handleIngredientModalOpen}
-            onIgredientClick={handleIngredientClick}
-            onOrderSubmit={handleOrderSubmit}
-          />
-        </IngredientsContext.Provider>
-      }
+      <Main 
+        onIngredientModalOpen={handleIngredientModalOpen}
+        onOrderModalOpen={handleOrderModalOpen}
+      />
 
       {isOrderModalOpen && 
         <Modal onClose={handleAllModalClose}>
-          <OrderDetails orderID={order.order.number}/>
+          <OrderDetails />
         </Modal>
       }
       
       {isIngredientModalOpen && 
         <Modal onClose={handleAllModalClose} title={"Детали ингредиента"}>
-          <IngredirntDetails data={ingredient}/>
+          <IngredirntDetails />
         </Modal>
       }
     </div>
