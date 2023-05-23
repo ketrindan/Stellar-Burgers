@@ -6,7 +6,6 @@ import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { setOrder } from '../../services/actions/order';
 
 function BurgerConstructor(props) {
-  const ingredients = useSelector(state => state.ingredients.ingredients)
   const chosenBun = useSelector(state => state.ingredients.chosenBun);
   const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
 
@@ -44,7 +43,7 @@ function BurgerConstructor(props) {
               thumbnail={item.image}
             />
           </ul>
-        )) : <p className="text text_type_main-large text_color_inactive">Выберите ингредиенты</p>
+        )) : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите ингредиенты</p>
         }
       </div>
       <div className="ml-8 pr-4">
