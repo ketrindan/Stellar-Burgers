@@ -62,11 +62,12 @@ export const ingredientsReducer = (state = initialState, action) => {
     case ADD_INGREDIENT: {
       return {
         ...state,
-        chosenIngredients: action.payload
+        chosenIngredients: [...state.chosenIngredients, action.payload]
       };
     }
     case DELETE_INGREDIENT: {
-      return { ...state, chosenIngredients: action.payload };
+      return { ...state, 
+        chosenIngredients: state.chosenIngredients.filter((i) => i._id !== action.payload) };
     }
     default: {
       return state;

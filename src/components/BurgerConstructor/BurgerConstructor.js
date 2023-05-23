@@ -1,11 +1,15 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { setOrder } from '../../services/actions/order';
+import { addBun, addIngredient } from '../../services/actions/ingredients';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor(props) {
+  const ingredients = useSelector(state => state.ingredients.ingredients);
   const chosenBun = useSelector(state => state.ingredients.chosenBun);
   const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
 
@@ -19,8 +23,30 @@ function BurgerConstructor(props) {
     props.onOrderModalOpen()
   }
 
+  function onDropHandler(item) {
+    const draggingIngredient = ingredients.find((i) => i._id === item._id)
+    if (draggingIngredient.type === 'bun') {
+      dispatch(addBun(draggingIngredient));
+    } else {
+      const id = uuidv4();
+      dispatch(addIngredient(draggingIngredient, id));
+    }
+  }
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: "chosen_ingredient",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item) {
+      onDropHandler(item);
+    },
+  });
+
+  const borderColor = isHover ? 'blueviolet' : 'transparent';
+
   return (
-    <section className={`${BurgerConstructorStyles.container} pt-25 pl-4 pb-13`}>
+    <section className={`${BurgerConstructorStyles.container} pt-25 pl-4 pb-13`} ref={dropTarget} style={{borderColor}}>
       <div className="ml-8 pr-4">
           {chosenBun.name ? 
             <ConstructorElement
@@ -35,7 +61,7 @@ function BurgerConstructor(props) {
       <div className={BurgerConstructorStyles.scrollbox}>
         {chosenIngredients.length>0 ? chosenIngredients.map((item) => (
           item.type !== 'bun' && 
-          <ul key={item._id} className={BurgerConstructorStyles.item}>
+          <ul key={item.id} className={BurgerConstructorStyles.item}>
             <DragIcon type="primary" />
             <ConstructorElement
               text={item.name}
@@ -62,7 +88,7 @@ function BurgerConstructor(props) {
           <p className="text text_type_digits-medium mr-2">{total}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={submitOrder}>Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="large" onClick={submitOrder} disabled={!chosenBun.name || chosenIngredients.length === 0}>Оформить заказ</Button>
       </div>
     </section>
   )

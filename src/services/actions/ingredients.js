@@ -38,3 +38,18 @@ export const selectIngredient = (ingredient) => ({
 export const deleteSelectedIngredient = () => ({
   type: DELETE_SELECTED_INGREDIENT,
 });
+
+export const addBun = (bun) => {
+  return {
+    type: ADD_BUN,
+    payload: bun,
+  };
+}
+
+export const addIngredient = (ing, id) => {
+  return {
+    type: ADD_INGREDIENT,
+    payload: {...ing, id: id},
+  };
+}
+

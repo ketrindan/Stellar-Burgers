@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 10px;
   width: 600px;
+  border: solid 1px;
 }
 
 .scrollbox {
