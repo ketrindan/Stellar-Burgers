@@ -54,25 +54,26 @@ function BurgerConstructor(props) {
   const borderColor = isHover ? 'blueviolet' : 'transparent';
 
   return (
-    <section className={`${BurgerConstructorStyles.container} pt-25 pl-4 pb-13`} ref={dropTarget} style={{borderColor}}>
-      <div className="ml-8 pr-4">
-          {chosenBun.name ? 
+    <section className={`${BurgerConstructorStyles.container} mt-25 pl-4 pt-2 pb-2`} ref={dropTarget} style={{borderColor}}>
+      {chosenBun.name ? <div className="ml-8 pr-4">
             <ConstructorElement
               type="top"
               isLocked={true}
               text={`${chosenBun.name} (верх)`}
               price={chosenBun.price}
               thumbnail={chosenBun.image}
-            /> : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите булку</p>
-          }
-      </div>
-      <div className={BurgerConstructorStyles.scrollbox}>
-        {chosenIngredients.length > 0 ? chosenIngredients.map((item, index) => (
-          item.type !== 'bun' &&
-          <ChosenIngredient key={item.id} data={item} index={index}/>
-        )) : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите ингредиенты</p>
-        }
-      </div>
+            /> 
+      </div> : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите булку</p>
+}
+      
+      {chosenIngredients.length > 0 ? 
+        <div className={BurgerConstructorStyles.scrollbox}>
+          {chosenIngredients.map((item, i) => (
+            item.type !== 'bun' &&
+            <ChosenIngredient key={item.id} data={item} index={i}/>
+          ))}
+        </div> : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите ингредиенты</p>
+      }
       <div className="ml-8 pr-4">
         {chosenBun.name && 
           <ConstructorElement
@@ -84,7 +85,7 @@ function BurgerConstructor(props) {
           />
         }
       </div>
-      <div className={`${BurgerConstructorStyles.infobox} mt-10`}>
+      <div className={`${BurgerConstructorStyles.infobox} mt-10 pr-5`}>
         <div className={BurgerConstructorStyles.pricebox}>
           <p className="text text_type_digits-medium mr-2">{total || 0}</p>
           <CurrencyIcon type="primary" />

@@ -47,6 +47,7 @@ function ChosenIngredient(props) {
         return
       } else {
         handleChangeOrder(dragI, hoverI);
+        item.index = hoverI;
       }
     },
   });

@@ -1,14 +1,14 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   width: 600px;
-  border: solid 1px;
+  border: dashed 1px;
 }
 
 .scrollbox {
   min-height: 100px;
-  max-height: 448px;
+  max-height: 464px;
   display: grid;
   overflow-y: scroll;
 }
