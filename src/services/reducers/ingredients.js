@@ -7,6 +7,8 @@ import {
   ADD_BUN,
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
+  CLEAR_CONSTRUCTOR,
+  CHANGE_ORDER,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -66,8 +68,23 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case DELETE_INGREDIENT: {
-      return { ...state, 
-        chosenIngredients: state.chosenIngredients.filter((i) => i._id !== action.payload) };
+      return { 
+        ...state, 
+        chosenIngredients: state.chosenIngredients.filter((i) => i.id !== action.payload.id) 
+      };
+    }
+    case CLEAR_CONSTRUCTOR: {
+      return {
+        ...state,
+        chosenIngredients: [],
+        chosenBun: {}
+      };
+    }
+    case CHANGE_ORDER: {
+      return {
+        ...state,
+        chosenIngredients: action.payload,
+      };
     }
     default: {
       return state;

@@ -4,7 +4,6 @@ import okImg from '../../images/graphics.svg';
 
 function OrderDetails() {
   const order = useSelector(state => state.order.order);
-  console.log(order)
 
   return (
     <div className={`${orderDetailsStyles.container} mt-4 mb-20`}>

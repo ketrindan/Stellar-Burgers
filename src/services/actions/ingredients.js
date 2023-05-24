@@ -8,6 +8,8 @@ export const DELETE_SELECTED_INGREDIENT = "DELETE_SELECTED_INGREDIENT";
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const ADD_BUN = "ADD_BUN";
 export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
+export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR";
+export const CHANGE_ORDER = "CHANGE_ORDER";
 
 export function getIngredients() {
   return function(dispatch) {
@@ -53,3 +55,20 @@ export const addIngredient = (ing, id) => {
   };
 }
 
+export const deleteIngredient = (ing) => {
+  return {
+    type: DELETE_INGREDIENT,
+    payload: ing,
+  };
+}
+
+export const clearConstructor = () => ({
+  type: CLEAR_CONSTRUCTOR,
+});
+
+export const changeOrder = (mixedIngredients) => {
+  return {
+    type: CHANGE_ORDER,
+    payload: mixedIngredients,
+  }
+}

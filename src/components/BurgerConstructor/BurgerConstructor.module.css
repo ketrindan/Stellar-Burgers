@@ -26,13 +26,6 @@
   border: 3px solid #8585AD;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0;
-}
-
 .infobox {
   display: flex;
   align-items: center;

@@ -16,13 +16,13 @@ export function setOrder(ids) {
         dispatch({
           type: SUBMIT_ORDER_SUCCESS,
           payload: data,
-        });
+        });  
       } else {
         dispatch({
           type: SUBMIT_ORDER_FAILED
         });
       }
-    });
+    })
   };
 }
 

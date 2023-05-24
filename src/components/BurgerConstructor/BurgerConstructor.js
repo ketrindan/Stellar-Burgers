@@ -2,11 +2,12 @@ import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { setOrder } from '../../services/actions/order';
-import { addBun, addIngredient } from '../../services/actions/ingredients';
+import { addBun, addIngredient, clearConstructor } from '../../services/actions/ingredients';
 import { v4 as uuidv4 } from 'uuid';
+import ChosenIngredient from '../ChosenIngredient/ChosenIngredient';
 
 function BurgerConstructor(props) {
   const ingredients = useSelector(state => state.ingredients.ingredients);
@@ -15,12 +16,19 @@ function BurgerConstructor(props) {
 
   const dispatch = useDispatch();
 
-  const total = useMemo(() => chosenBun.price * 2 + chosenIngredients.reduce((sum, current) => sum + current.price, 0), [chosenBun, chosenIngredients]) || 0;
+  const total = useMemo(() => {
+    if (!chosenBun.price) {
+      return chosenIngredients.reduce((sum, current) => sum + current.price, 0)
+    } else {
+      return chosenBun.price * 2 + chosenIngredients.reduce((sum, current) => sum + current.price, 0)
+    }
+  }, [chosenBun, chosenIngredients]);
 
   function submitOrder() {
     const orderIds = chosenIngredients.map(i => i._id).concat(chosenBun._id);
-    dispatch(setOrder(orderIds))
-    props.onOrderModalOpen()
+    dispatch(setOrder(orderIds));
+    dispatch(clearConstructor());
+    props.onOrderModalOpen();
   }
 
   function onDropHandler(item) {
@@ -59,16 +67,9 @@ function BurgerConstructor(props) {
           }
       </div>
       <div className={BurgerConstructorStyles.scrollbox}>
-        {chosenIngredients.length>0 ? chosenIngredients.map((item) => (
-          item.type !== 'bun' && 
-          <ul key={item.id} className={BurgerConstructorStyles.item}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text={item.name}
-              price={item.price}
-              thumbnail={item.image}
-            />
-          </ul>
+        {chosenIngredients.length > 0 ? chosenIngredients.map((item, index) => (
+          item.type !== 'bun' &&
+          <ChosenIngredient key={item.id} data={item} index={index}/>
         )) : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите ингредиенты</p>
         }
       </div>
@@ -85,7 +86,7 @@ function BurgerConstructor(props) {
       </div>
       <div className={`${BurgerConstructorStyles.infobox} mt-10`}>
         <div className={BurgerConstructorStyles.pricebox}>
-          <p className="text text_type_digits-medium mr-2">{total}</p>
+          <p className="text text_type_digits-medium mr-2">{total || 0}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button htmlType="button" type="primary" size="large" onClick={submitOrder} disabled={!chosenBun.name || chosenIngredients.length === 0}>Оформить заказ</Button>
