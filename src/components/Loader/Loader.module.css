@@ -1,0 +1,25 @@
+.loader_container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.loader {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 5px solid transparent;
+  border-top-color: #4c4cff;
+  border-bottom-color: #4c4cff;
+  border-right-color: #4c4cff;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

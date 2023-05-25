@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
 import Ingredient from '../Ingredient/Ingredient';
+import Loader from '../Loader/Loader';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 
 function BurgerIngredients(props) {
+  const ingredientsState = useSelector(state => state.ingredients);
   const ingredients = useSelector(state => state.ingredients.ingredients);
 
   const buns = ingredients.filter((item) => item.type === 'bun');
@@ -54,7 +56,7 @@ function BurgerIngredients(props) {
   }
 
   return (
-    <section className={`pt-10 ${burgerIngredientsStyles.container}`}>
+    <section className={`${burgerIngredientsStyles.container} pt-10`}>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <div className={burgerIngredientsStyles.navtab}>
         <Tab value="bun" active={current === 'bun'} onClick={() => handleTabClick('bun')}>
@@ -67,25 +69,38 @@ function BurgerIngredients(props) {
           Начинки
         </Tab>
       </div>
-      <div className={`mt-10 ${burgerIngredientsStyles.items_box}`} onScroll={handleScroll}>
-        <h2 className="text text_type_main-medium mb-6" id="bun">Булки</h2>
-        <ul className={`${burgerIngredientsStyles.list} mb-10 pr-4 pl-4`}>
-          {buns.map((item) => (
-            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
-          ))}
-        </ul>
-        <h2 className="text text_type_main-medium mb-6" id="sauce">Соусы</h2>
-        <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
-          {sauces.map((item) => (
-            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
-          ))}
-        </ul>
-        <h2 className="text text_type_main-medium mb-6" id="main">Начинки</h2>
-        <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
-          {mains.map((item) => (
-            <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
-          ))}
-        </ul>
+      <div className={`${burgerIngredientsStyles.items_box} mt-10`} onScroll={handleScroll}>
+        {ingredientsState.ingredientsRequest && <Loader/> }
+
+        { ingredients.length > 0 &&
+          <>
+            <h2 className="text text_type_main-medium mb-6" id="bun">Булки</h2>
+            <ul className={`${burgerIngredientsStyles.list} mb-10 pr-4 pl-4`}>
+              {buns.map((item) => (
+                <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
+              ))}
+            </ul>
+            <h2 className="text text_type_main-medium mb-6" id="sauce">Соусы</h2>
+            <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
+              {sauces.map((item) => (
+                <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
+              ))}
+            </ul>
+            <h2 className="text text_type_main-medium mb-6" id="main">Начинки</h2>
+            <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
+              {mains.map((item) => (
+                <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
+              ))}
+            </ul>
+          </>
+        }
+
+        {ingredientsState.ingredientsFailed && 
+          <div className={burgerIngredientsStyles.error_box}>
+            <p className="text text_type_main-default mb-2">Произошла ошибка...</p>
+          </div>
+        } 
+
       </div>
     </section>
   )

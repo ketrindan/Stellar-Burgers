@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag, useDrop } from "react-dnd";
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import PropTypes from "prop-types";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/prop-types';
@@ -19,7 +19,7 @@ function ChosenIngredient(props) {
     dispatch(deleteIngredient(item));
   }
 
-  function handleChangeOrder(dragI, hoverI) {
+  const handleChangeOrder = useCallback((dragI, hoverI) => {
     const draggingIng = chosenIngredients[dragI]
     const mixedIngredients = [...chosenIngredients];
     
@@ -27,7 +27,7 @@ function ChosenIngredient(props) {
     mixedIngredients.splice(hoverI, 0, draggingIng);
 
     dispatch(changeOrder(mixedIngredients));
-  }
+  }, [chosenIngredients, dispatch])
 
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
@@ -37,26 +37,50 @@ function ChosenIngredient(props) {
     })
   });
 
-  const [, dropTarget] = useDrop({
+  const opacity = isDrag ? 0 : 1;
+
+  const [{ handlerId }, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    collect(monitor) {
+      return {
+          handlerId: monitor.getHandlerId()
+      }
+    },
+    hover(item, monitor) {
       const dragI = item.index;
       const hoverI = index;
 
-      if (dragI === hoverI) {
-        return
-      } else {
-        handleChangeOrder(dragI, hoverI);
-        item.index = hoverI;
+      if (!ref.current) {
+        return;
       }
+
+      if (dragI === hoverI) {
+        return;
+      } 
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      if (dragI < hoverI && hoverClientY < hoverMiddleY) {
+        return;
+      }
+
+      if (dragI > hoverI && hoverClientY > hoverMiddleY) {
+        return;
+      }
+
+      handleChangeOrder(dragI, hoverI)
+      
+      item.index = hoverI;
     },
   });
 
   dragRef(dropTarget(ref))
 
   return(
-    !isDrag && 
-    <div className={ChosenIngredientStyles.item} ref={ref} draggable>
+    <div className={ChosenIngredientStyles.item} ref={ref} style={{ opacity }} data-handler-id={handlerId} draggable>
       <DragIcon type="primary" />
       <ConstructorElement
         text={props.data.name}

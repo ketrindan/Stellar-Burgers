@@ -23,6 +23,12 @@ export function setOrder(ids) {
         });
       }
     })
+    .catch((err) => {
+      dispatch({
+        type: SUBMIT_ORDER_FAILED
+      });
+      console.log(err)
+    })
   };
 }
 
