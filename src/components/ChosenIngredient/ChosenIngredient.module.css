@@ -1,0 +1,12 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.item:last-of-type {
+  margin-bottom: 0;
+}
