@@ -90,7 +90,7 @@ function BurgerConstructor(props) {
           <p className="text text_type_digits-medium mr-2">{total || 0}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={submitOrder} disabled={!chosenBun.name || chosenIngredients.length === 0}>Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="medium" onClick={submitOrder} disabled={!chosenBun.name || chosenIngredients.length === 0}>Оформить заказ</Button>
       </div>
     </section>
   )

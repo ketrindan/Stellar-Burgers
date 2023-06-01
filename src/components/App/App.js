@@ -1,11 +1,21 @@
 import React, {useState, useEffect} from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './App.module.css';
+
 import AppHeader from '../AppHeader/AppHeader';
-import Main from '../Main/Main';
+
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredirntDetails from '../IngredientDetails/IngredientDetails';
+
+import Main from '../../pages/Main/Main';
+import Register from '../../pages/Register/Register';
+import Login from '../../pages/Login/Login';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+
+import NotFound from '../../pages/NotFound/NotFound';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
@@ -40,10 +50,19 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
 
-      <Main 
-        onIngredientModalOpen={handleIngredientModalOpen}
-        onOrderModalOpen={handleOrderModalOpen}
-      />
+      <Routes>
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='*' element={<NotFound />} />
+        <Route exact path='/' element={
+          <Main 
+            onIngredientModalOpen={handleIngredientModalOpen}
+            onOrderModalOpen={handleOrderModalOpen}
+          />} 
+        />        
+      </Routes>
 
       {isOrderModalOpen && 
         <Modal onClose={handleAllModalClose}>
