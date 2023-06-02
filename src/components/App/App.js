@@ -7,14 +7,14 @@ import AppHeader from '../AppHeader/AppHeader';
 
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import IngredirntDetails from '../IngredientDetails/IngredientDetails';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 import Main from '../../pages/Main/Main';
 import Register from '../../pages/Register/Register';
 import Login from '../../pages/Login/Login';
 import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
 import ResetPassword from '../../pages/ResetPassword/ResetPassword';
-
+import Profile from '../../pages/Profile/Profile';
 import NotFound from '../../pages/NotFound/NotFound';
 
 import { getIngredients } from '../../services/actions/ingredients';
@@ -61,7 +61,9 @@ function App() {
             onIngredientModalOpen={handleIngredientModalOpen}
             onOrderModalOpen={handleOrderModalOpen}
           />} 
-        />        
+        />
+        <Route path='/profile/*' element={<Profile />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />       
       </Routes>
 
       {isOrderModalOpen && 
@@ -72,7 +74,7 @@ function App() {
       
       {isIngredientModalOpen && 
         <Modal onClose={handleAllModalClose} title={"Детали ингредиента"}>
-          <IngredirntDetails />
+          <IngredientDetails />
         </Modal>
       }
     </div>
