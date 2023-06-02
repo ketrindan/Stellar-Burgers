@@ -46,8 +46,8 @@ function ProfileDetails() {
       />
     {isChanged && 
     <div className={profileDetailsStyles.btns}>
-      <Button htmlType="button" type="primary" size="medium">Отменить</Button>
-      <Button htmlType="button" type="primary" size="medium">Сохранить</Button>
+      <Button htmlType="reset" type="primary" size="medium">Отменить</Button>
+      <Button htmlType="submit" type="primary" size="medium">Сохранить</Button>
     </div>}
   </form>
   )

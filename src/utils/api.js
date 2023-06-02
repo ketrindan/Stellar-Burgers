@@ -28,6 +28,31 @@ class Api {
     })
     .then((res) => this._checkResponse(res));
   }
+
+  forgotPassword(email) {
+    return fetch(`${this._baseUrl}/password-reset`, 
+    { method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email})
+    })
+    .then((res) => this._checkResponse(res));
+  }
+
+  resetPassword(newPassword, code) {
+    return fetch(`${this._baseUrl}/password-reset/reset`, 
+    { method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: newPassword,
+        token: code,
+      })
+    })
+    .then((res) => this._checkResponse(res));
+  }
 }
 
 const api = new Api(baseUrl);

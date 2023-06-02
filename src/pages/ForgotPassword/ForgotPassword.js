@@ -1,15 +1,27 @@
 import ForgotPasswordStyles from './ForgotPassword.module.css';
 import { useState, useRef} from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { forgotPassword } from '../../services/actions/user';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const inputRef = useRef(null);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function submitForm(e) {
+    e.preventDefault();
+    dispatch(forgotPassword(email));
+    setEmail('');
+    navigate('/reset-password')
+  }
+
   return (
     <section className={ForgotPasswordStyles.container}>
-      <form className={ForgotPasswordStyles.form}>
+      <form className={ForgotPasswordStyles.form} onSubmit={submitForm}>
         <h2 className="text text_type_main-medium">Восстановление пароля</h2>
         <Input 
           type={'email'}
@@ -21,7 +33,7 @@ function ForgotPassword() {
           ref={inputRef}
           errorText={'Ошибка'}
         />
-        <Button htmlType="button" type="primary" size="large">Войти</Button>
+        <Button htmlType="submit" type="primary" size="large" disabled={!email}>Восстановить</Button>
       </form>
       <span className="text text_type_main-default text_color_inactive mt-20">
         Вспомнили пароль? <Link to="/login" className={ForgotPasswordStyles.link}>Войти</Link>

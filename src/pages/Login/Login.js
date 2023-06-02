@@ -27,7 +27,7 @@ function Login() {
           value={password}
           name={'password'}
         />
-        <Button htmlType="button" type="primary" size="large">Войти</Button>
+        <Button htmlType="submit" type="primary" size="large">Войти</Button>
       </form>
       <span className="text text_type_main-default text_color_inactive mt-20">
         Вы - новый пользователь? <Link to="/register" className={LoginStyles.link}>Зарегистрироваться</Link>

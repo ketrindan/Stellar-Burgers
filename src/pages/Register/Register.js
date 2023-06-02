@@ -38,7 +38,7 @@ function Register() {
           value={password}
           name={'password'}
         />
-        <Button htmlType="button" type="primary" size="large">Зарегистрироваться</Button>
+        <Button htmlType="submit" type="primary" size="large">Зарегистрироваться</Button>
       </form>
       <span className="text text_type_main-default text_color_inactive mt-20">
         Уже зарегистрированы? <Link to="/login" className={registerStyles.link}>Войти</Link>
