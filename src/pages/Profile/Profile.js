@@ -1,11 +1,20 @@
 import profileStyles from './Profile.module.css';
 import { NavLink, useMatch } from "react-router-dom";
-
+import { useDispatch, } from "react-redux";
+import { logout } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie';
 import ProfileDetails from '../../components/ProfileDetails/ProfileDetails';
 
 function Profile() {
   const profileMatch = useMatch("/profile");
   const ordersMatch = useMatch("/profile/orders");
+
+  const dispatch = useDispatch();
+
+  function handleLogout() {
+    const refreshToken = getCookie('refreshToken');
+    dispatch(logout(refreshToken));
+  }
   
   return (
     <section className={profileStyles.container}>
@@ -23,7 +32,7 @@ function Profile() {
           </div>
           <div className={profileStyles.link_wrapper}>
             <NavLink to="/login" className={({ isActive }) => isActive ? `${profileStyles.link} text text_type_main-medium ${profileStyles.link_active}` : 
-              `${profileStyles.link} text text_type_main-medium text_color_inactive`} >Выход
+              `${profileStyles.link} text text_type_main-medium text_color_inactive`} onClick={handleLogout} >Выход
             </NavLink>
           </div>
         </nav>

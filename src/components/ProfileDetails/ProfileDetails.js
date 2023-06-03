@@ -1,12 +1,15 @@
 import profileDetailsStyles from './ProfileDetails.module.css';
 import { useState, useRef} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function ProfileDetails() {
+  const user = useSelector((state) => state.user.user);
+
   const [isChanged, setIsChanged] = useState(false)
-  const [name, setName] = useState('Имя');
-  const [email, setEmail] = useState('qwerty@mail.ru');
-  const [password, setPassword] = useState('12345');
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState("");
   const inputRef = useRef(null);
 
   return (
@@ -14,7 +17,11 @@ function ProfileDetails() {
       <Input 
         type={'text'}
         placeholder={'Имя'}
-        onChange={e => {setName(e.target.value); setIsChanged(true)}}
+        onChange={e => {
+          const value = e.target.value; 
+          setName(value); 
+          value === user.name ? setIsChanged(false) : setIsChanged(true);
+        }}
         value={name}
         name={'name'}
         error={false}
@@ -25,7 +32,11 @@ function ProfileDetails() {
       <Input 
         type={'email'}
         placeholder={'Логин'}
-        onChange={e => {setEmail(e.target.value); setIsChanged(true)}}
+        onChange={e => {
+          const value = e.target.value; 
+          setEmail(value); 
+          value === user.email ? setIsChanged(false) : setIsChanged(true);
+        }}
         value={email}
         name={'email'}
         error={false}
@@ -36,7 +47,11 @@ function ProfileDetails() {
       <Input
         type={'password'}
         placeholder={'Пароль'} 
-        onChange={e => {setPassword(e.target.value); setIsChanged(true)}}
+        onChange={e => {
+          const value = e.target.value; 
+          setPassword(value); 
+          value === "" ? setIsChanged(false) : setIsChanged(true);
+        }}
         value={password}
         name={'password'}
         error={false}

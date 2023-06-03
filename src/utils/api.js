@@ -53,6 +53,62 @@ class Api {
     })
     .then((res) => this._checkResponse(res));
   }
+
+  register( name, email, password) {
+    return fetch(`${this._baseUrl}/auth/register`, 
+    { method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      })
+    })
+    .then((res) => this._checkResponse(res));
+  }
+
+  login(email, password) {
+    return fetch(`${this._baseUrl}/auth/login`, 
+    { method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      })
+    })
+    .then((res) => this._checkResponse(res));
+  }
+
+  refreshToken(refreshToken) {
+    return fetch(`${this._baseUrl}/auth/token`, 
+    { method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "token": refreshToken
+      })
+    })
+    .then((res) => this._checkResponse(res));
+  }
+
+  logout(refreshToken) {
+    return fetch(`${this._baseUrl}/auth/logout`, 
+    { method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "token": refreshToken
+      })
+    })
+    .then((res) => this._checkResponse(res));
+  }
+
 }
 
 const api = new Api(baseUrl);

@@ -1,16 +1,33 @@
 import LoginStyles from './Login.module.css';
-import { useState, useRef} from 'react';
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect} from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { login } from '../../services/actions/user';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const inputRef = useRef(null);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const token = useSelector((state) => state.user.accessToken)
+
+  function submitLogin(e) {
+    e.preventDefault();
+    dispatch(login(email, password));
+  }
+
+  useEffect(() => {
+    token.length > 0 && navigate('/');
+  }, [token, navigate])
+
   return (
     <section className={LoginStyles.container}>
-      <form className={LoginStyles.form}>
+      <form className={LoginStyles.form} onSubmit={submitLogin}>
         <h2 className="text text_type_main-medium">Вход</h2>
         <Input 
           type={'email'}
@@ -27,7 +44,7 @@ function Login() {
           value={password}
           name={'password'}
         />
-        <Button htmlType="submit" type="primary" size="large">Войти</Button>
+        <Button htmlType="submit" type="primary" size="large" disabled={!email || !password}>Войти</Button>
       </form>
       <span className="text text_type_main-default text_color_inactive mt-20">
         Вы - новый пользователь? <Link to="/register" className={LoginStyles.link}>Зарегистрироваться</Link>
