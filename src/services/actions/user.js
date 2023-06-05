@@ -1,5 +1,5 @@
 import api from '../../utils/api';
-import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
+import { setCookie, deleteCookie } from '../../utils/cookie';
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SECCESS";
@@ -20,6 +20,13 @@ export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
+
+export const GET_USER_REQUEST = "GET_USER_REQUEST";
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const GET_USER_FAILED = "GET_USER_FAILED";
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 
 export const setForgotPassword = () => ({
   type: FORGOT_PASSWORD_REQUEST
@@ -95,6 +102,32 @@ export const setLogoutFailed = () => ({
   type: LOGOUT_FAILED
 });
 
+export const setGetUser = () => ({
+  type: GET_USER_REQUEST
+});
+
+export const setGetUserSuccess = (data) => ({
+  type: GET_USER_SUCCESS, 
+  payload: data
+});
+
+export const setGetUserFailed = () => ({
+  type: GET_USER_FAILED
+});
+
+export const setUpdateUser = () => ({
+  type: UPDATE_USER_REQUEST
+});
+
+export const setUpdateUserSuccess = (data) => ({
+  type: UPDATE_USER_SUCCESS, 
+  payload: data
+});
+
+export const setUpdateUserFailed = () => ({
+  type: UPDATE_USER_FAILED 
+});
+
 export function forgotPassword(email) {
   return (dispatch) => {
     dispatch(setForgotPassword());
@@ -132,15 +165,8 @@ export function register(name, email, password) {
     api.register(name, email, password)
     .then(res => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-
-      if (accessToken) {
-        setCookie('token', accessToken);
-      }
-
-      if (res.refreshToken) {
-        setCookie('refreshToken', res.refreshToken);
-      }
-
+      setCookie('token', accessToken);
+      localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setRegistrationSuccess(res));
     })
     .catch((err) => {
@@ -157,15 +183,8 @@ export function login(email, password) {
     api.login(email, password)
     .then(res => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-
-      if (accessToken) {
-        setCookie('token', accessToken);
-      }
-
-      if (res.refreshToken) {
-        setCookie('refreshToken', res.refreshToken);
-      }
-
+      setCookie('token', accessToken);
+      localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setLoginSuccess(res));
     })
     .catch((err) => {
@@ -175,23 +194,17 @@ export function login(email, password) {
   }
 }
 
-export function refreshToken(refreshToken) {
+export function refreshToken(refreshToken, afterRefresh) {
   return (dispatch) => {
     dispatch(setRefreshToken())
 
     api.refreshToken(refreshToken)
     .then((res) => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-
-      if (accessToken) {
-        setCookie('token', accessToken);
-      }
-
-      if (res.refreshToken) {
-        setCookie('refreshToken', res.refreshToken);
-      }
-
+      setCookie('token', accessToken);
+      localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setRefreshTokenSuccess(accessToken));
+      dispatch(afterRefresh);
     })
     .catch((err) => {
       dispatch(setRefreshTokenFailed());
@@ -207,12 +220,50 @@ export function logout(refreshToken) {
     api.logout(refreshToken)
     .then(() => {
       deleteCookie('token');
-      deleteCookie('refreshToken');
+      localStorage.removeItem('refreshToken');
       dispatch(setLogoutSuccess());
     })
     .catch((err) => {
       dispatch(setLoginFailed());
       console.log(err);
+    })
+  }
+}
+
+export function getUser(accessToken) {
+  return (dispatch) => {
+    dispatch(setGetUser())
+
+    api.getUser(accessToken)
+    .then((res) => {
+      dispatch(setGetUserSuccess(res.user))
+    })
+    .catch((err) => {
+       if (err.message === 'jwt expired') {
+        dispatch(refreshToken(localStorage.getItem('refreshToken'), getUser()))
+      } else {
+        dispatch(setUpdateUserFailed())
+        console.log(err)
+      }
+    })
+  }
+}
+
+export function updateUser(name, email, password, accessToken) {
+  return (dispatch) => {
+    dispatch(setUpdateUser())
+
+    api.updateUser(name, email, password, accessToken)
+    .then((res) => {
+      dispatch(setUpdateUserSuccess(res.user))
+    })
+    .catch((err) => {
+      if (err.message === 'jwt expired') {
+        dispatch(refreshToken(localStorage.getItem('refreshToken'), updateUser()));
+      } else {
+        dispatch(setUpdateUserFailed())
+        console.log(err)
+      }
     })
   }
 }

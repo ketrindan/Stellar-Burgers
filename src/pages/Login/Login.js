@@ -1,6 +1,6 @@
 import LoginStyles from './Login.module.css';
 import { useState, useRef, useEffect} from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -13,6 +13,7 @@ function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const token = useSelector((state) => state.user.accessToken)
 
@@ -22,8 +23,10 @@ function Login() {
   }
 
   useEffect(() => {
-    token.length > 0 && navigate('/');
-  }, [token, navigate])
+    if (token.length > 0) {
+      (location.state && location.state.from) ? navigate(location.state.from.pathname) : navigate('/')
+    }
+  }, [token, navigate, location])
 
   return (
     <section className={LoginStyles.container}>

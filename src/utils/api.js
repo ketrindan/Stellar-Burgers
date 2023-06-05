@@ -109,6 +109,32 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
+  getUser(token) {
+    return fetch(`${this._baseUrl}/auth/user`, 
+    { method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "authorization": token
+      }
+    })
+    .then((res) => this._checkResponse(res));
+  }
+
+  updateUser(name, email, password, token) {
+    return fetch(`${this._baseUrl}/auth/user`, 
+    { method: "PATCH",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "authorization": token
+      },
+      body: JSON.stringify({
+        "name": name,
+        "email": email,
+        "password": password
+      })
+    })
+    .then((res) => this._checkResponse(res));
+  }
 }
 
 const api = new Api(baseUrl);

@@ -17,6 +17,12 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILED,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILED
 } from '../actions/user';
 
 const initialState = {
@@ -34,6 +40,10 @@ const initialState = {
   refreshTokenFailed: false,
   logoutRequest: false,
   logoutFailed: false,
+  getUserRequest: false,
+  getUserFailed: false,
+  updateUserRequest: false,
+  updateUserFailed: false
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -163,6 +173,48 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logoutRequest: false,
         logoutFailed: true,
+      };
+    }
+    case GET_USER_REQUEST: {
+      return {
+        ...state,
+        getUserRequest: true,
+        getUserFailed: false,
+      };
+    }
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        getUserRequest: false,
+        user: action.payload
+      };
+    }
+    case GET_USER_FAILED: {
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserFailed: true,
+      };
+    }
+    case UPDATE_USER_REQUEST: {
+      return {
+        ...state,
+        updateUserRequest: true,
+        updateUserFailed: false,
+      };
+    }
+    case UPDATE_USER_SUCCESS: {
+      return {
+        ...state,
+        updateUserRequest: false,
+        user: action.payload,
+      };
+    }
+    case UPDATE_USER_FAILED: {
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserFailed: true,
       };
     }
     default: {

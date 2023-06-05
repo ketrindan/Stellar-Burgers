@@ -2,7 +2,6 @@ import profileStyles from './Profile.module.css';
 import { NavLink, useMatch } from "react-router-dom";
 import { useDispatch, } from "react-redux";
 import { logout } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
 import ProfileDetails from '../../components/ProfileDetails/ProfileDetails';
 
 function Profile() {
@@ -12,7 +11,7 @@ function Profile() {
   const dispatch = useDispatch();
 
   function handleLogout() {
-    const refreshToken = getCookie('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
     dispatch(logout(refreshToken));
   }
   

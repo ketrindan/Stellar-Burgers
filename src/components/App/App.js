@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.css';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -16,14 +16,18 @@ import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
 import ResetPassword from '../../pages/ResetPassword/ResetPassword';
 import Profile from '../../pages/Profile/Profile';
 import NotFound from '../../pages/NotFound/NotFound';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
 import { deleteOrder } from '../../services/actions/order';
+import { getUser } from '../../services/actions/user';
 
 function App() {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
+
+  const accessToken = useSelector((state) => state.user.accessToken);
 
   const dispatch = useDispatch();
 
@@ -43,8 +47,12 @@ function App() {
   }
 
   useEffect(() => {    
-   dispatch(getIngredients())
-  }, [dispatch])
+   dispatch(getIngredients());
+
+   if (accessToken.length > 0) {
+    dispatch(getUser(accessToken));
+   }
+  }, [dispatch, accessToken])
 
   return (
     <div className={styles.app}>
@@ -62,7 +70,7 @@ function App() {
             onOrderModalOpen={handleOrderModalOpen}
           />} 
         />
-        <Route path='/profile/*' element={<Profile />} />
+        <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile />}/>} /> 
         <Route path='/ingredients/:id' element={<IngredientDetails />} />       
       </Routes>
 
