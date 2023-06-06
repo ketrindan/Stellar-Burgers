@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,6 +14,9 @@ function BurgerConstructor(props) {
   const ingredients = useSelector(state => state.ingredients.ingredients);
   const chosenBun = useSelector(state => state.ingredients.chosenBun);
   const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
+  const user = useSelector(state => state.user.user);
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -26,9 +30,13 @@ function BurgerConstructor(props) {
 
   function submitOrder() {
     const orderIds = chosenIngredients.map(i => i._id).concat(chosenBun._id);
-    dispatch(setOrder(orderIds));
-    dispatch(clearConstructor());
-    props.onOrderModalOpen();
+    if (user.name) {
+      dispatch(setOrder(orderIds));
+      dispatch(clearConstructor());
+      props.onOrderModalOpen();
+    } else {
+      navigate('/login')
+    }
   }
 
   function onDropHandler(item) {

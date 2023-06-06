@@ -202,7 +202,7 @@ export function refreshToken(refreshToken, afterRefresh) {
       const accessToken = res.accessToken.split('Bearer ')[1];
       setCookie('token', accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
-      dispatch(setRefreshTokenSuccess(accessToken));
+      dispatch(setRefreshTokenSuccess());
       dispatch(afterRefresh);
     })
     .catch((err) => {
@@ -229,16 +229,16 @@ export function logout(refreshToken) {
   }
 }
 
-export function getUser(accessToken) {
+export function getUser() {
   return (dispatch) => {
     dispatch(setGetUser())
 
-    api.getUser(accessToken)
+    api.getUser()
     .then((res) => {
       dispatch(setGetUserSuccess(res.user))
     })
     .catch((err) => {
-       if (err.message === 'jwt expired') {
+      if (err.status === 403) {
         dispatch(refreshToken(localStorage.getItem('refreshToken'), getUser()))
       } else {
         dispatch(setGetUserFailed())
@@ -248,11 +248,11 @@ export function getUser(accessToken) {
   }
 }
 
-export function updateUser(name, email, password, accessToken) {
+export function updateUser(name, email, password) {
   return (dispatch) => {
     dispatch(setUpdateUser())
 
-    api.updateUser(name, email, password, accessToken)
+    api.updateUser(name, email, password)
     .then((res) => {
       dispatch(setUpdateUserSuccess(res.user))
     })

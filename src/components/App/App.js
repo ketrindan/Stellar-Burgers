@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './App.module.css';
 
@@ -25,68 +25,86 @@ import { getUser } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
 
 function App() {
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
-  const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
+  const ModalSwitch = () => {
+    const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+    const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
 
-  const accessToken = getCookie('token');
+    const accessToken = getCookie('token');
 
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  function handleIngredientModalOpen() {
-    setIsIngredientModalOpen(true)
-  }
+    const location = useLocation();
+    const navigate = useNavigate();
+    let background = location.state && location.state.background;
 
-  function handleOrderModalOpen() {
-    setIsOrderModalOpen(true)
-  }
+    function handleIngredientModalOpen() {
+      setIsIngredientModalOpen(true)
+    }
 
-  function handleAllModalClose() {
-    dispatch(deleteSelectedIngredient());
-    dispatch(deleteOrder());
-    setIsOrderModalOpen(false);
-    setIsIngredientModalOpen(false);
-  }
+    function handleOrderModalOpen() {
+      setIsOrderModalOpen(true)
+    }
 
-  useEffect(() => {    
-   dispatch(getIngredients());
+    function handleIngredientModalClose() {
+      dispatch(deleteSelectedIngredient());
+      setIsIngredientModalOpen(false);
+      navigate(-1);
+    }
 
-   if (accessToken) {
-    dispatch(getUser(accessToken));
-   }
-  }, [dispatch, accessToken])
+    function handleOrderModalClose() {
+      dispatch(deleteOrder());
+      setIsOrderModalOpen(false);
+    }
+
+    useEffect(() => {    
+      dispatch(getIngredients());
+
+      if (accessToken) {
+        dispatch(getUser(accessToken));
+      }
+    }, [dispatch, accessToken])
+
+    return (
+      <div className={styles.app}>
+        <AppHeader />
+
+        <Routes location={background || location}>
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
+          <Route path='*' element={<NotFound />} />
+          <Route exact path='/' element={
+            <Main 
+              onIngredientModalOpen={handleIngredientModalOpen}
+              onOrderModalOpen={handleOrderModalOpen}
+            />} 
+          />
+          <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile />}/>} /> 
+          <Route path='/ingredients/:id' element={<IngredientDetails title={"Детали ингредиента"}/>} />       
+        </Routes>
+
+        {isOrderModalOpen && 
+          <Modal onClose={handleOrderModalClose}>
+            <OrderDetails />
+          </Modal>
+        }
+        
+        {(background && isIngredientModalOpen) && (
+          <Routes>
+            <Route path='/ingredients/:id'
+              element={<Modal onClose={handleIngredientModalClose} title={"Детали ингредиента"}>
+                <IngredientDetails />
+              </Modal>} 
+            />
+          </Routes>
+        )}
+      </div>
+    );
+  };
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-
-      <Routes>
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='*' element={<NotFound />} />
-        <Route exact path='/' element={
-          <Main 
-            onIngredientModalOpen={handleIngredientModalOpen}
-            onOrderModalOpen={handleOrderModalOpen}
-          />} 
-        />
-        <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile />}/>} /> 
-        <Route path='/ingredients/:id' element={<IngredientDetails />} />       
-      </Routes>
-
-      {isOrderModalOpen && 
-        <Modal onClose={handleAllModalClose}>
-          <OrderDetails />
-        </Modal>
-      }
-      
-      {isIngredientModalOpen && 
-        <Modal onClose={handleAllModalClose} title={"Детали ингредиента"}>
-          <IngredientDetails />
-        </Modal>
-      }
-    </div>
+    <ModalSwitch />
   );
 }
 

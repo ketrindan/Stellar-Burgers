@@ -1,3 +1,5 @@
+import { getCookie } from "./cookie";
+
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
 class Api {
@@ -10,7 +12,7 @@ class Api {
       return res.json();
     }
 
-    return Promise.reject(new Error(`Ошибка: ${res.status}`))
+    return Promise.reject(res)
   }
 
   getData() {
@@ -109,23 +111,23 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  getUser(token) {
+  getUser() {
     return fetch(`${this._baseUrl}/auth/user`, 
     { method: "GET",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "authorization": 'Bearer ' + token
+        "authorization": 'Bearer ' + getCookie('token')
       }
     })
     .then((res) => this._checkResponse(res));
   }
 
-  updateUser(name, email, password, token) {
+  updateUser(name, email, password) {
     return fetch(`${this._baseUrl}/auth/user`, 
     { method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "authorization": 'Bearer ' + token
+        "authorization": 'Bearer ' + getCookie('token')
       },
       body: JSON.stringify({
         "name": name,
