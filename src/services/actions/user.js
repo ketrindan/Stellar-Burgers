@@ -82,9 +82,8 @@ export const setRefreshToken= () => ({
   type: REFRESH_TOKEN_REQUEST
 });
 
-export const setRefreshTokenSuccess = (token) => ({
+export const setRefreshTokenSuccess = () => ({
   type: REFRESH_TOKEN_SUCCESS,
-  payload: token
 });
 
 export const setRefreshTokenFailed = () => ({
@@ -242,7 +241,7 @@ export function getUser(accessToken) {
        if (err.message === 'jwt expired') {
         dispatch(refreshToken(localStorage.getItem('refreshToken'), getUser()))
       } else {
-        dispatch(setUpdateUserFailed())
+        dispatch(setGetUserFailed())
         console.log(err)
       }
     })

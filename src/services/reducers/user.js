@@ -27,7 +27,6 @@ import {
 
 const initialState = {
   user: {},
-  accessToken: "",
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
   resetPasswordRequest: false,
@@ -100,7 +99,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         registrationRequest: false,
         user: action.payload.user,
-        accessToken: action.payload.accessToken,
       };
     }
     case REGISTRATION_FAILED: {
@@ -122,7 +120,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         loginRequest: false,
         user: action.payload.user,
-        accessToken: action.payload.accessToken,
       };
     }
     case LOGIN_FAILED: {
@@ -143,7 +140,6 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         refreshTokenRequest: false,
-        accessToken: action.payload,
       };
     }
     case REFRESH_TOKEN_FAILED: {

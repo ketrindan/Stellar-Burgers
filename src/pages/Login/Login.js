@@ -15,7 +15,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const token = useSelector((state) => state.user.accessToken)
+  const user = useSelector((state) => state.user.user);
 
   function submitLogin(e) {
     e.preventDefault();
@@ -23,10 +23,10 @@ function Login() {
   }
 
   useEffect(() => {
-    if (token.length > 0) {
+    if (user.name) {
       (location.state && location.state.from) ? navigate(location.state.from.pathname) : navigate('/')
     }
-  }, [token, navigate, location])
+  }, [user, navigate, location])
 
   return (
     <section className={LoginStyles.container}>

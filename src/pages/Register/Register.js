@@ -6,6 +6,7 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 
 import { register } from '../../services/actions/user';
 
+
 function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const token = useSelector((state) => state.user.accessToken);
+  const user = useSelector((state) => state.user.user);
 
   function submitRegistration(e) {
     e.preventDefault();
@@ -23,8 +24,8 @@ function Register() {
   }
 
   useEffect(() => {
-    token.length > 0 && navigate('/login');
-  }, [token, navigate])
+    user.name && navigate('/login');
+  }, [user, navigate])
 
   return (
     <section className={registerStyles.container}>

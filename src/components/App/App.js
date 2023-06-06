@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './App.module.css';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -22,12 +22,13 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
 import { deleteOrder } from '../../services/actions/order';
 import { getUser } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie';
 
 function App() {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
 
-  const accessToken = useSelector((state) => state.user.accessToken);
+  const accessToken = getCookie('token');
 
   const dispatch = useDispatch();
 
@@ -49,7 +50,7 @@ function App() {
   useEffect(() => {    
    dispatch(getIngredients());
 
-   if (accessToken.length > 0) {
+   if (accessToken) {
     dispatch(getUser(accessToken));
    }
   }, [dispatch, accessToken])

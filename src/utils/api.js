@@ -114,7 +114,7 @@ class Api {
     { method: "GET",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "authorization": token
+        "authorization": 'Bearer ' + token
       }
     })
     .then((res) => this._checkResponse(res));
@@ -125,7 +125,7 @@ class Api {
     { method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "authorization": token
+        "authorization": 'Bearer ' + token
       },
       body: JSON.stringify({
         "name": name,

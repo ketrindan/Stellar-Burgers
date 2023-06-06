@@ -3,15 +3,16 @@ import { useState, useRef} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie';
 
 function ProfileDetails() {
   const user = useSelector((state) => state.user.user);
-  const accessToken = useSelector((state) => state.user.accessToken);
+  const accessToken = getCookie('token');
 
   const [isChanged, setIsChanged] = useState(false)
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState("******");
+  const [password, setPassword] = useState("");
   const inputRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ function ProfileDetails() {
     e.preventDefault();
     setName(user.name);
     setEmail(user.email);
-    setPassword('******');
+    setPassword('');
     setIsChanged(false);
   }
 
@@ -76,11 +77,6 @@ function ProfileDetails() {
         ref={inputRef}
         errorText={'Ошибка'}
         icon={"EditIcon"}
-        onFocus={() => setPassword("")}
-        onBlur={(e) => {
-          const value = e.target.value;
-          value === "" ? setPassword("******") : setPassword(value);
-        }}
       />
     {isChanged && 
     <div className={profileDetailsStyles.btns}>
