@@ -25,7 +25,6 @@ function ResetPassword() {
   }
   
   useEffect(() => {
-    user.name && navigate('/');
     (!user.name && !forgotPasswordRequest) && navigate('/login');
   }, [user, forgotPasswordRequest, navigate])
 

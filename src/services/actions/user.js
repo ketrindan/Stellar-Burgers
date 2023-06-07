@@ -164,7 +164,7 @@ export function register(name, email, password) {
     api.register(name, email, password)
     .then(res => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-      setCookie('token', accessToken);
+      setCookie('token', accessToken, { path: '/' });
       localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setRegistrationSuccess(res));
     })
@@ -182,7 +182,7 @@ export function login(email, password) {
     api.login(email, password)
     .then(res => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-      setCookie('token', accessToken);
+      setCookie('token', accessToken, { path: '/' });
       localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setLoginSuccess(res));
     })
@@ -200,7 +200,7 @@ export function refreshToken(refreshToken, afterRefresh) {
     api.refreshToken(refreshToken)
     .then((res) => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-      setCookie('token', accessToken);
+      setCookie('token', accessToken, { path: '/' });
       localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setRefreshTokenSuccess());
       dispatch(afterRefresh);
@@ -238,7 +238,7 @@ export function getUser() {
       dispatch(setGetUserSuccess(res.user))
     })
     .catch((err) => {
-      if (err.status === 403) {
+      if (err.message === 'jwt expired') {
         dispatch(refreshToken(localStorage.getItem('refreshToken'), getUser()))
       } else {
         dispatch(setGetUserFailed())
@@ -258,7 +258,7 @@ export function updateUser(name, email, password) {
     })
     .catch((err) => {
       if (err.message === 'jwt expired') {
-        dispatch(refreshToken(localStorage.getItem('refreshToken'), updateUser()));
+        dispatch(refreshToken(localStorage.getItem('refreshToken'), updateUser(name, email, password)));
       } else {
         dispatch(setUpdateUserFailed())
         console.log(err)

@@ -9,7 +9,10 @@ function ProfileDetails() {
   const user = useSelector((state) => state.user.user);
   const accessToken = getCookie('token');
 
-  const [isChanged, setIsChanged] = useState(false)
+  const [isNameChanged, setIsNameChanged] = useState(false);
+  const [isEmailChanged, setIsEmailChanged] = useState(false);
+  const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
@@ -20,7 +23,9 @@ function ProfileDetails() {
   function onSubmit(e) {
     e.preventDefault();
     dispatch(updateUser(name, email, password, accessToken));
-    setIsChanged(false);
+    setIsNameChanged(false);
+    setIsEmailChanged(false);
+    setIsPasswordChanged(false);
   }
 
   function onCancelClick(e) {
@@ -28,7 +33,9 @@ function ProfileDetails() {
     setName(user.name);
     setEmail(user.email);
     setPassword('');
-    setIsChanged(false);
+    setIsNameChanged(false);
+    setIsEmailChanged(false);
+    setIsPasswordChanged(false);
   }
 
   return (
@@ -39,7 +46,7 @@ function ProfileDetails() {
         onChange={e => {
           const value = e.target.value; 
           setName(value); 
-          value === user.name ? setIsChanged(false) : setIsChanged(true);
+          value === user.name ? setIsNameChanged(false) : setIsNameChanged(true);
         }}
         value={name}
         name={'name'}
@@ -54,7 +61,7 @@ function ProfileDetails() {
         onChange={e => {
           const value = e.target.value; 
           setEmail(value); 
-          value === user.email ? setIsChanged(false) : setIsChanged(true);
+          value === user.email ? setIsEmailChanged(false) : setIsEmailChanged(true);
         }}
         value={email}
         name={'email'}
@@ -69,7 +76,7 @@ function ProfileDetails() {
         onChange={e => {
           const value = e.target.value; 
           setPassword(value); 
-          value === "" ? setIsChanged(false) : setIsChanged(true);
+          value === "" ? setIsPasswordChanged(false) : setIsPasswordChanged(true);
         }}
         value={password}
         name={'password'}
@@ -78,7 +85,7 @@ function ProfileDetails() {
         errorText={'Ошибка'}
         icon={"EditIcon"}
       />
-    {isChanged && 
+    {(isNameChanged || isEmailChanged ||isPasswordChanged) && 
     <div className={profileDetailsStyles.btns}>
       <Button htmlType="reset" type="primary" size="medium" onClick={onCancelClick}>Отменить</Button>
       <Button htmlType="submit" type="primary" size="medium">Сохранить</Button>

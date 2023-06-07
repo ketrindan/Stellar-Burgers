@@ -1,7 +1,7 @@
 import registerStyles from './Register.module.css';
-import { useState, useRef, useEffect} from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useRef } from 'react';
+import { Link  } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { register } from '../../services/actions/user';
@@ -14,18 +14,11 @@ function Register() {
   const inputRef = useRef(null);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const user = useSelector((state) => state.user.user);
 
   function submitRegistration(e) {
     e.preventDefault();
     dispatch(register(name, email, password));
   }
-
-  useEffect(() => {
-    user.name && navigate('/login');
-  }, [user, navigate])
 
   return (
     <section className={registerStyles.container}>

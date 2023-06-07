@@ -64,15 +64,17 @@ function App() {
       }
     }, [dispatch, accessToken])
 
+    console.log(localStorage.getItem('refreshToken'))
+
     return (
       <div className={styles.app}>
         <AppHeader />
 
         <Routes location={background || location}>
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/reset-password' element={<ResetPassword />} />
+          <Route path='/register' element={<ProtectedRouteElement element={<Register />} onlyUnAuth={true} />} />
+          <Route path='/login' element={<ProtectedRouteElement element={<Login />} onlyUnAuth={true} />} />
+          <Route path='/forgot-password' element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
+          <Route path='/reset-password' element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path='*' element={<NotFound />} />
           <Route exact path='/' element={
             <Main 

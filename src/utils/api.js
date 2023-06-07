@@ -8,11 +8,8 @@ class Api {
   }
 
   _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res)
+    return res.ok ? res.json() : res.json()
+    .then((err) => Promise.reject(err));
   }
 
   getData() {
