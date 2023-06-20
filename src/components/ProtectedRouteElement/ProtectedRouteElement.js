@@ -2,7 +2,6 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-
 function ProtectedRouteElement({ element, onlyUnAuth }) {
   const user = useSelector((state) => state.user.user);
 

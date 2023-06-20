@@ -1,10 +1,10 @@
 import { NavLink, useMatch } from 'react-router-dom';
-
+import { FC } from 'react';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import headerStyles from './AppHeader.module.css';
 
-function AppHeader() {
+const AppHeader: FC = () => {
   const burgers = useMatch('/');
   const orders = useMatch('/profile/orders');
   const profile = useMatch('/profile');

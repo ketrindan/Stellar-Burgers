@@ -10,7 +10,7 @@ function Main(props) {
     <section className={mainStyles.main}>
       <DndProvider backend={HTML5Backend}>
         <BurgerIngredients onModalOpen={props.onIngredientModalOpen} /> 
-        <BurgerConstructor onOrderModalOpen={props.onOrderModalOpen} /> 
+        <BurgerConstructor onModalOpen={props.onOrderModalOpen} /> 
       </DndProvider>
     </section>
   )

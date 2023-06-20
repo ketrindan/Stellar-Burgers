@@ -1,25 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag, useDrop } from "react-dnd";
-import { useRef, useCallback } from 'react';
-import PropTypes from "prop-types";
+import { useRef, useCallback, FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropTypes } from '../../utils/prop-types';
 import { deleteIngredient, changeOrder } from '../../services/actions/ingredients';
-import ChosenIngredientStyles from './ChosenIngredient.module.css'
+import ChosenIngredientStyles from './ChosenIngredient.module.css';
+import { IChosenIngredientProps, IIngredient } from '../../utils/types';
 
-function ChosenIngredient(props) {
-  const { id } = props.data;
-  const index = props.index;
+const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
+  const { id } = data;
+
   const ref = useRef(null);
-  const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
+  const chosenIngredients = useSelector((state: any) => state.ingredients.chosenIngredients);
 
   const dispatch = useDispatch();
 
-  function handleDelete(item) {
+  function handleDelete(item: IIngredient) {
     dispatch(deleteIngredient(item));
   }
 
-  const handleChangeOrder = useCallback((dragI, hoverI) => {
+  const handleChangeOrder = useCallback((dragI: number, hoverI: number) => {
     const draggingIng = chosenIngredients[dragI]
     const mixedIngredients = [...chosenIngredients];
     
@@ -47,6 +46,7 @@ function ChosenIngredient(props) {
       }
     },
     hover(item, monitor) {
+      // @ts-ignore
       const dragI = item.index;
       const hoverI = index;
 
@@ -58,9 +58,11 @@ function ChosenIngredient(props) {
         return;
       } 
 
+      // @ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
+      // @ts-ignore
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragI < hoverI && hoverClientY < hoverMiddleY) {
@@ -73,6 +75,7 @@ function ChosenIngredient(props) {
 
       handleChangeOrder(dragI, hoverI)
       
+      // @ts-ignore
       item.index = hoverI;
     },
   });
@@ -83,17 +86,13 @@ function ChosenIngredient(props) {
     <div className={ChosenIngredientStyles.item} ref={ref} style={{ opacity }} data-handler-id={handlerId} draggable>
       <DragIcon type="primary" />
       <ConstructorElement
-        text={props.data.name}
-        price={props.data.price}
-        thumbnail={props.data.image}
-        handleClose={() => handleDelete(props.data)} 
+        text={data.name}
+        price={data.price}
+        thumbnail={data.image}
+        handleClose={() => handleDelete(data)} 
       />
     </div> 
   )
 }
 
 export default ChosenIngredient;
-
-ChosenIngredient.propTypes = {
-  data: PropTypes.shape(ingredientPropTypes).isRequired,
-};

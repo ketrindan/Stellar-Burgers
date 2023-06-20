@@ -1,20 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDrop } from "react-dnd";
-import PropTypes from "prop-types";
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { setOrder } from '../../services/actions/order';
 import { addBun, addIngredient, clearConstructor } from '../../services/actions/ingredients';
 import { v4 as uuidv4 } from 'uuid';
 import ChosenIngredient from '../ChosenIngredient/ChosenIngredient';
+import { IBurgerProps, IIngredient } from '../../utils/types';
 
-function BurgerConstructor(props) {
-  const ingredients = useSelector(state => state.ingredients.ingredients);
-  const chosenBun = useSelector(state => state.ingredients.chosenBun);
-  const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
-  const user = useSelector(state => state.user.user);
+const BurgerConstructor: FC<IBurgerProps> = ({onModalOpen}) => {
+  const ingredients = useSelector((state: any) => state.ingredients.ingredients);
+  const chosenBun = useSelector((state: any) => state.ingredients.chosenBun);
+  const chosenIngredients = useSelector((state: any) => state.ingredients.chosenIngredients);
+  const user = useSelector((state: any) => state.user.user);
 
   const navigate = useNavigate();
 
@@ -22,25 +22,25 @@ function BurgerConstructor(props) {
 
   const total = useMemo(() => {
     if (!chosenBun.price) {
-      return chosenIngredients.reduce((sum, current) => sum + current.price, 0)
+      return chosenIngredients.reduce((sum: number, current: IIngredient) => sum + current.price, 0)
     } else {
-      return chosenBun.price * 2 + chosenIngredients.reduce((sum, current) => sum + current.price, 0)
+      return chosenBun.price * 2 + chosenIngredients.reduce((sum: number, current: IIngredient) => sum + current.price, 0)
     }
   }, [chosenBun, chosenIngredients]);
 
   function submitOrder() {
-    const orderIds = chosenIngredients.map(i => i._id).concat(chosenBun._id);
+    const orderIds = chosenIngredients.map((i: IIngredient) => i._id).concat(chosenBun._id);
     if (user.name) {
-      dispatch(setOrder(orderIds));
+      dispatch(setOrder(orderIds) as any);
       dispatch(clearConstructor());
-      props.onOrderModalOpen();
+      onModalOpen();
     } else {
       navigate('/login')
     }
   }
 
-  function onDropHandler(item) {
-    const draggingIngredient = ingredients.find((i) => i._id === item._id)
+  function onDropHandler(item: IIngredient) {
+    const draggingIngredient = ingredients.find((i: IIngredient) => i._id === item._id)
     if (draggingIngredient.type === 'bun') {
       dispatch(addBun(draggingIngredient));
     } else {
@@ -55,6 +55,7 @@ function BurgerConstructor(props) {
       isHover: monitor.isOver(),
     }),
     drop(item) {
+      // @ts-ignore
       onDropHandler(item);
     },
   });
@@ -76,7 +77,7 @@ function BurgerConstructor(props) {
       
       {chosenIngredients.length > 0 ? 
         <div className={BurgerConstructorStyles.scrollbox}>
-          {chosenIngredients.map((item, i) => (
+          {chosenIngredients.map((item: IIngredient, i: number) => (
             item.type !== 'bun' &&
             <ChosenIngredient key={item.id} data={item} index={i}/>
           ))}
@@ -105,7 +106,3 @@ function BurgerConstructor(props) {
 }
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  onOrderModalOpen: PropTypes.func.isRequired,
-};
