@@ -3,11 +3,13 @@ import { getCookie } from "./cookie";
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
 class Api {
-  constructor(data) {
+  private _baseUrl: string;
+
+  constructor(data: string) {
     this._baseUrl = data;
   }
 
-  _checkResponse(res) {
+  _checkResponse(res: Response) {
     return res.ok ? res.json() : res.json()
     .then((err) => Promise.reject(err));
   }
@@ -17,7 +19,7 @@ class Api {
     .then(res => this._checkResponse(res))
   }
 
-  submitOrder(ids) {
+  submitOrder(ids: Array<string>) {
     return fetch(`${this._baseUrl}/orders`, 
     { method: 'POST',
       headers: {
@@ -28,7 +30,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  forgotPassword(email) {
+  forgotPassword(email: string) {
     return fetch(`${this._baseUrl}/password-reset`, 
     { method: "POST",
       headers: {
@@ -39,7 +41,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  resetPassword(newPassword, code) {
+  resetPassword(newPassword: string, code: string) {
     return fetch(`${this._baseUrl}/password-reset/reset`, 
     { method: "POST",
       headers: {
@@ -53,7 +55,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  register( name, email, password) {
+  register(name: string, email: string, password: string) {
     return fetch(`${this._baseUrl}/auth/register`, 
     { method: "POST",
       headers: {
@@ -68,7 +70,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  login(email, password) {
+  login(email: string, password: string) {
     return fetch(`${this._baseUrl}/auth/login`, 
     { method: "POST",
       headers: {
@@ -82,7 +84,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  refreshToken(refreshToken) {
+  refreshToken(refreshToken: string) {
     return fetch(`${this._baseUrl}/auth/token`, 
     { method: "POST",
       headers: {
@@ -95,7 +97,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  logout(refreshToken) {
+  logout(refreshToken: string) {
     return fetch(`${this._baseUrl}/auth/logout`, 
     { method: "POST",
       headers: {
@@ -119,7 +121,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  updateUser(name, email, password) {
+  updateUser(name: string, email: string, password: string) {
     return fetch(`${this._baseUrl}/auth/user`, 
     { method: "PATCH",
       headers: {
