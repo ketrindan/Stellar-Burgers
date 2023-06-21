@@ -31,3 +31,23 @@ export interface IBurgerProps {
 export interface IIngredientDetails {
   title?: string;
 }
+
+export interface IModal {
+  children: React.ReactNode;
+  onClose: () => void;
+  title?: string;
+}
+
+export interface IModalOverlay {
+  onClose: () => void;
+}
+
+export interface IProtectedRoute {
+  element: React.ReactElement;
+  onlyUnAuth?: boolean;
+}
+
+export interface IMain {
+  onIngredientModalOpen: () => void;
+  onOrderModalOpen: () => void;
+}

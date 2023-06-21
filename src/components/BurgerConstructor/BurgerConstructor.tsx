@@ -55,8 +55,7 @@ const BurgerConstructor: FC<IBurgerProps> = ({onModalOpen}) => {
       isHover: monitor.isOver(),
     }),
     drop(item) {
-      // @ts-ignore
-      onDropHandler(item);
+      onDropHandler(item as any);
     },
   });
 

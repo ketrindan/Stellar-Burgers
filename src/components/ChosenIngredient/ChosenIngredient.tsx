@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useDrag, useDrop } from "react-dnd";
+import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { useRef, useCallback, FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { deleteIngredient, changeOrder } from '../../services/actions/ingredients';
@@ -61,8 +61,8 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
       // @ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      // @ts-ignore
+      const clientOffset = monitor.getClientOffset() as XYCoord;
+      
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragI < hoverI && hoverClientY < hoverMiddleY) {

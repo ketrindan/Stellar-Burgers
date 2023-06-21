@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import profileStyles from './Profile.module.css';
 import { NavLink, useMatch } from "react-router-dom";
 import { useDispatch, } from "react-redux";
 import { logout } from '../../services/actions/user';
 import ProfileDetails from '../../components/ProfileDetails/ProfileDetails';
 
-function Profile() {
+const Profile: FC = () => {
   const profileMatch = useMatch("/profile");
   const ordersMatch = useMatch("/profile/orders");
 
@@ -12,7 +13,7 @@ function Profile() {
 
   function handleLogout() {
     const refreshToken = localStorage.getItem('refreshToken');
-    dispatch(logout(refreshToken));
+    dispatch(logout(refreshToken) as any);
   }
   
   return (

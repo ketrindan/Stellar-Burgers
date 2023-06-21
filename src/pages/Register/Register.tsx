@@ -1,5 +1,5 @@
 import registerStyles from './Register.module.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, FC } from 'react';
 import { Link  } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,7 +7,7 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 import { register } from '../../services/actions/user';
 
 
-function Register() {
+const Register: FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,9 +15,9 @@ function Register() {
 
   const dispatch = useDispatch();
 
-  function submitRegistration(e) {
+  function submitRegistration(e: any) {
     e.preventDefault();
-    dispatch(register(name, email, password));
+    dispatch(register(name, email, password) as any);
   }
 
   return (

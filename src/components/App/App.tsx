@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, FC} from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styles from './App.module.css';
@@ -24,7 +24,7 @@ import { deleteOrder } from '../../services/actions/order';
 import { getUser } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
 
-function App() {
+const App: FC = () => {
   const ModalSwitch = () => {
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
     const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
@@ -57,14 +57,12 @@ function App() {
     }
 
     useEffect(() => {    
-      dispatch(getIngredients());
+      dispatch(getIngredients() as any);
 
       if (accessToken) {
-        dispatch(getUser(accessToken));
+        dispatch(getUser() as any);
       }
     }, [dispatch, accessToken])
-
-    console.log(localStorage.getItem('refreshToken'))
 
     return (
       <div className={styles.app}>
@@ -76,6 +74,7 @@ function App() {
           <Route path='/forgot-password' element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
           <Route path='/reset-password' element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path='*' element={<NotFound />} />
+          {/* @ts-ignore */}
           <Route exact path='/' element={
             <Main 
               onIngredientModalOpen={handleIngredientModalOpen}
