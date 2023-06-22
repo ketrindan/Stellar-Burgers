@@ -49,13 +49,13 @@ const BurgerConstructor: FC<IBurgerProps> = ({onModalOpen}) => {
     }
   }
 
-  const [{isHover}, dropTarget] = useDrop({
+  const [{isHover}, dropTarget] = useDrop<IIngredient, unknown, { isHover: boolean }>({
     accept: "chosen_ingredient",
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
     drop(item) {
-      onDropHandler(item as any);
+      onDropHandler(item);
     },
   });
 

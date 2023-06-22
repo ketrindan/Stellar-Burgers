@@ -38,7 +38,7 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
 
   const opacity = isDrag ? 0 : 1;
 
-  const [{ handlerId }, dropTarget] = useDrop({
+  const [{ handlerId }, dropTarget] = useDrop<{id: string | undefined; index: number}, unknown, {handlerId: any}>({
     accept: "ingredient",
     collect(monitor) {
       return {
@@ -46,7 +46,6 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
       }
     },
     hover(item, monitor) {
-      // @ts-ignore
       const dragI = item.index;
       const hoverI = index;
 
@@ -58,11 +57,9 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
         return;
       } 
 
-      // @ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset() as XYCoord;
-      
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragI < hoverI && hoverClientY < hoverMiddleY) {
@@ -75,7 +72,6 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
 
       handleChangeOrder(dragI, hoverI)
       
-      // @ts-ignore
       item.index = hoverI;
     },
   });

@@ -44,10 +44,8 @@ const BurgerIngredients: FC<IBurgerProps> = ({onModalOpen}) => {
     return activeTitle || ""
   }
   
-  function handleScroll(e: any) {
-    e.target.addEventListener('scroll', function() {
-      setCurrent(setActiveTabTitle)
-    })
+  function handleScroll() {
+    setCurrent(setActiveTabTitle);
   }
   
   function handleTabClick(title: string) {

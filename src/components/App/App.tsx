@@ -74,8 +74,7 @@ const App: FC = () => {
           <Route path='/forgot-password' element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
           <Route path='/reset-password' element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path='*' element={<NotFound />} />
-          {/* @ts-ignore */}
-          <Route exact path='/' element={
+          <Route path='/' element={
             <Main 
               onIngredientModalOpen={handleIngredientModalOpen}
               onOrderModalOpen={handleOrderModalOpen}
