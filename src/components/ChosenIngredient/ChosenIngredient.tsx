@@ -38,7 +38,7 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
 
   const opacity = isDrag ? 0 : 1;
 
-  const [{ handlerId }, dropTarget] = useDrop<{id: string | undefined; index: number}, unknown, {handlerId: any}>({
+  const [{ handlerId }, dropTarget] = useDrop<{id: string; index: number}, unknown, { handlerId: any }>({
     accept: "ingredient",
     collect(monitor) {
       return {
