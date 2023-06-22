@@ -1,5 +1,5 @@
 import profileDetailsStyles from './ProfileDetails.module.css';
-import { useState, useRef, FC } from 'react';
+import { useState, useRef, FC, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../../services/actions/user';
@@ -14,11 +14,11 @@ const ProfileDetails: FC = () => {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
 
-  function onSubmit(e: any) {
+  function onSubmit(e: FormEvent) {
     e.preventDefault();
     dispatch(updateUser(name, email, password) as any);
     setIsNameChanged(false);
@@ -26,8 +26,7 @@ const ProfileDetails: FC = () => {
     setIsPasswordChanged(false);
   }
 
-  function onCancelClick(e: any) {
-    e.preventDefault();
+  function onCancelClick() {
     setName(user.name);
     setEmail(user.email);
     setPassword('');

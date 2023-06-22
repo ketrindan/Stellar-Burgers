@@ -9,7 +9,7 @@ import { IChosenIngredientProps, IIngredient } from '../../utils/types';
 const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
   const { id } = data;
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const chosenIngredients = useSelector((state: any) => state.ingredients.chosenIngredients);
 
   const dispatch = useDispatch();

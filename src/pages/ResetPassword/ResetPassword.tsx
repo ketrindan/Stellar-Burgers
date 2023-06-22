@@ -1,5 +1,5 @@
 import ResetPasswordStyles from './ResetPassword.module.css';
-import { useState, useRef, useEffect, FC} from 'react';
+import { useState, useRef, useEffect, FC, FormEvent } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,7 +8,7 @@ import { resetPassword } from '../../services/actions/user';
 const ResetPassword: FC = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const ResetPassword: FC = () => {
   const user = useSelector((state: any) => state.user.user);
   const forgotPasswordRequest = useSelector((state: any) => state.user.forgotPasswordRequest);
 
-  function submitForm(e: any) {
+  function submitForm(e: FormEvent) {
     e.preventDefault();
     dispatch(resetPassword(password, code) as any);
     setPassword('');

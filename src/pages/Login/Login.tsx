@@ -1,5 +1,5 @@
 import LoginStyles from './Login.module.css';
-import { useState, useRef, FC } from 'react';
+import { useState, useRef, FC, FormEvent } from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,11 +9,11 @@ import { login } from '../../services/actions/user';
 const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
 
-  function submitLogin(e: any) {
+  function submitLogin(e: FormEvent) {
     e.preventDefault();
     dispatch(login(email, password) as any);
   }
