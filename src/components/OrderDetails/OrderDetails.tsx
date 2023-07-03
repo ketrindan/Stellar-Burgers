@@ -1,11 +1,12 @@
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import orderDetailsStyles from './OrderDetails.module.css';
 import okImg from '../../images/graphics.svg';
 import Loader from '../Loader/Loader';
 
-function OrderDetails() {
-  const orderStatus = useSelector(state => state.order);
-  const order = useSelector(state => state.order.order);
+const OrderDetails: FC = () => {
+  const orderStatus = useSelector((state: any) => state.order);
+  const order = useSelector((state: any) => state.order.order);
 
   return (
     <div className={`${orderDetailsStyles.container} mt-4 mb-20`}>

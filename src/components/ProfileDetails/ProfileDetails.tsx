@@ -1,13 +1,11 @@
 import profileDetailsStyles from './ProfileDetails.module.css';
-import { useState, useRef} from 'react';
+import { useState, useRef, FC, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
 
-function ProfileDetails() {
-  const user = useSelector((state) => state.user.user);
-  const accessToken = getCookie('token');
+const ProfileDetails: FC = () => {
+  const user = useSelector((state: any) => state.user.user);
 
   const [isNameChanged, setIsNameChanged] = useState(false);
   const [isEmailChanged, setIsEmailChanged] = useState(false);
@@ -16,20 +14,19 @@ function ProfileDetails() {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
 
-  function onSubmit(e) {
+  function onSubmit(e: FormEvent) {
     e.preventDefault();
-    dispatch(updateUser(name, email, password, accessToken));
+    dispatch(updateUser(name, email, password) as any);
     setIsNameChanged(false);
     setIsEmailChanged(false);
     setIsPasswordChanged(false);
   }
 
-  function onCancelClick(e) {
-    e.preventDefault();
+  function onCancelClick() {
     setName(user.name);
     setEmail(user.email);
     setPassword('');

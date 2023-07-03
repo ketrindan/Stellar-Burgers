@@ -1,10 +1,10 @@
+import { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { IProtectedRoute } from '../../utils/types';
 
-
-function ProtectedRouteElement({ element, onlyUnAuth }) {
-  const user = useSelector((state) => state.user.user);
+const ProtectedRouteElement: FC<IProtectedRoute> = ({ element, onlyUnAuth }) => {
+  const user = useSelector((state: any) => state.user.user);
 
   const location = useLocation();
 
@@ -16,7 +16,3 @@ function ProtectedRouteElement({ element, onlyUnAuth }) {
 }
 
 export default ProtectedRouteElement;
-
-ProtectedRouteElement.propTypes = {
-  element: PropTypes.element.isRequired,
-};

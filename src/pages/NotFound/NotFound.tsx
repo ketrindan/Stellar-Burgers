@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import NotFoundStyles from './NotFound.module.css';
 
-function NotFound() {
+const NotFound: FC = () => {
 
   return (
     <section className={NotFoundStyles.container}>

@@ -1,58 +1,56 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from "prop-types";
 import Ingredient from '../Ingredient/Ingredient';
 import Loader from '../Loader/Loader';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
+import { IBurgerProps, IIngredient } from '../../utils/types';
 
-function BurgerIngredients(props) {
-  const ingredientsState = useSelector(state => state.ingredients);
-  const ingredients = useSelector(state => state.ingredients.ingredients);
+const BurgerIngredients: FC<IBurgerProps> = ({onModalOpen}) => {
+  const ingredientsState = useSelector((state: any) => state.ingredients);
+  const ingredients = useSelector((state: any) => state.ingredients.ingredients);
 
-  const buns = ingredients.filter((item) => item.type === 'bun');
-  const mains = ingredients.filter((item) => item.type === 'main');
-  const sauces = ingredients.filter((item) => item.type === 'sauce');
+  const buns = ingredients.filter((item: IIngredient) => item.type === 'bun');
+  const mains = ingredients.filter((item: IIngredient) => item.type === 'main');
+  const sauces = ingredients.filter((item: IIngredient) => item.type === 'sauce');
 
   const [current, setCurrent] = useState('bun');
 
   function setActiveTabTitle() {
-    const tabsBorder = (document.querySelector(`.${burgerIngredientsStyles.navtab}`)).getBoundingClientRect().bottom;
-    const bunsTitle = (document.querySelector(`#bun`)).getBoundingClientRect().top;
-    const saucesTitle = (document.querySelector(`#sauce`)).getBoundingClientRect().top;
-    const mainsTitle = (document.querySelector(`#main`)).getBoundingClientRect().top;
+    const tabsBorder = (document.querySelector(`.${burgerIngredientsStyles.navtab}`))?.getBoundingClientRect().bottom;
+    const bunsTitle = (document.querySelector(`#bun`))?.getBoundingClientRect().top;
+    const saucesTitle = (document.querySelector(`#sauce`))?.getBoundingClientRect().top;
+    const mainsTitle = (document.querySelector(`#main`))?.getBoundingClientRect().top;
     
     const coords = [
       {
         title: 'bun',
-        distance: Math.abs(tabsBorder - bunsTitle)
+        distance: (tabsBorder && bunsTitle) ? Math.abs(tabsBorder - bunsTitle) : 0
       },
       {
         title: 'sauce',
-        distance: Math.abs(tabsBorder - saucesTitle)
+        distance: (tabsBorder && saucesTitle) ? Math.abs(tabsBorder - saucesTitle) : 0
       },
       {
         title: 'main',
-        distance: Math.abs(tabsBorder - mainsTitle)
+        distance: (tabsBorder && mainsTitle) ? Math.abs(tabsBorder - mainsTitle) : 0
       },
     ];
 
     const distances = coords.map(i => i.distance);
     const minDistance = Math.min(...distances);
-    const activeTitle = coords.find(i => i.distance === minDistance).title;
+    const activeTitle = coords.find(i => i.distance === minDistance)?.title;
 
-    return activeTitle
+    return activeTitle || ""
   }
   
-  function handleScroll(e) {
-    e.target.addEventListener('scroll', function() {
-      setCurrent(setActiveTabTitle)
-    })
+  function handleScroll() {
+    setCurrent(setActiveTabTitle);
   }
   
-  function handleTabClick(title) {
+  function handleTabClick(title: string) {
     setCurrent(title)
-    document.querySelector(`#${title}`).scrollIntoView({behavior: "smooth"})
+    document.querySelector(`#${title}`)?.scrollIntoView({behavior: "smooth"})
   }
 
   return (
@@ -76,20 +74,20 @@ function BurgerIngredients(props) {
           <>
             <h2 className="text text_type_main-medium mb-6" id="bun">Булки</h2>
             <ul className={`${burgerIngredientsStyles.list} mb-10 pr-4 pl-4`}>
-              {buns.map((item) => (
-                <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
+              {buns.map((item: IIngredient) => (
+                <Ingredient key={item._id} data={item} onModalOpen={onModalOpen} />
               ))}
             </ul>
             <h2 className="text text_type_main-medium mb-6" id="sauce">Соусы</h2>
             <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
-              {sauces.map((item) => (
-                <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
+              {sauces.map((item: IIngredient) => (
+                <Ingredient key={item._id} data={item} onModalOpen={onModalOpen} />
               ))}
             </ul>
             <h2 className="text text_type_main-medium mb-6" id="main">Начинки</h2>
             <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
-              {mains.map((item) => (
-                <Ingredient key={item._id} data={item} onModalOpen={props.onModalOpen} />
+              {mains.map((item: IIngredient) => (
+                <Ingredient key={item._id} data={item} onModalOpen={onModalOpen} />
               ))}
             </ul>
           </>
@@ -107,7 +105,3 @@ function BurgerIngredients(props) {
 }
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  onModalOpen: PropTypes.func.isRequired,
-};
