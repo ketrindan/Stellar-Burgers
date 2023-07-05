@@ -11,16 +11,19 @@ import {
   CHANGE_ORDER,
 } from '../actions/ingredients';
 
-const initialState = {
+import { IIngredientsState } from '../../utils/types';
+import { TIngredientsActions } from '../actions/ingredients';
+
+const initialState: IIngredientsState = {
   ingredients: [],
   chosenIngredients: [],
   chosenBun: {},
-  selectedIngredient: {},
+  selectedIngredient: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

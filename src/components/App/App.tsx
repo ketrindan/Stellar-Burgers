@@ -1,6 +1,6 @@
 import React, {useState, useEffect, FC} from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import styles from './App.module.css';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -57,10 +57,10 @@ const App: FC = () => {
     }
 
     useEffect(() => {    
-      dispatch(getIngredients() as any);
+      dispatch(getIngredients());
 
       if (accessToken) {
-        dispatch(getUser() as any);
+        dispatch(getUser());
       }
     }, [dispatch, accessToken])
 

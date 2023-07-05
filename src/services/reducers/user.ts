@@ -25,7 +25,10 @@ import {
   UPDATE_USER_FAILED
 } from '../actions/user';
 
-const initialState = {
+import { IUserState } from '../../utils/types';
+import { TUserActions } from '../actions/user';
+
+const initialState: IUserState = {
   user: {},
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
@@ -45,7 +48,7 @@ const initialState = {
   updateUserFailed: false
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST: {
       return {

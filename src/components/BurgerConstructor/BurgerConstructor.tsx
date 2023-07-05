@@ -1,5 +1,5 @@
 import React, { useMemo, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useDrop } from "react-dnd";
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -31,7 +31,7 @@ const BurgerConstructor: FC<IBurgerProps> = ({onModalOpen}) => {
   function submitOrder() {
     const orderIds = chosenIngredients.map((i: IIngredient) => i._id).concat(chosenBun._id);
     if (user.name) {
-      dispatch(setOrder(orderIds) as any);
+      dispatch(setOrder(orderIds));
       dispatch(clearConstructor());
       onModalOpen();
     } else {

@@ -5,13 +5,16 @@ import {
   DELETE_ORDER
 } from '../actions/order';
 
-const initialState = {
+import { IOrderState } from '../../utils/types';
+import { TOrderActions } from '../actions/order';
+
+const initialState: IOrderState = {
   order: {},
   orderRequest: false,
   orderFailed: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
 
   switch (action.type) {
     case SUBMIT_ORDER_REQUEST: {

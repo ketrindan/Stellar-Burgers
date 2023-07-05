@@ -1,3 +1,9 @@
+import { store } from "../services/store";
+import {Action, ActionCreator} from "redux";
+import {ThunkAction}from "redux-thunk";
+import {TIngredientsActions} from "../services/actions/ingredients";
+import {TOrderActions} from "../services/actions/order";
+import {TUserActions} from "../services/actions/user";
 export interface IIngredient {
   _id: string;
   name: string;
@@ -51,3 +57,76 @@ export interface IMain {
   onIngredientModalOpen: () => void;
   onOrderModalOpen: () => void;
 }
+
+export interface IOrderSuccess {
+  success: true;
+  name: string;
+  order: {
+    number: number;
+  }
+}
+
+export interface IUser {
+  name: 'string';
+  email: 'string';
+}
+
+export interface IAuthUserSuccess {
+  success: true;
+  user: IUser;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IChangeUserSuccess {
+  success: true;
+  user: IUser;
+}
+
+export interface IIngredientsState {
+  ingredients: IIngredient[];
+  chosenIngredients: IIngredient[];
+  chosenBun: IIngredient | object;
+  selectedIngredient: IIngredient | null;
+  ingredientsRequest: boolean,
+  ingredientsFailed: boolean,
+};
+
+export interface IOrderState {
+  order: object,
+  orderRequest: boolean,
+  orderFailed: boolean,
+};
+
+export interface IUserState {
+  user: object,
+  forgotPasswordRequest: boolean,
+  forgotPasswordFailed: boolean,
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+  registrationRequest: boolean,
+  registrationFailed: boolean,
+  loginRequest: boolean,
+  loginFailed: boolean,
+  refreshTokenRequest: boolean,
+  refreshTokenFailed: boolean,
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+  getUserRequest: boolean,
+  getUserFailed: boolean,
+  updateUserRequest: boolean,
+  updateUserFailed: boolean
+};
+
+type TApplicationActions  = 
+  | TIngredientsActions
+  | TOrderActions
+  | TUserActions;
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>; 
+
+export type AppDispatch = typeof store.dispatch; 
