@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import profileStyles from './Profile.module.css';
 import { NavLink, useMatch } from "react-router-dom";
-import { useDispatch, } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { logout } from '../../services/actions/user';
 import ProfileDetails from '../../components/ProfileDetails/ProfileDetails';
 
@@ -13,7 +13,7 @@ const Profile: FC = () => {
 
   function handleLogout() {
     const refreshToken = localStorage.getItem('refreshToken');
-    dispatch(logout(refreshToken) as any);
+    dispatch(logout(refreshToken));
   }
   
   return (

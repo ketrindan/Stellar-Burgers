@@ -1,19 +1,19 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import orderDetailsStyles from './OrderDetails.module.css';
 import okImg from '../../images/graphics.svg';
 import Loader from '../Loader/Loader';
 
 const OrderDetails: FC = () => {
-  const orderStatus = useSelector((state: any) => state.order);
-  const order = useSelector((state: any) => state.order.order);
+  const orderStatus = useSelector((state) => state.order);
+  const order = useSelector((state) => state.order.order);
 
   return (
     <div className={`${orderDetailsStyles.container} mt-4 mb-20`}>
 
       {orderStatus.orderRequest && <Loader/> }
 
-      {order.success && 
+      {order && order.success && 
         <>
           <p className="text text_type_digits-large mb-8">{order.order.number}</p>
           <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
@@ -25,7 +25,7 @@ const OrderDetails: FC = () => {
         </>
       }
 
-      {(orderStatus.orderFailed || !order) && 
+      {(orderStatus.orderFailed) && 
         <p className="text text_type_main-large mb-2">Произошла ошибка...</p>
       }
       

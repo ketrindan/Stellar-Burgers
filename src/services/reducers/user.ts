@@ -29,7 +29,7 @@ import { IUserState } from '../../utils/types';
 import { TUserActions } from '../actions/user';
 
 const initialState: IUserState = {
-  user: {},
+  user: null,
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
   resetPasswordRequest: false,
@@ -163,8 +163,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
       return {
         ...state,
         logoutRequest: false,
-        user: {},
-        accessToken: "",
+        user: null,
       };
     }
     case LOGOUT_FAILED: {
@@ -185,7 +184,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
       return {
         ...state,
         getUserRequest: false,
-        user: action.payload
+        user: action.payload,
       };
     }
     case GET_USER_FAILED: {

@@ -78,28 +78,23 @@ export interface IAuthUserSuccess {
   refreshToken: string;
 }
 
-export interface IChangeUserSuccess {
-  success: true;
-  user: IUser;
-}
-
 export interface IIngredientsState {
   ingredients: IIngredient[];
   chosenIngredients: IIngredient[];
-  chosenBun: IIngredient | object;
+  chosenBun: IIngredient | null;
   selectedIngredient: IIngredient | null;
   ingredientsRequest: boolean,
   ingredientsFailed: boolean,
 };
 
 export interface IOrderState {
-  order: object,
+  order: IOrderSuccess | null,
   orderRequest: boolean,
   orderFailed: boolean,
 };
 
 export interface IUserState {
-  user: object,
+  user: IUser | null,
   forgotPasswordRequest: boolean,
   forgotPasswordFailed: boolean,
   resetPasswordRequest: boolean,
@@ -115,7 +110,7 @@ export interface IUserState {
   getUserRequest: boolean,
   getUserFailed: boolean,
   updateUserRequest: boolean,
-  updateUserFailed: boolean
+  updateUserFailed: boolean,
 };
 
 type TApplicationActions  = 

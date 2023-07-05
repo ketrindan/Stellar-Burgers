@@ -1,6 +1,6 @@
 import api from '../../utils/api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
-import { IChangeUserSuccess, IAuthUserSuccess, AppDispatch } from '../../utils/types';
+import { IUser, IAuthUserSuccess, AppDispatch } from '../../utils/types';
 
 export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS: "FORGOT_PASSWORD_SUCCESS" = "FORGOT_PASSWORD_SUCCESS";
@@ -109,7 +109,7 @@ export interface IGetUserRequest {
 
 export interface IGetUserSuccess {
   readonly type: typeof GET_USER_SUCCESS;
-  payload: IAuthUserSuccess;
+  payload: IUser;
 }
 
 export interface IGetUserFailed {
@@ -122,7 +122,7 @@ export interface IUpdateUserRequest {
 
 export interface IUpdateUserSuccess {
   readonly type: typeof UPDATE_USER_SUCCESS;
-  payload: IChangeUserSuccess;
+  payload: IUser;
 }
 
 export interface IUpdateUserFailed {
@@ -155,7 +155,7 @@ export type TUserActions =
   | IUpdateUserSuccess
 | IUpdateUserFailed;
 
-export const setForgotPassword = () => ({
+export const setForgotPasswordRequest = () => ({
   type: FORGOT_PASSWORD_REQUEST
 });
 
@@ -167,7 +167,7 @@ export const setForgotPasswordFailed = () => ({
   type: FORGOT_PASSWORD_FAILED
 });
 
-export const setResetPassword = () => ({
+export const setResetPasswordRequest = () => ({
   type: RESET_PASSWORD_REQUEST
 });
 
@@ -179,7 +179,7 @@ export const setResetPasswordFailed = () => ({
   type: RESET_PASSWORD_FAILED
 });
 
-export const setRegistration= () => ({
+export const setRegistrationRequest = () => ({
   type: REGISTRATION_REQUEST
 });
 
@@ -192,7 +192,7 @@ export const setRegistrationFailed = () => ({
   type: REGISTRATION_FAILED
 });
 
-export const setLogin = () => ({
+export const setLoginRequest = () => ({
   type: LOGIN_REQUEST
 });
 
@@ -205,7 +205,7 @@ export const setLoginFailed = () => ({
   type: LOGIN_FAILED
 });
 
-export const setRefreshToken= () => ({
+export const setRefreshTokenRequest = () => ({
   type: REFRESH_TOKEN_REQUEST
 });
 
@@ -217,7 +217,7 @@ export const setRefreshTokenFailed = () => ({
   type: REFRESH_TOKEN_FAILED
 });
 
-export const setLogout= () => ({
+export const setLogoutRequest = () => ({
   type: LOGOUT_REQUEST
 });
 
@@ -228,11 +228,11 @@ export const setLogoutFailed = () => ({
   type: LOGOUT_FAILED
 });
 
-export const setGetUser = () => ({
+export const setGetUserRequest = () => ({
   type: GET_USER_REQUEST
 });
 
-export const setGetUserSuccess = (data: IAuthUserSuccess) => ({
+export const setGetUserSuccess = (data: IUser) => ({
   type: GET_USER_SUCCESS, 
   payload: data
 });
@@ -245,7 +245,7 @@ export const setUpdateUser = () => ({
   type: UPDATE_USER_REQUEST
 });
 
-export const setUpdateUserSuccess = (data: IChangeUserSuccess) => ({
+export const setUpdateUserSuccess = (data: IUser) => ({
   type: UPDATE_USER_SUCCESS, 
   payload: data
 });
@@ -256,7 +256,7 @@ export const setUpdateUserFailed = () => ({
 
 export function forgotPassword(email: string) {
   return (dispatch: AppDispatch) => {
-    dispatch(setForgotPassword());
+    dispatch(setForgotPasswordRequest());
 
     api.forgotPassword(email)
     .then(() => {
@@ -271,7 +271,7 @@ export function forgotPassword(email: string) {
 
 export function resetPassword(newPassword: string, code: string) {
   return (dispatch: AppDispatch) => {
-    dispatch(setResetPassword());
+    dispatch(setResetPasswordRequest());
 
     api.resetPassword(newPassword, code)
     .then(() => {
@@ -286,7 +286,7 @@ export function resetPassword(newPassword: string, code: string) {
 
 export function register(name: string, email: string, password: string) {
   return (dispatch: AppDispatch) => {
-    dispatch(setRegistration())
+    dispatch(setRegistrationRequest())
 
     api.register(name, email, password)
     .then(res => {
@@ -304,7 +304,7 @@ export function register(name: string, email: string, password: string) {
 
 export function login(email: string, password: string) {
   return (dispatch: AppDispatch) => {
-    dispatch(setLogin())
+    dispatch(setLoginRequest())
 
     api.login(email, password)
     .then(res => {
@@ -322,7 +322,7 @@ export function login(email: string, password: string) {
 
 export function refreshToken(refreshToken: string, afterRefresh: () => void) {
   return (dispatch: AppDispatch | any) => {
-    dispatch(setRefreshToken())
+    dispatch(setRefreshTokenRequest())
 
     api.refreshToken(refreshToken)
     .then((res) => {
@@ -341,7 +341,7 @@ export function refreshToken(refreshToken: string, afterRefresh: () => void) {
 
 export function logout(refreshToken: string | null) {
   return (dispatch: AppDispatch) => {
-    dispatch(setLogout())
+    dispatch(setLogoutRequest())
 
     api.logout(refreshToken)
     .then(() => {
@@ -358,7 +358,7 @@ export function logout(refreshToken: string | null) {
 
 export function getUser() {
   return (dispatch: AppDispatch) => {
-    dispatch(setGetUser())
+    dispatch(setGetUserRequest())
 
     api.getUser()
     .then((res) => {

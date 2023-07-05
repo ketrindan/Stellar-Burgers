@@ -1,20 +1,27 @@
 import profileDetailsStyles from './ProfileDetails.module.css';
-import { useState, useRef, FC, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect, useRef, FC, FormEvent } from 'react';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../../services/actions/user';
 
 const ProfileDetails: FC = () => {
-  const user = useSelector((state: any) => state.user.user);
+  const user = useSelector((state) => state.user.user);
 
   const [isNameChanged, setIsNameChanged] = useState(false);
   const [isEmailChanged, setIsEmailChanged] = useState(false);
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
 
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  }, [user]);
 
   const dispatch = useDispatch();
 
@@ -27,12 +34,14 @@ const ProfileDetails: FC = () => {
   }
 
   function onCancelClick() {
-    setName(user.name);
-    setEmail(user.email);
-    setPassword('');
-    setIsNameChanged(false);
-    setIsEmailChanged(false);
-    setIsPasswordChanged(false);
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+      setPassword('');
+      setIsNameChanged(false);
+      setIsEmailChanged(false);
+      setIsPasswordChanged(false);
+    }
   }
 
   return (
@@ -43,7 +52,7 @@ const ProfileDetails: FC = () => {
         onChange={e => {
           const value = e.target.value; 
           setName(value); 
-          value === user.name ? setIsNameChanged(false) : setIsNameChanged(true);
+          value === (user && user.name) ? setIsNameChanged(false) : setIsNameChanged(true);
         }}
         value={name}
         name={'name'}
@@ -58,7 +67,7 @@ const ProfileDetails: FC = () => {
         onChange={e => {
           const value = e.target.value; 
           setEmail(value); 
-          value === user.email ? setIsEmailChanged(false) : setIsEmailChanged(true);
+          value === (user && user.name) ? setIsEmailChanged(false) : setIsEmailChanged(true);
         }}
         value={email}
         name={'email'}

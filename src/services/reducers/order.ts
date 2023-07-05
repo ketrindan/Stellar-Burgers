@@ -9,7 +9,7 @@ import { IOrderState } from '../../utils/types';
 import { TOrderActions } from '../actions/order';
 
 const initialState: IOrderState = {
-  order: {},
+  order: null,
   orderRequest: false,
   orderFailed: false,
 };
@@ -41,7 +41,7 @@ export const orderReducer = (state = initialState, action: TOrderActions) => {
     case DELETE_ORDER: {
       return {
         ...state,
-        order: {}
+        order: null,
       };
     }
     default: {

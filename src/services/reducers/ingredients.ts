@@ -17,7 +17,7 @@ import { TIngredientsActions } from '../actions/ingredients';
 const initialState: IIngredientsState = {
   ingredients: [],
   chosenIngredients: [],
-  chosenBun: {},
+  chosenBun: null,
   selectedIngredient: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -55,7 +55,7 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
     case DELETE_SELECTED_INGREDIENT: {
       return {
         ...state,
-        selectedIngredient: {}
+        selectedIngredient: null
       };
     }
     case ADD_BUN: {
@@ -80,7 +80,7 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
       return {
         ...state,
         chosenIngredients: [],
-        chosenBun: {}
+        chosenBun: null
       };
     }
     case CHANGE_ORDER: {

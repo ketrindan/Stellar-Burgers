@@ -6,16 +6,16 @@ export const SUBMIT_ORDER_SUCCESS: "SUBMIT_ORDER_SUCCESS" = 'SUBMIT_ORDER_SUCCES
 export const SUBMIT_ORDER_FAILED: "SUBMIT_ORDER_FAILED" = 'SUBMIT_ORDER_FAILED';
 export const DELETE_ORDER: "DELETE_ORDER" = 'DELETE_ORDER';
 
-export interface ISubmitOrderDataRequest {
+export interface ISubmitOrderRequest {
   readonly type: typeof SUBMIT_ORDER_REQUEST;
 }
 
-export interface ISubmitOrderDataSuccess {
+export interface ISubmitOrderSuccess {
   readonly type: typeof SUBMIT_ORDER_SUCCESS;
   readonly payload: IOrderSuccess;
 }
 
-export interface ISubmitOrderDataFailed {
+export interface ISubmitOrderFailed {
   readonly type: typeof SUBMIT_ORDER_FAILED;
 }
 
@@ -24,9 +24,9 @@ export interface IDeleteOrder {
 }
 
 export type TOrderActions = 
-  | ISubmitOrderDataRequest
-  | ISubmitOrderDataSuccess
-  | ISubmitOrderDataFailed
+  | ISubmitOrderRequest
+  | ISubmitOrderSuccess
+  | ISubmitOrderFailed
 | IDeleteOrder;
 
 export function setOrder(ids: Array<string>) {
