@@ -17,6 +17,7 @@ import ResetPassword from '../../pages/ResetPassword/ResetPassword';
 import Profile from '../../pages/Profile/Profile';
 import NotFound from '../../pages/NotFound/NotFound';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import Feed from '../../pages/Feed/Feed';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
@@ -28,6 +29,7 @@ const App: FC = () => {
   const ModalSwitch = () => {
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
     const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
+    const [isOrderInfoModalOpen, setIsOrderInfoModalOpen] = useState(false);
 
     const accessToken = getCookie('token');
 
@@ -45,6 +47,10 @@ const App: FC = () => {
       setIsOrderModalOpen(true)
     }
 
+    function handleOrderInfoModalOpen() {
+      setIsOrderInfoModalOpen(true)
+    }
+
     function handleIngredientModalClose() {
       dispatch(deleteSelectedIngredient());
       setIsIngredientModalOpen(false);
@@ -54,6 +60,11 @@ const App: FC = () => {
     function handleOrderModalClose() {
       dispatch(deleteOrder());
       setIsOrderModalOpen(false);
+    }
+
+    function handleOrderInfoModalClose() {
+      /*dispatch(deleteOrder());*/
+      setIsOrderInfoModalOpen(false);
     }
 
     useEffect(() => {    
@@ -80,6 +91,7 @@ const App: FC = () => {
               onOrderModalOpen={handleOrderModalOpen}
             />} 
           />
+          <Route path='/feed' element={<Feed onOrderInfoModalOpen={handleOrderInfoModalOpen}/>} />
           <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile />}/>} /> 
           <Route path='/ingredients/:id' element={<IngredientDetails title={"Детали ингредиента"}/>} />       
         </Routes>
@@ -95,6 +107,16 @@ const App: FC = () => {
             <Route path='/ingredients/:id'
               element={<Modal onClose={handleIngredientModalClose} title={"Детали ингредиента"}>
                 <IngredientDetails />
+              </Modal>} 
+            />
+          </Routes>
+        )}
+
+        {(background && isOrderInfoModalOpen) && (
+          <Routes>
+            <Route path='/feed/:id'
+              element={<Modal onClose={handleOrderInfoModalClose} title={""}>
+                
               </Modal>} 
             />
           </Routes>

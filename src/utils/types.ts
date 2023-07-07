@@ -66,6 +66,24 @@ export interface IOrderSuccess {
   }
 }
 
+export interface IOrder {
+  ingredients: string[];
+  _id: string;
+  status: string;
+  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IOrderProps {
+  data: IOrder;
+  onModalOpen: () => void;
+}
+
+export interface IFeedProps {
+  onOrderInfoModalOpen: () => void;
+}
 export interface IUser {
   name: 'string';
   email: 'string';
