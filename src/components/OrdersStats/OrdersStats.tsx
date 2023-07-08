@@ -12,13 +12,13 @@ const OrdersStats: FC = () => {
         { data ? (
           <>
             <div className={ordersStatsStyles.order_stats}>
-              { data.orders?.some((order: IOrder) => order.status === 'done') && (
-                <div>
-                  <p className="text text_type_main-medium pb-6">Готовы:</p>
+              <div>
+                <p className="text text_type_main-medium pb-6">Готовы:</p>
+                { data.orders?.some((order: IOrder) => order.status === 'done') && (
                   <div className={ordersStatsStyles.container}>
                     <ul className={ordersStatsStyles.list_done}>
-                      { data.orders?.map((order: IOrder, i: number) => {
-                        if (i < 10 && order.status === 'done') {
+                      { data.orders?.filter((order: IOrder) => order.status === 'done').map((order: IOrder, i: number) => {
+                        if (i < 10) {
                           return (<li key={i} className="text text_type_digits-default pb-2">
                             {order.number}
                           </li>)
@@ -27,8 +27,8 @@ const OrdersStats: FC = () => {
                       })}
                     </ul>
                     <ul className={ordersStatsStyles.list_done}>
-                      { data.orders?.map((order: IOrder, i: number) => {
-                        if (i >= 10 && i < 20 && order.status === 'done') {
+                      { data.orders?.filter((order: IOrder) => order.status === 'done').map((order: IOrder, i: number) => {
+                        if (i >= 10 && i < 20) {
                           return (<li key={i} className="text text_type_digits-default pb-2">
                             {order.number}
                           </li>)
@@ -37,15 +37,15 @@ const OrdersStats: FC = () => {
                       })}
                     </ul>
                   </div>
-                </div>)
-              }
-              { data.orders?.some((order: IOrder) => order.status === 'pending') && (
-                <div>
-                  <p className="text text_type_main-medium pb-6">В работе:</p>
+                )}
+              </div>
+              <div>
+                <p className="text text_type_main-medium pb-6">В работе:</p>
+                { data.orders?.some((order: IOrder) => order.status === 'pending') && (
                   <div className={ordersStatsStyles.container}>
                     <ul className={ordersStatsStyles.list_pending}>
-                      { data.orders?.map((order: IOrder, i: number) => {
-                        if (i < 10 && order.status === 'pending') {
+                      { data.orders?.filter((order: IOrder) => order.status === 'pending').map((order: IOrder, i: number) => {
+                        if (i < 10) {
                           return (<li key={i} className="text text_type_digits-default pb-2">
                             {order.number}
                           </li>)
@@ -54,8 +54,8 @@ const OrdersStats: FC = () => {
                       })}
                     </ul>
                     <ul className={ordersStatsStyles.list_pending}>
-                      { data.orders?.map((order: IOrder, i: number) => {
-                        if (i >= 10 && i < 20 && order.status === 'pending') {
+                      { data.orders?.filter((order: IOrder) => order.status === 'pending').map((order: IOrder, i: number) => {
+                        if (i >= 10 && i < 20) {
                           return (<li key={i} className="text text_type_digits-default pb-2">
                             {order.number}
                         </li>)
@@ -64,8 +64,8 @@ const OrdersStats: FC = () => {
                       })}
                     </ul>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
             <div>
               <p className="text text_type_main-medium">Выполнено за все время:</p>

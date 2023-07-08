@@ -1,0 +1,29 @@
+.ordersList {
+  width: 860px;
+}
+
+.container {
+  overflow-y: scroll;
+  max-height: 800px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  border: 3px solid #8585AD;
+}

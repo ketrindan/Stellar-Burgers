@@ -79,6 +79,7 @@ export interface IOrder {
 export interface IOrderProps {
   data: IOrder;
   onModalOpen: () => void;
+  userHistory: boolean;
 }
 
 export interface IFeedProps {

@@ -45,7 +45,27 @@
   margin-left: -20px;
 }
 
-.ingredients_list_item_6th {
+.ingredients_list_item:first-child {
+  z-index: 6;
+}
+
+.ingredients_list_item:nth-child(2) {
+  z-index: 5;
+}
+
+.ingredients_list_item:nth-child(3) {
+  z-index: 4;
+}
+
+.ingredients_list_item:nth-child(4) {
+  z-index: 3;
+}
+
+.ingredients_list_item:nth-child(5) {
+  z-index: 2;
+}
+
+.ingredients_list_item:nth-child(6) {
   position: relative;
 }
 
@@ -56,6 +76,7 @@
   display: flex;
   justify-content: center;
 }
+
 .ingredients_image {
   width: 64px;
   height: 64px;

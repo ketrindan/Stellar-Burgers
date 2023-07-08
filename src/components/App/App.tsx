@@ -18,6 +18,7 @@ import Profile from '../../pages/Profile/Profile';
 import NotFound from '../../pages/NotFound/NotFound';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import Feed from '../../pages/Feed/Feed';
+import OrderInfo from '../OrderInfo/OrderInfo';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
@@ -92,7 +93,7 @@ const App: FC = () => {
             />} 
           />
           <Route path='/feed' element={<Feed onOrderInfoModalOpen={handleOrderInfoModalOpen}/>} />
-          <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile />}/>} /> 
+          <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile onOrderInfoModalOpen={handleOrderInfoModalOpen}/>}/>} /> 
           <Route path='/ingredients/:id' element={<IngredientDetails title={"Детали ингредиента"}/>} />       
         </Routes>
 
@@ -115,8 +116,18 @@ const App: FC = () => {
         {(background && isOrderInfoModalOpen) && (
           <Routes>
             <Route path='/feed/:id'
-              element={<Modal onClose={handleOrderInfoModalClose} title={""}>
-                
+              element={<Modal onClose={handleOrderInfoModalClose} title={"gh"}>
+                <OrderInfo />
+              </Modal>} 
+            />
+          </Routes>
+        )}
+
+        {(background && isOrderInfoModalOpen) && (
+          <Routes>
+            <Route path='/profile/orders/:id'
+              element={<Modal onClose={handleOrderInfoModalClose} title={"jk"}>
+                <OrderInfo />
               </Modal>} 
             />
           </Routes>

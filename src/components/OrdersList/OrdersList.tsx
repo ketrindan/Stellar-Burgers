@@ -11,12 +11,12 @@ const OrdersList: FC<IBurgerProps> = ({onModalOpen}) => {
     <section className={ordersListStyles.ordersList}>
       <h1 className="mt-10 mb-5 text text_type_main-large">Лента заказов</h1>
       <div
-        className={`${ordersListStyles.container} mt-10 ingredients-container`}>
+        className={`${ordersListStyles.container} mt-10`}>
         { data ? (
           <ul className={`${ordersListStyles.list} pt-6 pb-10 pr-4 pl-4`}>
             {
               data.orders?.map((order: IOrder, id: number) => (
-                <Order key={id} data={order} onModalOpen={onModalOpen}/>
+                <Order key={id} data={order} onModalOpen={onModalOpen} userHistory={false}/>
               ))
             }
           </ul>

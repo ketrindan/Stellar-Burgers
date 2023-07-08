@@ -4,11 +4,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/hooks';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IOrderProps, IIngredient } from '../../utils/types';
-import { v4 as uuid } from 'uuid';
 
-const Order: FC<IOrderProps> = ({data, onModalOpen}) => {
+const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
   const location = useLocation();
-  const {number, createdAt, name, ingredients} = data;
+  const {number, createdAt, name, ingredients, status} = data;
   const ingredientsData = useSelector((state) => state.ingredients.ingredients);
 
   const getImage = (ing: string) => {
@@ -33,6 +32,17 @@ const Order: FC<IOrderProps> = ({data, onModalOpen}) => {
     onModalOpen()
   }
 
+  function setStatus(status: string) {
+    switch(status) {
+      case "done":
+        return "Готов";
+      case "pending":
+        return "Готовится";
+      default:
+        return "Создан";
+    }
+  }
+
   return (
     <Link className={orderStyles.link} key={number} to={{
       pathname: `${location.pathname}/${number}`
@@ -42,19 +52,22 @@ const Order: FC<IOrderProps> = ({data, onModalOpen}) => {
           <p className="text text_type_digits-default">{`#${number}`}</p>
           <p className="text text_type_main-default text_color_inactive">{<FormattedDate date={new Date(createdAt)} />}</p>
         </div>
-        <h2 className="text text_type_main-medium">{name}</h2>
+        <div>
+          <h2 className="text text_type_main-medium">{name}</h2>
+          { userHistory && <p className="text text_type_main-default mt-2">{setStatus(status)}</p> }
+        </div>
         <div className={orderStyles.container}>
           <ul className={orderStyles.ingredients_list}>
             { ingredients.map((ingredient: string, i: number) => {
               if (i < 5) {
                 return (
-                  <div className={orderStyles.ingredients_list_item} key={uuid()} style={{zIndex: 999 - i}}>
+                  <div className={orderStyles.ingredients_list_item}>
                     <img src={getImage(ingredient)} className={orderStyles.ingredients_image} alt="ingredient_image" />
                   </div>
                 )
               } else if (i === 6) {
                 return (
-                  <div className={`${orderStyles.ingredients_list_item} ${orderStyles.ingredients_list_item_6th}`} key={uuid()}>
+                  <div className={orderStyles.ingredients_list_item} >
                     <p className={`${orderStyles.ingredients_counter} text text_type_digits-default`}>{`+${ingredients.slice(5, ingredients.length).length}`}</p>
                     <img src={getImage(ingredient)} className={`${orderStyles.ingredients_image} ${orderStyles.ingredients_image_6th}`} alt="ingredient_image" />
                   </div>
