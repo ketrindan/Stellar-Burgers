@@ -1,12 +1,15 @@
 import { FC } from 'react';
 import orderStyles from './Order.module.css';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from '../../services/hooks';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IOrderProps, IIngredient } from '../../utils/types';
+import { selectOrder } from '../../services/actions/ordersHistory';
 
 const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
   const {number, createdAt, name, ingredients, status} = data;
   const ingredientsData = useSelector((state) => state.ingredients.ingredients);
 
@@ -19,7 +22,7 @@ const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
 
   const countTotal = () => {
     let total = 0;
-    ingredients.forEach((ingredient) => {
+    ingredients.forEach((ingredient: string) => {
       const foundIng = ingredientsData.find((ingredientsData: IIngredient) => ingredientsData._id === ingredient);
       if (foundIng?.price) {
         total += foundIng.price;
@@ -29,17 +32,27 @@ const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
   }
 
   function handleClick() {
+    dispatch(selectOrder(data))
     onModalOpen()
   }
 
   function setStatus(status: string) {
     switch(status) {
       case "done":
-        return "Готов";
+        return "Выполнен";
       case "pending":
         return "Готовится";
       default:
         return "Создан";
+    }
+  }
+
+  const setStyle = (status: string) => {
+    switch(status) {
+      case "done":
+        return {color: '#00CCCC'};
+      default:
+        return;
     }
   }
 
@@ -54,7 +67,7 @@ const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
         </div>
         <div>
           <h2 className="text text_type_main-medium">{name}</h2>
-          { userHistory && <p className="text text_type_main-default mt-2">{setStatus(status)}</p> }
+          { userHistory && <p className="text text_type_main-default mt-2" style={setStyle(status)}>{setStatus(status)}</p> }
         </div>
         <div className={orderStyles.container}>
           <ul className={orderStyles.ingredients_list}>

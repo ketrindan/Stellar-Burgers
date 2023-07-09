@@ -1,6 +1,6 @@
 import React, {useState, useEffect, FC} from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from '../../services/hooks';
+import { useDispatch, useSelector } from '../../services/hooks';
 import styles from './App.module.css';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -22,6 +22,7 @@ import OrderInfo from '../OrderInfo/OrderInfo';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
+import { deleteSelectedOrder } from '../../services/actions/ordersHistory';
 import { deleteOrder } from '../../services/actions/order';
 import { getUser } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
@@ -31,6 +32,8 @@ const App: FC = () => {
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
     const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
     const [isOrderInfoModalOpen, setIsOrderInfoModalOpen] = useState(false);
+
+    const selectedOrder = useSelector(state => state.ordersHistory.selectedOrder)
 
     const accessToken = getCookie('token');
 
@@ -64,8 +67,9 @@ const App: FC = () => {
     }
 
     function handleOrderInfoModalClose() {
-      /*dispatch(deleteOrder());*/
+      dispatch(deleteSelectedOrder());
       setIsOrderInfoModalOpen(false);
+      navigate(-1);
     }
 
     useEffect(() => {    
@@ -94,7 +98,9 @@ const App: FC = () => {
           />
           <Route path='/feed' element={<Feed onOrderInfoModalOpen={handleOrderInfoModalOpen}/>} />
           <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile onOrderInfoModalOpen={handleOrderInfoModalOpen}/>}/>} /> 
-          <Route path='/ingredients/:id' element={<IngredientDetails title={"Детали ингредиента"}/>} />       
+          <Route path='/ingredients/:id' element={<IngredientDetails title={"Детали ингредиента"}/>} /> 
+          <Route path='/feed/:id' element={<OrderInfo fullPage={true}/>} /> 
+          <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<OrderInfo fullPage={true}/>} />} />       
         </Routes>
 
         {isOrderModalOpen && 
@@ -116,8 +122,8 @@ const App: FC = () => {
         {(background && isOrderInfoModalOpen) && (
           <Routes>
             <Route path='/feed/:id'
-              element={<Modal onClose={handleOrderInfoModalClose} title={"gh"}>
-                <OrderInfo />
+              element={<Modal onClose={handleOrderInfoModalClose} orderNumber={selectedOrder?.number}>
+                <OrderInfo fullPage={false}/>
               </Modal>} 
             />
           </Routes>
@@ -126,8 +132,8 @@ const App: FC = () => {
         {(background && isOrderInfoModalOpen) && (
           <Routes>
             <Route path='/profile/orders/:id'
-              element={<Modal onClose={handleOrderInfoModalClose} title={"jk"}>
-                <OrderInfo />
+              element={<Modal onClose={handleOrderInfoModalClose} orderNumber={selectedOrder?.number}>
+                <OrderInfo fullPage={false} />
               </Modal>} 
             />
           </Routes>

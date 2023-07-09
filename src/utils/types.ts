@@ -42,6 +42,7 @@ export interface IModal {
   children: React.ReactNode;
   onClose: () => void;
   title?: string;
+  orderNumber?: number;
 }
 
 export interface IModalOverlay {
@@ -90,6 +91,10 @@ export interface IUser {
   email: 'string';
 }
 
+export interface IOrderInfoProps {
+  fullPage: boolean;
+}
+
 export interface IAuthUserSuccess {
   success: true;
   user: IUser;
@@ -102,35 +107,39 @@ export interface IIngredientsState {
   chosenIngredients: IIngredient[];
   chosenBun: IIngredient | null;
   selectedIngredient: IIngredient | null;
-  ingredientsRequest: boolean,
-  ingredientsFailed: boolean,
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
 };
 
 export interface IOrderState {
-  order: IOrderSuccess | null,
-  orderRequest: boolean,
-  orderFailed: boolean,
+  order: IOrderSuccess | null;
+  orderRequest: boolean;
+  orderFailed: boolean;
 };
 
 export interface IUserState {
-  user: IUser | null,
-  forgotPasswordRequest: boolean,
-  forgotPasswordFailed: boolean,
-  resetPasswordRequest: boolean,
-  resetPasswordFailed: boolean,
-  registrationRequest: boolean,
-  registrationFailed: boolean,
-  loginRequest: boolean,
-  loginFailed: boolean,
-  refreshTokenRequest: boolean,
-  refreshTokenFailed: boolean,
-  logoutRequest: boolean,
-  logoutFailed: boolean,
-  getUserRequest: boolean,
-  getUserFailed: boolean,
-  updateUserRequest: boolean,
-  updateUserFailed: boolean,
+  user: IUser | null;
+  forgotPasswordRequest: boolean;
+  forgotPasswordFailed: boolean;
+  resetPasswordRequest: boolean;
+  resetPasswordFailed: boolean;
+  registrationRequest: boolean;
+  registrationFailed: boolean;
+  loginRequest: boolean;
+  loginFailed: boolean;
+  refreshTokenRequest: boolean;
+  refreshTokenFailed: boolean;
+  logoutRequest: boolean;
+  logoutFailed: boolean;
+  getUserRequest: boolean;
+  getUserFailed: boolean;
+  updateUserRequest: boolean;
+  updateUserFailed: boolean;
 };
+
+export interface IOrdersHistoryState {
+  selectedOrder: IOrder | null;
+}
 
 type TApplicationActions  = 
   | TIngredientsActions

@@ -27,7 +27,7 @@ const AppHeader: FC = () => {
         <div className={headerStyles.logo}>
           <Logo />
         </div>
-        <NavLink end to='/profile' className={({ isActive }) => isActive ? `pt-4 pl-5 pb-4 pr-5 ${headerStyles.link} ${headerStyles.profile} ${headerStyles.link_active}` : 
+        <NavLink to='/profile' className={({ isActive }) => isActive ? `pt-4 pl-5 pb-4 pr-5 ${headerStyles.link} ${headerStyles.profile} ${headerStyles.link_active}` : 
               `pt-4 pl-5 pb-4 pr-5 ${headerStyles.link} ${headerStyles.profile}`} >
           <ProfileIcon type={profile ? "primary" : "secondary"} />
           <span className="text text_type_main-default ml-2">Личный кабинет</span>
