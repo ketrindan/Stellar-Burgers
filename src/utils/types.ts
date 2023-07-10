@@ -102,6 +102,12 @@ export interface IAuthUserSuccess {
   refreshToken: string;
 }
 
+export interface IWSMessage {
+  orders: IOrder[];
+  total: number;
+  totalToday: number;
+}
+
 export interface IIngredientsState {
   ingredients: IIngredient[];
   chosenIngredients: IIngredient[];
@@ -139,6 +145,9 @@ export interface IUserState {
 
 export interface IOrdersHistoryState {
   selectedOrder: IOrder | null;
+  wsConnected: boolean;
+  messages: IWSMessage[];
+  error?: boolean;
 }
 
 type TApplicationActions  = 

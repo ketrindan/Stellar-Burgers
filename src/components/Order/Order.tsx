@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IOrderProps, IIngredient } from '../../utils/types';
-import { selectOrder } from '../../services/actions/ordersHistory';
+import { selectOrder } from '../../services/actions/wsOrdersHistory';
 
 const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
   const location = useLocation();
@@ -74,16 +74,16 @@ const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
             { ingredients.map((ingredient: string, i: number) => {
               if (i < 5) {
                 return (
-                  <div className={orderStyles.ingredients_list_item}>
+                  <li className={orderStyles.ingredients_list_item} key={i}>
                     <img src={getImage(ingredient)} className={orderStyles.ingredients_image} alt="ingredient_image" />
-                  </div>
+                  </li>
                 )
               } else if (i === 6) {
                 return (
-                  <div className={orderStyles.ingredients_list_item} >
+                  <li className={orderStyles.ingredients_list_item} key={i}>
                     <p className={`${orderStyles.ingredients_counter} text text_type_digits-default`}>{`+${ingredients.slice(5, ingredients.length).length}`}</p>
                     <img src={getImage(ingredient)} className={`${orderStyles.ingredients_image} ${orderStyles.ingredients_image_6th}`} alt="ingredient_image" />
-                  </div>
+                  </li>
                 )
               }
               return null

@@ -1,17 +1,28 @@
-import { FC } from 'react';
-import { useSelector } from '../../services/hooks';
+import { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useParams } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import orderInfoStyles from './OrderInfo.module.css';
 import { IOrderInfoProps, IIngredient, IOrder } from '../../utils/types';
 import Loader from '../Loader/Loader';
+import { wsStart, wsClose } from '../../services/actions/wsOrdersHistory';
 
-import { data } from '../../utils/data';
-
-const OrderInfo: FC<IOrderInfoProps> = ({fullPage=false}) => {
+const OrderInfo: FC<IOrderInfoProps> = ({fullPage = false}) => {
   const { id } = useParams();
 
-  const order = data.orders.find((order: IOrder)  => order.number === Number(id));
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    if (fullPage === true) {
+      dispatch(wsStart("wss://norma.nomoreparties.space/orders/all"));
+      return () => {
+        dispatch(wsClose());
+      }
+    }
+  }, [dispatch, fullPage])
+
+  const messages = useSelector(state => state.ordersHistory.messages);
+  const order = messages[messages.length - 1]?.orders.find((order: IOrder)  => order.number === Number(id));
   const ingredientsData = useSelector((state) => state.ingredients.ingredients);
 
   const orderIngredients = order?.ingredients.map((orderedIng: string) => ingredientsData.find((ingredient: IIngredient) => ingredient._id === orderedIng));
@@ -50,10 +61,10 @@ const OrderInfo: FC<IOrderInfoProps> = ({fullPage=false}) => {
 
   return (
     <>
-      { order ? (
-        <section className={orderInfoStyles.container}>
+      <section className={`${orderInfoStyles.container} mt-30`}>
+        { order ? (
           <div className={orderInfoStyles.info}>
-            { fullPage && <p className={`text text_type_digits-default mt-30 mb-10 ${orderInfoStyles.number}`}>#{order.number}</p>}
+            { fullPage && <p className={`text text_type_digits-default mb-10 ${orderInfoStyles.number}`}>#{order.number}</p>}
             <h2 className="text text_type_main-medium mb-3">{order.name}</h2>
             <p className={`text text_type_main-default mb-15`} style={setStyle(order?.status)}>{setStatus(order?.status)}</p>
             <p className="text text_type_main-medium mb-6">Состав:</p>
@@ -85,9 +96,9 @@ const OrderInfo: FC<IOrderInfoProps> = ({fullPage=false}) => {
                 <CurrencyIcon type="primary"/>
               </div>
             </div>
-          </div>
-        </section>) : <Loader/>
-      }
+          </div>) 
+        : <Loader/>}
+      </section>
     </>
   )
 }

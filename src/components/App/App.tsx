@@ -22,7 +22,7 @@ import OrderInfo from '../OrderInfo/OrderInfo';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
-import { deleteSelectedOrder } from '../../services/actions/ordersHistory';
+import { deleteSelectedOrder } from '../../services/actions/wsOrdersHistory';
 import { deleteOrder } from '../../services/actions/order';
 import { getUser } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';

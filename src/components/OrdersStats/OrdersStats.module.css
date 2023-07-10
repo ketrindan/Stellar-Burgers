@@ -1,15 +1,15 @@
-.ordersList {
-width: 580px;
-display: flex;
-flex-direction: column;
-gap: 60px;
+.ordersStats {
+  width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  margin-top: 115px;
 }
 
 .order_stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
-  margin-top: 116px;
   gap: 80px;
 }
 
