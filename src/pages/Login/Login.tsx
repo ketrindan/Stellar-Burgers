@@ -3,7 +3,6 @@ import { useState, useRef, FC, FormEvent } from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch } from '../../services/hooks';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { login } from '../../services/actions/user';
 
 const Login: FC = () => {

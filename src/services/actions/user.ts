@@ -345,8 +345,8 @@ export function logout(refreshToken: string | null) {
 
     api.logout(refreshToken)
     .then(() => {
-      deleteCookie('token');
       localStorage.removeItem('refreshToken');
+      deleteCookie('token');
       dispatch(setLogoutSuccess());
     })
     .catch((err) => {

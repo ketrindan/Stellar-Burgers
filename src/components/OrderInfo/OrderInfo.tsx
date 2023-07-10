@@ -61,10 +61,10 @@ const OrderInfo: FC<IOrderInfoProps> = ({fullPage = false}) => {
 
   return (
     <>
-      <section className={`${orderInfoStyles.container} mt-30`}>
+      <section className={orderInfoStyles.container}>
         { order ? (
           <div className={orderInfoStyles.info}>
-            { fullPage && <p className={`text text_type_digits-default mb-10 ${orderInfoStyles.number}`}>#{order.number}</p>}
+            { fullPage && <p className={`text text_type_digits-default mb-10 mt-30 ${orderInfoStyles.number}`}>#{order.number}</p>}
             <h2 className="text text_type_main-medium mb-3">{order.name}</h2>
             <p className={`text text_type_main-default mb-15`} style={setStyle(order?.status)}>{setStatus(order?.status)}</p>
             <p className="text text_type_main-medium mb-6">Состав:</p>
@@ -97,7 +97,7 @@ const OrderInfo: FC<IOrderInfoProps> = ({fullPage = false}) => {
               </div>
             </div>
           </div>) 
-        : <Loader/>}
+        : <div className='mt-30'><Loader/></div>}
       </section>
     </>
   )

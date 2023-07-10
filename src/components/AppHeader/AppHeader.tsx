@@ -6,7 +6,7 @@ import headerStyles from './AppHeader.module.css';
 
 const AppHeader: FC = () => {
   const burgers = useMatch('/');
-  const feed = useMatch('/feed');
+  const feed = useMatch('/feed/*');
   const profile = useMatch('/profile/*');
 
   return (

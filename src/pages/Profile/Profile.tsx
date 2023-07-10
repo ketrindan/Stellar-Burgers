@@ -6,6 +6,7 @@ import { logout } from '../../services/actions/user';
 import { IFeedProps } from '../../utils/types';
 import ProfileDetails from '../../components/ProfileDetails/ProfileDetails';
 import OrdersHistory from '../../components/OrdersHistory/OrdersHistory';
+import { deleteCookie } from '../../utils/cookie';
 
 const Profile: FC<IFeedProps> = ({onOrderInfoModalOpen}) => {
   const profileMatch = useMatch("/profile");
@@ -16,6 +17,7 @@ const Profile: FC<IFeedProps> = ({onOrderInfoModalOpen}) => {
   function handleLogout() {
     const refreshToken = localStorage.getItem('refreshToken');
     dispatch(logout(refreshToken));
+    deleteCookie('token');
   }
   
   return (

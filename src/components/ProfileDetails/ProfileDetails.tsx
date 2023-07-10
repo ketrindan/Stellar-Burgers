@@ -27,7 +27,7 @@ const ProfileDetails: FC = () => {
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    dispatch(updateUser(name, email, password) as any);
+    dispatch(updateUser(name, email, password));
     setIsNameChanged(false);
     setIsEmailChanged(false);
     setIsPasswordChanged(false);
