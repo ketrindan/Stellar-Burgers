@@ -25,8 +25,11 @@ import {
   UPDATE_USER_FAILED
 } from '../actions/user';
 
-const initialState = {
-  user: {},
+import { IUserState } from '../../utils/types';
+import { TUserActions } from '../actions/user';
+
+const initialState: IUserState = {
+  user: null,
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
   resetPasswordRequest: false,
@@ -45,7 +48,7 @@ const initialState = {
   updateUserFailed: false
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST: {
       return {
@@ -160,8 +163,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         logoutRequest: false,
-        user: {},
-        accessToken: "",
+        user: null,
       };
     }
     case LOGOUT_FAILED: {
@@ -182,7 +184,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         getUserRequest: false,
-        user: action.payload
+        user: action.payload,
       };
     }
     case GET_USER_FAILED: {

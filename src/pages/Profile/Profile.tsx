@@ -1,11 +1,14 @@
 import { FC } from 'react';
 import profileStyles from './Profile.module.css';
 import { NavLink, useMatch } from "react-router-dom";
-import { useDispatch, } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { logout } from '../../services/actions/user';
+import { IFeedProps } from '../../utils/types';
 import ProfileDetails from '../../components/ProfileDetails/ProfileDetails';
+import OrdersHistory from '../../components/OrdersHistory/OrdersHistory';
+import { deleteCookie } from '../../utils/cookie';
 
-const Profile: FC = () => {
+const Profile: FC<IFeedProps> = ({onOrderInfoModalOpen}) => {
   const profileMatch = useMatch("/profile");
   const ordersMatch = useMatch("/profile/orders");
 
@@ -13,7 +16,8 @@ const Profile: FC = () => {
 
   function handleLogout() {
     const refreshToken = localStorage.getItem('refreshToken');
-    dispatch(logout(refreshToken) as any);
+    dispatch(logout(refreshToken));
+    deleteCookie('token');
   }
   
   return (
@@ -42,7 +46,7 @@ const Profile: FC = () => {
       </div>
       
       {profileMatch && <ProfileDetails />}
-      {ordersMatch && <></>}
+      {ordersMatch && <OrdersHistory onModalOpen={onOrderInfoModalOpen}/>}
 
     </section>
   )

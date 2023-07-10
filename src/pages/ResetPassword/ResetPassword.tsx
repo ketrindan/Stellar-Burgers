@@ -1,7 +1,7 @@
 import ResetPasswordStyles from './ResetPassword.module.css';
 import { useState, useRef, useEffect, FC, FormEvent } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../../services/actions/user';
 
@@ -13,19 +13,19 @@ const ResetPassword: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state: any) => state.user.user);
-  const forgotPasswordRequest = useSelector((state: any) => state.user.forgotPasswordRequest);
+  const user = useSelector((state) => state.user.user);
+  const forgotPasswordRequest = useSelector((state) => state.user.forgotPasswordRequest);
 
   function submitForm(e: FormEvent) {
     e.preventDefault();
-    dispatch(resetPassword(password, code) as any);
+    dispatch(resetPassword(password, code));
     setPassword('');
     setCode('');
     navigate('/login')
   }
   
   useEffect(() => {
-    (!user.name && !forgotPasswordRequest) && navigate('/login');
+    (!user && !forgotPasswordRequest) && navigate('/login');
   }, [user, forgotPasswordRequest, navigate])
 
   return (

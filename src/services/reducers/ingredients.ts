@@ -11,16 +11,19 @@ import {
   CHANGE_ORDER,
 } from '../actions/ingredients';
 
-const initialState = {
+import { IIngredientsState } from '../../utils/types';
+import { TIngredientsActions } from '../actions/ingredients';
+
+const initialState: IIngredientsState = {
   ingredients: [],
   chosenIngredients: [],
-  chosenBun: {},
-  selectedIngredient: {},
+  chosenBun: null,
+  selectedIngredient: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -52,7 +55,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case DELETE_SELECTED_INGREDIENT: {
       return {
         ...state,
-        selectedIngredient: {}
+        selectedIngredient: null
       };
     }
     case ADD_BUN: {
@@ -77,7 +80,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         chosenIngredients: [],
-        chosenBun: {}
+        chosenBun: null
       };
     }
     case CHANGE_ORDER: {

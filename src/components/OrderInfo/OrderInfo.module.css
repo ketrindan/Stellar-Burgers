@@ -1,0 +1,84 @@
+.container {
+  width: 640px;
+  display: flex;
+  justify-content: center;
+}
+
+.info {
+  width: 100%;
+}
+
+.number {
+  text-align: center;
+}
+
+.list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 320px;
+  list-style: none;
+  overflow-y: scroll;
+  padding: 0 24px 0 0;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  border: 3px solid #8585AD;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.ingredient {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.image {
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(#000, #000) padding-box,
+  linear-gradient(45deg, #801AB2, #4C4CFF) border-box;
+  border: 2px solid transparent;
+  object-fit: cover;
+}
+
+.price_box {
+  display: flex;
+  gap: 8px;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.total_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.total {
+  display: flex;
+  gap: 8px;
+}
+

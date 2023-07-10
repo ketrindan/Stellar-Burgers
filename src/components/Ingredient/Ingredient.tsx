@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom';
 import ingredientStyles from './Ingredient.module.css';
@@ -12,8 +12,8 @@ const Ingredient: FC<IIngredientProps> = ({data, onModalOpen}) => {
 
   const location = useLocation();
 
-  const chosenBun = useSelector((state: any) => state.ingredients.chosenBun);
-  const chosenIngredients = useSelector((state: any) => state.ingredients.chosenIngredients);
+  const chosenBun = useSelector((state) => state.ingredients.chosenBun);
+  const chosenIngredients = useSelector((state) => state.ingredients.chosenIngredients);
 
   const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const Ingredient: FC<IIngredientProps> = ({data, onModalOpen}) => {
   let counter = 0;
 
   chosenIngredients.forEach((ingredient: IIngredient) => ingredient.name === data.name && (counter+= 1));
-  chosenBun.name === data.name && (counter+= 2);
+  chosenBun && chosenBun.name === data.name && (counter+= 2);
 
   return (
     <Link className={ingredientStyles.link} key={_id} to={{
