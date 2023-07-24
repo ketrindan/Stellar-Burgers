@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { useRef, useCallback, FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,7 +10,7 @@ const ChosenIngredient: FC<IChosenIngredientProps> = ({ data, index}) => {
   const { id } = data;
 
   const ref = useRef<HTMLDivElement>(null);
-  const chosenIngredients = useSelector((state: any) => state.ingredients.chosenIngredients);
+  const chosenIngredients = useSelector((state) => state.ingredients.chosenIngredients);
 
   const dispatch = useDispatch();
 

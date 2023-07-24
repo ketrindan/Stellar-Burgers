@@ -1,9 +1,8 @@
 import LoginStyles from './Login.module.css';
 import { useState, useRef, FC, FormEvent } from 'react';
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { login } from '../../services/actions/user';
 
 const Login: FC = () => {
@@ -15,7 +14,7 @@ const Login: FC = () => {
 
   function submitLogin(e: FormEvent) {
     e.preventDefault();
-    dispatch(login(email, password) as any);
+    dispatch(login(email, password));
   }
 
   return (

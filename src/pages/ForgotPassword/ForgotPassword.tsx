@@ -1,7 +1,7 @@
 import ForgotPasswordStyles from './ForgotPassword.module.css';
 import { useState, useRef, FC, FormEvent } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { forgotPassword } from '../../services/actions/user';
 
@@ -14,7 +14,7 @@ const ForgotPassword: FC = () => {
 
   function submitForm(e: FormEvent) {
     e.preventDefault();
-    dispatch(forgotPassword(email) as any);
+    dispatch(forgotPassword(email));
     setEmail('');
     navigate('/reset-password')
   }

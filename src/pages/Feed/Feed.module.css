@@ -1,0 +1,7 @@
+.feed {
+  display: flex;
+  gap: 60px;
+  width: 100%;
+  max-width: 1240px;
+  align-items: flex-start;
+}

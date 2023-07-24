@@ -23,7 +23,8 @@ class Api {
     return fetch(`${this._baseUrl}/orders`, 
     { method: 'POST',
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8',
+        "authorization": 'Bearer ' + getCookie('token'),
       },
       body: JSON.stringify({'ingredients': ids})
     })
@@ -97,7 +98,7 @@ class Api {
     .then((res) => this._checkResponse(res));
   }
 
-  logout(refreshToken: string) {
+  logout(refreshToken: string | null) {
     return fetch(`${this._baseUrl}/auth/logout`, 
     { method: "POST",
       headers: {

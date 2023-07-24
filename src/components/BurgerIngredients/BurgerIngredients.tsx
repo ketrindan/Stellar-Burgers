@@ -1,5 +1,5 @@
 import { useState, FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 import Loader from '../Loader/Loader';
@@ -7,12 +7,12 @@ import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import { IBurgerProps, IIngredient } from '../../utils/types';
 
 const BurgerIngredients: FC<IBurgerProps> = ({onModalOpen}) => {
-  const ingredientsState = useSelector((state: any) => state.ingredients);
-  const ingredients = useSelector((state: any) => state.ingredients.ingredients);
+  const ingredientsState = useSelector((state) => state.ingredients);
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
 
-  const buns = ingredients.filter((item: IIngredient) => item.type === 'bun');
-  const mains = ingredients.filter((item: IIngredient) => item.type === 'main');
-  const sauces = ingredients.filter((item: IIngredient) => item.type === 'sauce');
+  const buns = ingredients.filter((item) => item.type === 'bun');
+  const mains = ingredients.filter((item) => item.type === 'main');
+  const sauces = ingredients.filter((item) => item.type === 'sauce');
 
   const [current, setCurrent] = useState('bun');
 
