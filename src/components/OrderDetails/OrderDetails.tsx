@@ -9,7 +9,7 @@ const OrderDetails: FC = () => {
   const order = useSelector((state) => state.order.order);
 
   return (
-    <div className={`${orderDetailsStyles.container} mt-4 mb-20`}>
+    <div id="order-popup" className={`${orderDetailsStyles.container} mt-4 mb-20`}>
 
       {orderStatus.orderRequest && <Loader/> }
 

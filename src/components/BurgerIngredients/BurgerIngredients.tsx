@@ -67,7 +67,7 @@ const BurgerIngredients: FC<IBurgerProps> = ({onModalOpen}) => {
           Начинки
         </Tab>
       </div>
-      <div className={`${burgerIngredientsStyles.items_box} mt-10`} onScroll={handleScroll}>
+      <div className={`${burgerIngredientsStyles.items_box} mt-10`} onScroll={handleScroll} data-cy="ingredients">
         {ingredientsState.ingredientsRequest && <Loader/> }
 
         { ingredients.length > 0 &&

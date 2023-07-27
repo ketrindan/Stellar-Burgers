@@ -4,7 +4,7 @@ import { IModalOverlay } from "../../utils/types";
 
 const ModalOverlay: FC<IModalOverlay> = ({onClose}) => {
   return (
-    <div className={modalOverlayStyles.overlay} onClick={onClose}> </div>
+    <div className={modalOverlayStyles.overlay} onClick={onClose} data-cy="modal-overlay"> </div>
   );
 };
 

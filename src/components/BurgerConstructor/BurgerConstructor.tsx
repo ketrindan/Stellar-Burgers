@@ -62,8 +62,8 @@ const BurgerConstructor: FC<IBurgerProps> = ({onModalOpen}) => {
   const borderColor = isHover ? 'blueviolet' : 'transparent';
 
   return (
-    <section className={`${BurgerConstructorStyles.container} mt-25 pl-4 pt-2 pb-2`} ref={dropTarget} style={{borderColor}}>
-      {chosenBun ? <div className="ml-8 pr-4">
+    <section className={`${BurgerConstructorStyles.container} mt-25 pl-4 pt-2 pb-2`} ref={dropTarget} style={{borderColor}} data-cy="constructor">
+      {chosenBun ? <div className="ml-8 pr-4" data-cy="constructor-bun-1">
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -75,14 +75,14 @@ const BurgerConstructor: FC<IBurgerProps> = ({onModalOpen}) => {
 }
       
       {chosenIngredients.length > 0 ? 
-        <div className={BurgerConstructorStyles.scrollbox}>
+        <div className={BurgerConstructorStyles.scrollbox} data-cy="constructor-ingredients">
           {chosenIngredients.map((item: IIngredient, i: number) => (
             item.type !== 'bun' &&
             <ChosenIngredient key={item.id} data={item} index={i}/>
           ))}
         </div> : <p className={`${BurgerConstructorStyles.text} text text_type_main-large text_color_inactive`}>Выберите ингредиенты</p>
       }
-      <div className="ml-8 pr-4">
+      <div className="ml-8 pr-4" data-cy="constructor-bun-2">
         {chosenBun && 
           <ConstructorElement
             type="bottom"

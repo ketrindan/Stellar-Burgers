@@ -33,3 +33,8 @@
 .title {
   margin-right: auto;
 }
+
+.button {
+  background-color: transparent;
+  border-style: none;
+}
