@@ -91,7 +91,7 @@ describe('should create order', () => {
       .should('not.exist');
   });
 
-  it('should add ingredients and click order button', () => {
+  it('should add ingredients and create order', () => {
     cy.get('[data-cy=ingredients]')
       .contains('Краторная булка N-200i')
       .trigger('dragstart')
@@ -103,7 +103,20 @@ describe('should create order', () => {
     cy.get('[data-cy=constructor]').trigger('drop')
 
     cy.get('button').contains('Оформить заказ').should('not.be.disabled').click();
+
+    cy.contains('Вход')
+
+    cy.get('form').within(() => {
+      cy.get('input:first').should('have.attr', 'name', 'email').type('keitilins@yandex.ru');
+      cy.get('input:last').should('have.attr', 'name', 'password').type('654321');
+    })
+    cy.get('button').contains('Войти').click();
+    
+    cy.get('button').contains('Оформить заказ').should('not.be.disabled').click();
+
+    /* eslint-disable */
+    cy.wait(20000);
+
+    cy.get('#modal').contains('идентификатор заказа').should('exist')
   });
 });
-
-
