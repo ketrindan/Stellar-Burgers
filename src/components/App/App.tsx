@@ -108,7 +108,7 @@ const App: FC = () => {
           </Modal>
         }
         
-        {(background && isIngredientModalOpen) && (
+        {background && (
           <Routes>
             <Route path='/ingredients/:id'
               element={<Modal onClose={handleIngredientModalClose} title={"Детали ингредиента"}>
@@ -118,7 +118,7 @@ const App: FC = () => {
           </Routes>
         )}
 
-        {(background && isOrderInfoModalOpen) && (
+        {background && (
           <Routes>
             <Route path='/feed/:id'
               element={<Modal onClose={handleOrderInfoModalClose} orderNumber={selectedOrder?.number}>
@@ -128,7 +128,7 @@ const App: FC = () => {
           </Routes>
         )}
 
-        {(background && isOrderInfoModalOpen) && (
+        {background && (
           <Routes>
             <Route path='/profile/orders/:id'
               element={<Modal onClose={handleOrderInfoModalClose} orderNumber={selectedOrder?.number}>
