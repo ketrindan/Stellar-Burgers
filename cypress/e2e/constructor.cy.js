@@ -1,7 +1,15 @@
+const baseUrl = 'http://localhost:3000';
+const apiUrl = "https://norma.nomoreparties.space/api/ingredients";
+const bunName = 'Краторная булка N-200i';
+const ingredientName = 'Биокотлета из марсианской Магнолии';
+const ingredientsSelector ='[data-cy=ingredients]';
+const constructorSelector = '[data-cy=constructor]';
+const ingredientModalTitle = 'Детали ингредиента';
+
 describe('burger constructor is working', function () {
   beforeEach(function () {
-    cy.intercept("GET", "https://norma.nomoreparties.space/api/ingredients", { fixture: "ingredients.json" });
-    cy.visit('http://localhost:3000');
+    cy.intercept("GET", apiUrl, { fixture: "ingredients.json" });
+    cy.visit(baseUrl);
   });
 
   it('should open main page by default', () => {
@@ -9,31 +17,31 @@ describe('burger constructor is working', function () {
   });
 
   it('should drag bun', function () {
-    cy.get('[data-cy=ingredients]')
-      .contains('Краторная булка N-200i')
+    cy.get(ingredientsSelector)
+      .contains(bunName)
       .trigger('dragstart')
-    cy.get('[data-cy=constructor]').trigger('drop')
+    cy.get(constructorSelector).trigger('drop')
 
     cy.get('[data-cy=constructor-bun-1]')
-      .contains('Краторная булка N-200i')
+      .contains(bunName)
       .should('exist')
     cy.get('[data-cy=constructor-bun-2]')
-      .contains('Краторная булка N-200i')
+      .contains(bunName)
       .should('exist')
   })
 
   it('should drag ingredient', function () {
-    cy.get('[data-cy=ingredients]')
-      .contains('Биокотлета из марсианской Магнолии')
+    cy.get(ingredientsSelector)
+      .contains(ingredientName)
       .trigger('dragstart')
-    cy.get('[data-cy=constructor]').trigger('drop')
-    cy.get('[data-cy=ingredients]')
+    cy.get(constructorSelector).trigger('drop')
+    cy.get(ingredientsSelector)
       .contains('Соус Spicy-X')
       .trigger('dragstart')
-    cy.get('[data-cy=constructor]').trigger('drop')
+    cy.get(constructorSelector).trigger('drop')
 
     cy.get('[data-cy=constructor-ingredients]')
-      .contains('Биокотлета из марсианской Магнолии')
+      .contains(ingredientName)
       .should('exist')
     cy.get('[data-cy=constructor-ingredients]')
       .contains('Соус Spicy-X')
@@ -43,44 +51,44 @@ describe('burger constructor is working', function () {
 
 describe("should ingredient popup work correctly", function () {
   beforeEach(function () {
-    cy.intercept("GET", "https://norma.nomoreparties.space/api/ingredients", { fixture: "ingredients.json" });
-    cy.visit('http://localhost:3000');
+    cy.intercept("GET", apiUrl, { fixture: "ingredients.json" });
+    cy.visit(baseUrl);
   })
 
   it('should open modal', function () {
-    cy.contains('Детали ингредиента').should('not.exist')
-    cy.contains('Краторная булка N-200i').click()
-    cy.contains('Детали ингредиента').should('exist')
-    cy.get('#modal').contains('Краторная булка N-200i').should('exist')
+    cy.contains(ingredientModalTitle).should('not.exist')
+    cy.contains(bunName).click()
+    cy.contains(ingredientModalTitle).should('exist')
+    cy.get('#modal').contains(bunName).should('exist')
   })
 
   it('should close modal on button click', function () {
-    cy.contains('Детали ингредиента').should('not.exist')
-    cy.contains('Краторная булка N-200i').click()
-    cy.contains('Детали ингредиента').should('exist')
+    cy.contains(ingredientModalTitle).should('not.exist')
+    cy.contains(bunName).click()
+    cy.contains(ingredientModalTitle).should('exist')
     cy.get('#modal').find('button').click()
-    cy.contains('Детали ингредиента').should('not.exist')
+    cy.contains(ingredientModalTitle).should('not.exist')
   })
 
   it('should close modal on overlay click', function () {
-    cy.contains('Краторная булка N-200i').click()
-    cy.contains('Детали ингредиента').should('exist')
+    cy.contains(bunName).click()
+    cy.contains(ingredientModalTitle).should('exist')
     cy.get('[data-cy=modal-overlay]').click({ force: true })
-    cy.contains('Детали ингредиента').should('not.exist')
+    cy.contains(ingredientModalTitle).should('not.exist')
   })
 
   it('should close modal on esc', function () {
-    cy.contains('Краторная булка N-200i').click()
-    cy.contains('Детали ингредиента').should('exist')
+    cy.contains(bunName).click()
+    cy.contains(ingredientModalTitle).should('exist')
     cy.get('body').type('{esc}')
-    cy.contains('Детали ингредиента').should('not.exist')
+    cy.contains(ingredientModalTitle).should('not.exist')
   })
 });
 
 describe('should create order', () => {
   beforeEach(function () {
-    cy.intercept("GET", "https://norma.nomoreparties.space/api/ingredients", { fixture: "ingredients.json" });
-    cy.visit('http://localhost:3000');
+    cy.intercept("GET", apiUrl, { fixture: "ingredients.json" });
+    cy.visit(baseUrl);
   })
 
   it('shouldn not create order without ingredients', function() {
@@ -92,15 +100,15 @@ describe('should create order', () => {
   });
 
   it('should add ingredients and create order', () => {
-    cy.get('[data-cy=ingredients]')
-      .contains('Краторная булка N-200i')
+    cy.get(ingredientsSelector)
+      .contains(bunName)
       .trigger('dragstart')
-    cy.get('[data-cy=constructor]').trigger('drop')
+    cy.get(constructorSelector).trigger('drop')
 
-    cy.get('[data-cy=ingredients]')
-      .contains('Биокотлета из марсианской Магнолии')
+    cy.get(ingredientsSelector)
+      .contains(ingredientName)
       .trigger('dragstart')
-    cy.get('[data-cy=constructor]').trigger('drop')
+    cy.get(constructorSelector).trigger('drop')
 
     cy.get('button').contains('Оформить заказ').should('not.be.disabled').click();
 

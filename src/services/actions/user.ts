@@ -1,5 +1,4 @@
 import api from '../../utils/api';
-import { setCookie, deleteCookie } from '../../utils/cookie';
 import { IUser, IAuthUserSuccess, AppDispatch } from '../../utils/types';
 
 export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" = "FORGOT_PASSWORD_REQUEST";
@@ -291,7 +290,7 @@ export function register(name: string, email: string, password: string) {
     api.register(name, email, password)
     .then(res => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-      setCookie('token', accessToken, { path: '/' });
+      localStorage.setItem('token', accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setRegistrationSuccess(res));
     })
@@ -309,7 +308,7 @@ export function login(email: string, password: string) {
     api.login(email, password)
     .then(res => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-      setCookie('token', accessToken, { path: '/' });
+      localStorage.setItem('token', accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setLoginSuccess(res));
     })
@@ -327,7 +326,7 @@ export function refreshToken(refreshToken: string, afterRefresh: () => void) {
     api.refreshToken(refreshToken)
     .then((res) => {
       const accessToken = res.accessToken.split('Bearer ')[1];
-      setCookie('token', accessToken, { path: '/' });
+      localStorage.setItem('token', accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
       dispatch(setRefreshTokenSuccess());
       dispatch(afterRefresh);
@@ -346,7 +345,7 @@ export function logout(refreshToken: string | null) {
     api.logout(refreshToken)
     .then(() => {
       localStorage.removeItem('refreshToken');
-      deleteCookie('token');
+      localStorage.removeItem('token');
       dispatch(setLogoutSuccess());
     })
     .catch((err) => {

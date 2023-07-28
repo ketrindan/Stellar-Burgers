@@ -1,4 +1,4 @@
-import { orderReducer } from './order';
+import { orderReducer, initialState } from './order';
 
 import {
   SUBMIT_ORDER_REQUEST,
@@ -6,12 +6,6 @@ import {
   SUBMIT_ORDER_FAILED,
   DELETE_ORDER
 } from '../actions/order';
-
-const initialState = {
-  order: null,
-  orderRequest: false,
-  orderFailed: false,
-};
 
 const orderData = {
   success: true,

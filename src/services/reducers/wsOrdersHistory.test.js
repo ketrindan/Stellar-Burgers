@@ -1,19 +1,15 @@
-import { ordersHistoryReducer } from './wsOrdersHistory';
+import { ordersHistoryReducer, initialState } from './wsOrdersHistory';
 
 import {
-  SELECT_ORDER,
-  DELETE_SELECTED_ORDER,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
+  GET_ORDER_INFO_REQUEST,
+  GET_ORDER_INFO_SUCCESS,
+  GET_ORDER_INFO_FAILED,
+  DELETE_ORDER_INFO
 } from '../actions/wsOrdersHistory';
-
-const initialState = {
-  selectedOrder: null,
-  wsConnected: false,
-  messages: [],
-};
 
 const orderData = {
   _id:"64abfbf082e277001bf8d4fd",
@@ -28,33 +24,6 @@ const orderData = {
 describe('ordersHistory reducer', () => {
   it('should return the initial state', () => {
     expect(ordersHistoryReducer(undefined, {})).toEqual(initialState)
-  })
-
-  it('should handle SELECT_ORDER', () => {
-    expect(
-      ordersHistoryReducer(initialState, {
-        type: SELECT_ORDER,
-        payload: orderData
-      })
-    ).toEqual(
-      {
-        ...initialState,
-        selectedOrder: orderData
-      }
-    )
-  })
-  
-  it('should handle DELETE_SELECTED_ORDER', () => {
-    expect(
-      ordersHistoryReducer(initialState, {
-        type: DELETE_SELECTED_ORDER,
-      })
-    ).toEqual(
-      {
-        ...initialState,
-        selectedOrder: null
-      }
-    )
   })
 
   it('should handle WS_CONNECTION_SUCCESS', () => {
@@ -111,6 +80,64 @@ describe('ordersHistory reducer', () => {
         ...initialState,
         error: undefined,
         messages: [...initialState.messages, {orders: orderData, total: 1, totalToday: 1}]
+      }
+    )
+  })
+
+  it('should handle GET_ORDER_INFO_REQUEST', () => {
+    expect(
+      ordersHistoryReducer(initialState, {
+        type: GET_ORDER_INFO_REQUEST,
+      })
+    ).toEqual(
+      {
+        ...initialState,
+        orderInfoRequest: true,
+        orderInfoFailed: false,
+      }
+    )
+  })
+
+  it('should handle GET_ORDER_INFO_SUCCESS', () => {
+    expect(
+      ordersHistoryReducer(initialState, {
+        type: GET_ORDER_INFO_SUCCESS,
+        payload: orderData
+      })
+    ).toEqual(
+      {
+        ...initialState,
+        orderInfoRequest: false,
+        orderInfo: orderData,
+      }
+    )
+  })
+
+  it('should handle GET_ORDER_INFO_FAILED', () => {
+    expect(
+      ordersHistoryReducer(initialState, {
+        type: GET_ORDER_INFO_FAILED,
+      })
+    ).toEqual(
+      {
+        ...initialState,
+        orderInfoRequest: false,
+        orderInfoFailed: true
+      }
+    )
+  })
+  
+  it('should handle DELETE_ORDER_INFO', () => {
+    expect(
+      ordersHistoryReducer(initialState, {
+        type: DELETE_ORDER_INFO,
+      })
+    ).toEqual(
+      {
+        ...initialState,
+        orderInfoRequest: false,
+        orderInfoFailed: false,
+        orderInfo: null,
       }
     )
   })

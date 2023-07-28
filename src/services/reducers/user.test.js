@@ -1,4 +1,4 @@
-import { userReducer } from './user';
+import { userReducer, initialState } from './user';
 
 import {
   FORGOT_PASSWORD_REQUEST,
@@ -26,26 +26,6 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED
 } from '../actions/user';
-
-const initialState = {
-  user: null,
-  forgotPasswordRequest: false,
-  forgotPasswordFailed: false,
-  resetPasswordRequest: false,
-  resetPasswordFailed: false,
-  registrationRequest: false,
-  registrationFailed: false,
-  loginRequest: false,
-  loginFailed: false,
-  refreshTokenRequest: false,
-  refreshTokenFailed: false,
-  logoutRequest: false,
-  logoutFailed: false,
-  getUserRequest: false,
-  getUserFailed: false,
-  updateUserRequest: false,
-  updateUserFailed: false
-};
 
 describe('user reducer', () => {
   it('should return the initial state', () => {

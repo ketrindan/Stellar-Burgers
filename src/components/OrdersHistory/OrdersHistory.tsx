@@ -5,11 +5,10 @@ import Order from '../Order/Order';
 import Loader from '../Loader/Loader';
 import { IBurgerProps, IOrder } from '../../utils/types';
 import { wsStart, wsClose } from '../../services/actions/wsOrdersHistory';
-import { getCookie } from '../../utils/cookie';
 
 const OrdersHistory: FC<IBurgerProps> = ({onModalOpen}) => {
   const dispatch = useDispatch();
-  const accessToken = getCookie('token');
+  const accessToken = localStorage.getItem('token');
 
   const messages = useSelector(state => state.ordersHistory.messages);
   

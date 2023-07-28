@@ -3,26 +3,21 @@ import { useSelector, useDispatch } from '../../services/hooks';
 import { useParams } from "react-router-dom";
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import orderInfoStyles from './OrderInfo.module.css';
-import { IOrderInfoProps, IIngredient, IOrder } from '../../utils/types';
+import { IOrderInfoProps, IIngredient } from '../../utils/types';
 import Loader from '../Loader/Loader';
-import { wsStart, wsClose } from '../../services/actions/wsOrdersHistory';
+import { getOrderInfo } from '../../services/actions/wsOrdersHistory';
 
 const OrderInfo: FC<IOrderInfoProps> = ({fullPage = false}) => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    if (fullPage === true) {
-      dispatch(wsStart("wss://norma.nomoreparties.space/orders/all"));
-      return () => {
-        dispatch(wsClose());
-      }
-    }
-  }, [dispatch, fullPage])
 
-  const messages = useSelector(state => state.ordersHistory.messages);
-  const order = messages[messages.length - 1]?.orders.find((order: IOrder)  => order.number === Number(id));
+  useEffect(() => {
+    id && dispatch(getOrderInfo(id))
+  }, [dispatch, fullPage, id])
+
+  const order = useSelector(state => state.ordersHistory.orderInfo)
+  console.log(order)
   const ingredientsData = useSelector((state) => state.ingredients.ingredients);
 
   const orderIngredients = order?.ingredients.map((orderedIng: string) => ingredientsData.find((ingredient: IIngredient) => ingredient._id === orderedIng));

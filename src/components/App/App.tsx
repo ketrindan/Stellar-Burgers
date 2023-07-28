@@ -22,10 +22,9 @@ import OrderInfo from '../OrderInfo/OrderInfo';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
-import { deleteSelectedOrder } from '../../services/actions/wsOrdersHistory';
+import { deleteOrderInfo } from '../../services/actions/wsOrdersHistory';
 import { deleteOrder } from '../../services/actions/order';
 import { getUser } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
 
 const App: FC = () => {
   const ModalSwitch = () => {
@@ -33,9 +32,9 @@ const App: FC = () => {
     const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
     const [isOrderInfoModalOpen, setIsOrderInfoModalOpen] = useState(false);
 
-    const selectedOrder = useSelector(state => state.ordersHistory.selectedOrder)
+    const selectedOrder = useSelector(state => state.ordersHistory.orderInfo)
 
-    const accessToken = getCookie('token');
+    const accessToken = localStorage.getItem('token');
 
     const dispatch = useDispatch();
 
@@ -67,7 +66,7 @@ const App: FC = () => {
     }
 
     function handleOrderInfoModalClose() {
-      dispatch(deleteSelectedOrder());
+      dispatch(deleteOrderInfo());
       setIsOrderInfoModalOpen(false);
       navigate(-1);
     }

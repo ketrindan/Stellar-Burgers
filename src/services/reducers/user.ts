@@ -28,7 +28,7 @@ import {
 import { IUserState } from '../../utils/types';
 import { TUserActions } from '../actions/user';
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
   user: null,
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,

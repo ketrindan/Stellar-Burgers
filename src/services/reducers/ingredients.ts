@@ -14,7 +14,7 @@ import {
 import { IIngredientsState } from '../../utils/types';
 import { TIngredientsActions } from '../actions/ingredients';
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
   ingredients: [],
   chosenIngredients: [],
   chosenBun: null,

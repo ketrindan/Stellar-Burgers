@@ -1,5 +1,3 @@
-import { getCookie } from "./cookie";
-
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
 class Api {
@@ -24,7 +22,7 @@ class Api {
     { method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        "authorization": 'Bearer ' + getCookie('token'),
+        "authorization": 'Bearer ' + localStorage.getItem('token'),
       },
       body: JSON.stringify({'ingredients': ids})
     })
@@ -116,7 +114,7 @@ class Api {
     { method: "GET",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "authorization": 'Bearer ' + getCookie('token')
+        "authorization": 'Bearer ' + localStorage.getItem('token'),
       }
     })
     .then((res) => this._checkResponse(res));
@@ -127,7 +125,7 @@ class Api {
     { method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "authorization": 'Bearer ' + getCookie('token')
+        "authorization": 'Bearer ' + localStorage.getItem('token'),
       },
       body: JSON.stringify({
         "name": name,
@@ -137,6 +135,11 @@ class Api {
     })
     .then((res) => this._checkResponse(res));
   }
+
+  getOrderInfo(number: string) {
+    return fetch(`${this._baseUrl}/orders/${number}`).then((res) => this._checkResponse(res));
+  }
+
 }
 
 const api = new Api(baseUrl);

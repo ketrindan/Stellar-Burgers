@@ -1,4 +1,4 @@
-import { ingredientsReducer } from "./ingredients";
+import { ingredientsReducer, initialState } from "./ingredients";
 
 import {
   GET_INGREDIENTS_REQUEST,
@@ -12,15 +12,6 @@ import {
   CLEAR_CONSTRUCTOR,
   CHANGE_ORDER,
 } from '../actions/ingredients';
-
-const initialState = {
-  ingredients: [],
-  chosenIngredients: [],
-  chosenBun: null,
-  selectedIngredient: null,
-  ingredientsRequest: false,
-  ingredientsFailed: false,
-};
 
 const ingredient = {
   _id:"643d69a5c3f7b9001cfa093e",

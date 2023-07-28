@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IOrderProps, IIngredient } from '../../utils/types';
-import { selectOrder } from '../../services/actions/wsOrdersHistory';
+import { getOrderInfoSuccess } from '../../services/actions/wsOrdersHistory';
 
 const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
   const location = useLocation();
@@ -32,7 +32,7 @@ const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
   }
 
   function handleClick() {
-    dispatch(selectOrder(data))
+    dispatch(getOrderInfoSuccess(data))
     onModalOpen()
   }
 

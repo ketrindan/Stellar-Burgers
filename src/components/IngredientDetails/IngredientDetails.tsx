@@ -1,14 +1,21 @@
-import { FC } from 'react';
-import { useSelector } from '../../services/hooks';
+import { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useParams } from "react-router-dom";
 import ingredientDetailsStyles from './IngredientDetails.module.css';
 import { IIngredientDetails, IIngredient } from '../../utils/types';
+import { selectIngredient } from '../../services/actions/ingredients';
 
 const IngredientDetails: FC<IIngredientDetails> = ({title}) => {
   const { id } = useParams();
 
   const ingredients = useSelector((state) => state.ingredients.ingredients);
   const ingredient =  ingredients.find((ingredient: IIngredient)  => ingredient._id === id);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    ingredient && dispatch(selectIngredient(ingredient))
+  },[dispatch, ingredient])
 
   return (
     <>

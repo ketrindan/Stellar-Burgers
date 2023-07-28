@@ -144,10 +144,12 @@ export interface IUserState {
 };
 
 export interface IOrdersHistoryState {
-  selectedOrder: IOrder | null;
   wsConnected: boolean;
   messages: IWSMessage[];
   error?: boolean;
+  orderInfoRequest: boolean,
+  orderInfoFailed: boolean,
+  orderInfo: IOrder | null,
 }
 
 type TApplicationActions  = 
