@@ -23,11 +23,11 @@ const Modal: FC<IModal> = ({ title, onClose, children, orderNumber}) => {
   return createPortal(
     (
       <>
-        <div className={`${modalStyles.modal} p-10`}>
+        <div id="modal" className={`${modalStyles.modal} p-10`}>
           <div className={modalStyles.header_box}>
             {title && <h2 className={`${modalStyles.title} text text_type_main-large`}>{title}</h2>}
             {orderNumber && <p className={`${modalStyles.title} text text_type_digits-default`}>{`#${orderNumber}`}</p>}
-            <CloseIcon type="primary"  onClick={onClose}/>
+            <button className={modalStyles.button}><CloseIcon type="primary" onClick={onClose}/></button>
           </div>
           {children}
         </div>

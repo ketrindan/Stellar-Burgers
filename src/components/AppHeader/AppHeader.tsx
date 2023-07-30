@@ -25,7 +25,7 @@ const AppHeader: FC = () => {
           </NavLink>
         </nav>
         <div className={headerStyles.logo}>
-          <Logo />
+          <NavLink to='/'><Logo /></NavLink>
         </div>
         <NavLink to='/profile' className={({ isActive }) => isActive ? `pt-4 pl-5 pb-4 pr-5 ${headerStyles.link} ${headerStyles.profile} ${headerStyles.link_active}` : 
               `pt-4 pl-5 pb-4 pr-5 ${headerStyles.link} ${headerStyles.profile}`} >

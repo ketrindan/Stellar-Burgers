@@ -1,46 +1,61 @@
-# Getting Started with Create React App
+# Stellar-Burgers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## ***Проектная работа курса [Яндекс.Практикум](https://practicum.yandex.ru/)***
 
-## Available Scripts
+### **Описание**
+Сервис *Stellar-Burgers* - фронтенд сайта мини-бургерной
 
-In the project directory, you can run:
+### **Функционал**
+* Регистрация и авторизация пользователя
+* Добавление ингредиентов в заказ (dnd)
+* Создание заказа
+* Просмотр информации об ингредиенте/заказе в форме попапа и полностраничном виде
+* Редактирование профиля пользователя
+* Просмотр ленты заказов
 
-### `npm start`
+### **Технологии и библиотеки**
+* TypeScript, JavaScript
+* React
+* Redux
+* WebSocket
+* Jest, Cypress
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[Макет в Figma](https://www.figma.com/file/CyNqYSUByhVifnQFHjuWF5/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link-(Copy)?node-id=0%3A1&mode=dev)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### **Ссылка на проект**
+[Проект на GitHub Pages](https://ketrindan.github.io/Stellar-Burgers/)
 
-### `npm test`
+### **Инструкция по установке и сборке**
+1. Клонировать репозиторий
+```
+git clone git@github.com:ketrindan/Stellar-Burgers.git
+```
+2. Перейти в папку проекта
+```
+cd Stellar-Burgers
+```
+3. Установить пакеты
+```
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+`npm start` - запуск режима разработки
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Чтобы открыть проект в браузере, перейдите на [http://localhost:3000](http://localhost:3000).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+При сохранении изменений страница автоматически перезагружается.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+`npm run build` - запуск сборки проекта, проект будет собран в папку `build`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`npm run deploy` - деплой проекта на Github Pages
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`npm test` - запуск Jest
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`npm run cypress:open` - запуск Cypress
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### **Планы по доработке**
+* сверстать мобильную версию
+* расширить тестирование
