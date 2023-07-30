@@ -2,6 +2,8 @@
 
 ## ***Проектная работа курса [Яндекс.Практикум](https://practicum.yandex.ru/)***
 
+![image](https://raw.githubusercontent.com/ketrindan/Stellar-Burgers/main/src/images/screen.png)
+
 ### **Описание**
 Сервис *Stellar-Burgers* - фронтенд сайта мини-бургерной
 
