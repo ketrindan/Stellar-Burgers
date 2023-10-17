@@ -1,4 +1,6 @@
 .app {
+  min-width: 320px;
+  max-width: 1440px;
   min-height: 100vh;
   background-color: #131316;
   margin: 0 auto;

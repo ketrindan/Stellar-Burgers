@@ -47,3 +47,129 @@
 .profile {
   justify-self: flex-end;
 }
+
+.burger_btn {
+  display: none;
+}
+
+.burger_layer {
+  width: 28px;
+  height: 3px;
+  background: #f2f2f2;
+  margin-bottom: 7px;
+  position: relative;
+  transition: 0.4s ease;
+}
+
+.burger_layer:last-of-type {
+  margin-bottom: 0;
+}
+
+.burger_btn_transformed {
+  position: fixed;
+  right: 17px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.burger_btn_transformed:hover {
+  opacity: 0.6;
+}
+
+.burger_btn_transformed .burger_layer:nth-of-type(2) {
+  opacity: 0; 
+  margin-bottom: 0;
+}
+
+.burger_btn_transformed .burger_layer:nth-of-type(1) {
+  transform: rotate(45deg) scale(1.1);
+  margin-bottom: 0;
+  top: 3px;
+}
+
+.burger_btn_transformed .burger_layer:nth-of-type(3) {
+  transform: rotate(-45deg) scale(1.1);
+  margin-bottom: 0;
+  bottom: 3px;
+}
+
+.logo_mini {
+  display: none;
+}
+
+@media screen and (max-width: 1150px) {
+  .link {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .link:not(:first-of-type) {
+    padding-left: 5px;
+  }
+
+  .link:not(:last-of-type) {
+    padding-right: 5px;
+  }
+
+  .span {
+    text-align: center;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 955px) {
+  .span {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .span {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 12px 20px;
+  }
+
+  .container {
+   display: none;
+   width: 0;
+  }
+
+  .logo_mini {
+    display: block;
+  }
+  
+
+ .burger_btn {
+   display: flex;
+   flex-direction: column;
+   cursor: pointer;
+ }
+
+ .burger_btn:hover {
+   opacity: 0.6;
+ }
+}
+
+@media screen and (max-width: 320px) {
+  .burger_layer {
+    width: 22px;
+    height: 2.5px;
+    margin-bottom: 6.5px;
+    transition: 0.4s ease;
+  }
+
+  .burger_btn_transformed .burger_layer:nth-of-type(1) {
+    top: 2.15px;
+  }
+
+  .burger_btn_transformed .burger_layer:nth-of-type(3) {
+    bottom: 2.15px;
+  }
+}
