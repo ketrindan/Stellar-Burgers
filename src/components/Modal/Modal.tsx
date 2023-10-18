@@ -7,7 +7,7 @@ import { IModal } from '../../utils/types';
 
 const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
-const Modal: FC<IModal> = ({ title, onClose, children, orderNumber}) => {
+const Modal: FC<IModal> = ({ title, onClose, children, orderNumber }) => {
   useEffect(() => {
     function closeByEscape(e: KeyboardEvent) {
       if (e.key === 'Escape') {

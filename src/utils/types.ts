@@ -45,6 +45,14 @@ export interface IModal {
   orderNumber?: number;
 }
 
+export interface IMobModalPage {
+  children: React.ReactNode;
+  onClose: () => void;
+  title?: string;
+  orderNumber?: number;
+  isHeaderNav?: boolean
+}
+
 export interface IModalOverlay {
   onClose: () => void;
 }

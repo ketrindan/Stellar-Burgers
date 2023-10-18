@@ -6,6 +6,7 @@ import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 
 import Modal from '../Modal/Modal';
+import MobModalPage from '../MobModalPage/MobModalPage';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
@@ -31,7 +32,7 @@ const App: FC = () => {
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
     const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
     const [isOrderInfoModalOpen, setIsOrderInfoModalOpen] = useState(false);
-
+    
     const selectedOrder = useSelector(state => state.ordersHistory.orderInfo)
 
     const accessToken = localStorage.getItem('token');
@@ -113,7 +114,7 @@ const App: FC = () => {
             <Route path='/ingredients/:id'
               element={<Modal onClose={handleIngredientModalClose} title={"Детали ингредиента"}>
                 <IngredientDetails />
-              </Modal>} 
+              </Modal>}
             />
           </Routes>
         )}
