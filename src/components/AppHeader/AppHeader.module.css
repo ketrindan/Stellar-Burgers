@@ -97,6 +97,38 @@
   display: none;
 }
 
+.profile_nav {
+  display: flex;
+  flex-direction: column;
+  margin-left: 32px;
+  height: 0;
+  overflow: hidden;
+  transition: 0.4s ease;
+}
+
+.profile_nav_opened {
+  height: max-content;
+}
+
+.user_link {
+  display: flex;
+  color: #8585AD;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 40px;
+  box-shadow: none;
+  opacity: 1;
+  transition: all 0.2s linear;
+}
+
+.user_link_active {
+  color: #F2F2F3;
+}
+
+.user_link_hover {
+  opacity: 0.6;
+}
+
 @media screen and (max-width: 1150px) {
   .link {
     flex-direction: column;
@@ -143,6 +175,35 @@
 
   .logo_mini {
     display: block;
+  }
+
+  .link {
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .link:not(:first-of-type) {
+    padding-left: 0;
+  }
+
+  .link:not(:last-of-type) {
+    padding-right: 0;
+  }
+
+  .link_arrow {
+    content: url(../../images/icon.svg);
+    margin-left: 60px;
+    max-height: 24px;
+    transition: 0.4s ease;
+    opacity: 0.5;
+  }
+
+  .link_active .link_arrow {
+    opacity: 1;
+  }
+
+  .link_arrow_transformed {
+    transform: rotate(180deg);
   }
 
   .burger_btn {
