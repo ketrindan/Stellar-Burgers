@@ -3,9 +3,9 @@ import { useSelector } from '../../services/hooks';
 import ordersListStyles from './OrdersList.module.css';
 import Order from '../Order/Order';
 import Loader from '../Loader/Loader';
-import { IBurgerProps, IOrder } from '../../utils/types';
+import { IOrder } from '../../utils/types';
 
-const OrdersList: FC<IBurgerProps> = ({onModalOpen}) => {
+const OrdersList: FC = () => {
   const messages = useSelector(state => state.ordersHistory.messages);
 
   return (
@@ -17,7 +17,7 @@ const OrdersList: FC<IBurgerProps> = ({onModalOpen}) => {
           <ul className={`${ordersListStyles.list} pt-6 pb-10 pr-4 pl-4`}>
             {
               messages[messages.length - 1].orders?.map((order: IOrder, i: number) => (
-                <Order key={i} data={order} onModalOpen={onModalOpen} userHistory={false}/>
+                <Order key={i} data={order} userHistory={false}/>
               ))
             }
           </ul>

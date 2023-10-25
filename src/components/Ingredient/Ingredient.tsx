@@ -7,7 +7,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { selectIngredient } from '../../services/actions/ingredients';
 import { IIngredientProps, IIngredient } from '../../utils/types';
 
-const Ingredient: FC<IIngredientProps> = ({data, onModalOpen}) => {
+const Ingredient: FC<IIngredientProps> = ({data}) => {
   const { _id } = data;
 
   const location = useLocation();
@@ -19,7 +19,6 @@ const Ingredient: FC<IIngredientProps> = ({data, onModalOpen}) => {
 
   function handleClick() {
     dispatch(selectIngredient(data));
-    onModalOpen()
   }
 
   const [{ opacity }, dragRef] = useDrag({

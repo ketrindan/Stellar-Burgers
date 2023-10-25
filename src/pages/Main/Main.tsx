@@ -6,11 +6,11 @@ import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstruc
 import mainStyles from './Main.module.css';
 import { IMain } from '../../utils/types';
 
-const Main: FC<IMain> = ({onIngredientModalOpen, onOrderModalOpen}) => {
+const Main: FC<IMain> = ({ onOrderModalOpen }) => {
   return (
     <section className={mainStyles.main}>
       <DndProvider backend={HTML5Backend}>
-        <BurgerIngredients onModalOpen={onIngredientModalOpen} /> 
+        <BurgerIngredients /> 
         <BurgerConstructor onModalOpen={onOrderModalOpen} /> 
       </DndProvider>
     </section>

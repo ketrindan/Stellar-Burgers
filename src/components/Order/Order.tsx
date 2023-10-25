@@ -6,7 +6,7 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import { IOrderProps, IIngredient } from '../../utils/types';
 import { getOrderInfoSuccess } from '../../services/actions/wsOrdersHistory';
 
-const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
+const Order: FC<IOrderProps> = ({data, userHistory=false}) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -33,7 +33,6 @@ const Order: FC<IOrderProps> = ({data, onModalOpen, userHistory=false}) => {
 
   function handleClick() {
     dispatch(getOrderInfoSuccess(data))
-    onModalOpen()
   }
 
   function setStatus(status: string) {

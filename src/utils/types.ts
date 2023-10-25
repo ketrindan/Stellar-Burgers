@@ -22,7 +22,6 @@ export interface IIngredient {
 
 export interface IIngredientProps {
   data: IIngredient;
-  onModalOpen: () => void;
 }
 
 export interface IChosenIngredientProps {
@@ -30,12 +29,16 @@ export interface IChosenIngredientProps {
   index: number;
 }
 
+export interface IIngredientDetails {
+  title?: string;
+}
+
 export interface IBurgerProps {
   onModalOpen: () => void;
 }
 
-export interface IIngredientDetails {
-  title?: string;
+export interface IMain {
+  onOrderModalOpen: () => void;
 }
 
 export interface IModal {
@@ -53,11 +56,6 @@ export interface IModalOverlay {
 export interface IProtectedRoute {
   element: React.ReactElement;
   onlyUnAuth?: boolean;
-}
-
-export interface IMain {
-  onIngredientModalOpen: () => void;
-  onOrderModalOpen: () => void;
 }
 
 export interface IOrderSuccess {
@@ -80,13 +78,9 @@ export interface IOrder {
 
 export interface IOrderProps {
   data: IOrder;
-  onModalOpen: () => void;
   userHistory: boolean;
 }
 
-export interface IFeedProps {
-  onOrderInfoModalOpen: () => void;
-}
 export interface IUser {
   name: 'string';
   email: 'string';

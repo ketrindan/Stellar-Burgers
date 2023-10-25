@@ -1,4 +1,4 @@
-import React, {useState, useEffect, FC} from 'react';
+import { useState, useEffect, FC } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/hooks';
 import styles from './App.module.css';
@@ -29,8 +29,6 @@ import { getUser } from '../../services/actions/user';
 const App: FC = () => {
   const ModalSwitch = () => {
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
-    const [isIngredientModalOpen, setIsIngredientModalOpen] = useState(false);
-    const [isOrderInfoModalOpen, setIsOrderInfoModalOpen] = useState(false);
     
     const selectedOrder = useSelector(state => state.ordersHistory.orderInfo)
 
@@ -42,21 +40,12 @@ const App: FC = () => {
     const navigate = useNavigate();
     let background = location.state && location.state.background;
 
-    function handleIngredientModalOpen() {
-      setIsIngredientModalOpen(true)
-    }
-
     function handleOrderModalOpen() {
       setIsOrderModalOpen(true)
     }
 
-    function handleOrderInfoModalOpen() {
-      setIsOrderInfoModalOpen(true)
-    }
-
     function handleIngredientModalClose() {
       dispatch(deleteSelectedIngredient());
-      setIsIngredientModalOpen(false);
       navigate(-1);
     }
 
@@ -67,7 +56,6 @@ const App: FC = () => {
 
     function handleOrderInfoModalClose() {
       dispatch(deleteOrderInfo());
-      setIsOrderInfoModalOpen(false);
       navigate(-1);
     }
 
@@ -91,12 +79,11 @@ const App: FC = () => {
           <Route path='*' element={<NotFound />} />
           <Route path='/' element={
             <Main 
-              onIngredientModalOpen={handleIngredientModalOpen}
               onOrderModalOpen={handleOrderModalOpen}
             />} 
           />
-          <Route path='/feed' element={<Feed onOrderInfoModalOpen={handleOrderInfoModalOpen}/>} />
-          <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile onOrderInfoModalOpen={handleOrderInfoModalOpen}/>}/>} /> 
+          <Route path='/feed' element={<Feed />} />
+          <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile />}/>} /> 
           <Route path='/ingredients/:id' element={<IngredientDetails title={"Детали ингредиента"}/>} /> 
           <Route path='/feed/:id' element={<OrderInfo fullPage={true}/>} /> 
           <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<OrderInfo fullPage={true}/>} />} />       

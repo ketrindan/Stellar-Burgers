@@ -17,7 +17,6 @@ const OrderInfo: FC<IOrderInfoProps> = ({fullPage = false}) => {
   }, [dispatch, fullPage, id])
 
   const order = useSelector(state => state.ordersHistory.orderInfo)
-  console.log(order)
   const ingredientsData = useSelector((state) => state.ingredients.ingredients);
 
   const orderIngredients = order?.ingredients.map((orderedIng: string) => ingredientsData.find((ingredient: IIngredient) => ingredient._id === orderedIng));

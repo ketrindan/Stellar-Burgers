@@ -30,6 +30,7 @@ const Login: FC = () => {
           error={false}
           ref={inputRef}
           errorText={'Ошибка'}
+          extraClass={LoginStyles.input}
         />
         <PasswordInput 
           onChange={e => setPassword(e.target.value)}

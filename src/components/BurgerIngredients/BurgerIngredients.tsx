@@ -4,9 +4,9 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 import Loader from '../Loader/Loader';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
-import { IBurgerProps, IIngredient } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
 
-const BurgerIngredients: FC<IBurgerProps> = ({onModalOpen}) => {
+const BurgerIngredients: FC = () => {
   const ingredientsState = useSelector((state) => state.ingredients);
   const ingredients = useSelector((state) => state.ingredients.ingredients);
 
@@ -75,19 +75,19 @@ const BurgerIngredients: FC<IBurgerProps> = ({onModalOpen}) => {
             <h2 className="text text_type_main-medium mb-6" id="bun">Булки</h2>
             <ul className={`${burgerIngredientsStyles.list} mb-10 pr-4 pl-4`}>
               {buns.map((item: IIngredient) => (
-                <Ingredient key={item._id} data={item} onModalOpen={onModalOpen} />
+                <Ingredient key={item._id} data={item} />
               ))}
             </ul>
             <h2 className="text text_type_main-medium mb-6" id="sauce">Соусы</h2>
             <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
               {sauces.map((item: IIngredient) => (
-                <Ingredient key={item._id} data={item} onModalOpen={onModalOpen} />
+                <Ingredient key={item._id} data={item} />
               ))}
             </ul>
             <h2 className="text text_type_main-medium mb-6" id="main">Начинки</h2>
             <ul className={`${burgerIngredientsStyles.list} mb-10  pr-4 pl-4`}>
               {mains.map((item: IIngredient) => (
-                <Ingredient key={item._id} data={item} onModalOpen={onModalOpen} />
+                <Ingredient key={item._id} data={item} />
               ))}
             </ul>
           </>

@@ -9,7 +9,7 @@ const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
 const Modal: FC<IModal> = ({ title, onClose, children, orderNumber, isHeaderNav }) => {
   function toggleBurgerBtnClass() {
-    return isHeaderNav ? `${modalStyles.modal_menu} pl-4` : `${modalStyles.modal} p-10`;
+    return isHeaderNav ? `${modalStyles.modal_menu} pl-4 pr-4` : `${modalStyles.modal} p-10`;
   }
 
   useEffect(() => {

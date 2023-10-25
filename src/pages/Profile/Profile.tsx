@@ -3,12 +3,11 @@ import profileStyles from './Profile.module.css';
 import { NavLink, useMatch } from "react-router-dom";
 import { useDispatch } from "../../services/hooks";
 import { logout } from '../../services/actions/user';
-import { IFeedProps } from '../../utils/types';
 import ProfileDetails from '../../components/ProfileDetails/ProfileDetails';
 import OrdersHistory from '../../components/OrdersHistory/OrdersHistory';
 import { deleteCookie } from '../../utils/cookie';
 
-const Profile: FC<IFeedProps> = ({onOrderInfoModalOpen}) => {
+const Profile: FC = () => {
   const profileMatch = useMatch("/profile");
   const ordersMatch = useMatch("/profile/orders");
 
@@ -46,7 +45,7 @@ const Profile: FC<IFeedProps> = ({onOrderInfoModalOpen}) => {
       </div>
       
       {profileMatch && <ProfileDetails />}
-      {ordersMatch && <OrdersHistory onModalOpen={onOrderInfoModalOpen}/>}
+      {ordersMatch && <OrdersHistory />}
 
     </section>
   )

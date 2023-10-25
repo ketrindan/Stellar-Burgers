@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, useMatch, useLocation } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 import { FC } from 'react';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "../../services/hooks";
@@ -20,7 +20,6 @@ const AppHeader: FC = () => {
   const [isProfileNavOpen, setProfileNavOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const location = useLocation();
 
   function handleBurgerClick() {
     setMenuOpen((state) => !state);
@@ -76,7 +75,7 @@ const AppHeader: FC = () => {
         </NavLink>
       </div>
       
-      <img src={logo_mini} alt='логотип' className={headerStyles.logo_mini}></img>
+      <NavLink to='/'><img src={logo_mini} alt='логотип' className={headerStyles.logo_mini}></img></NavLink>
       <div className={toggleBurgerBtnClass()} onClick={handleBurgerClick}>
         <span className={headerStyles.burger_layer}></span>
         <span className={headerStyles.burger_layer}></span>
@@ -84,12 +83,12 @@ const AppHeader: FC = () => {
       </div>
 
       { isMenuOpen && <Modal onClose={handleBurgerClick} title={"Меню"} isHeaderNav={true} >
-        <NavLink to={location} className={({ isActive }) => isActive ? `pt-4 pb-4 ${headerStyles.link} ${headerStyles.link_active}` : 
-          `pt-4 pb-4 ${headerStyles.link}`} onClick={handleProfileClick}>
+        <button className={profile ? `pt-4 pb-4 ${headerStyles.nav_button} ${headerStyles.link} ${headerStyles.link_active}` : 
+          `pt-4 pb-4 ${headerStyles.nav_button} ${headerStyles.link}`} onClick={handleProfileClick}>
           <ProfileIcon type={profile ? "primary" : "secondary"} />
           <span className={`${headerStyles.span} text text_type_main-default ml-2`}>Личный кабинет</span>
           <img className={toggleArrowClass()} src={arrow} alt='arrow'/>
-        </NavLink>
+        </button>
         <div className={toggleProfileNavClass()}>
           <NavLink end to='/profile' className={({ isActive }) => isActive ? `pt-2 pb-2 ${headerStyles.user_link} ${headerStyles.user_link_active}` : 
             `pt-2 pb-2 ${headerStyles.user_link}`} onClick={handleBurgerClick}>

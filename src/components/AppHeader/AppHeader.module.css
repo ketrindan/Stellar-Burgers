@@ -129,6 +129,13 @@
   opacity: 0.6;
 }
 
+.nav_button {
+  border: none;
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 @media screen and (max-width: 1150px) {
   .link {
     flex-direction: column;

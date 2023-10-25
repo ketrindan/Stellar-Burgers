@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from '../../services/hooks';
 import ordersHistoryStyles from './OrdersHistory.module.css';
 import Order from '../Order/Order';
 import Loader from '../Loader/Loader';
-import { IBurgerProps, IOrder } from '../../utils/types';
+import { IOrder } from '../../utils/types';
 import { wsStart, wsClose } from '../../services/actions/wsOrdersHistory';
 
-const OrdersHistory: FC<IBurgerProps> = ({onModalOpen}) => {
+const OrdersHistory: FC = () => {
   const dispatch = useDispatch();
   const accessToken = localStorage.getItem('token');
 
@@ -27,7 +27,7 @@ const OrdersHistory: FC<IBurgerProps> = ({onModalOpen}) => {
           <ul className={`${ordersHistoryStyles.list} pt-6 pb-10 pr-4 pl-4`}>
             {
               messages[messages.length - 1].orders?.map((order: IOrder, i: number) => (
-                <Order key={i} data={order} onModalOpen={onModalOpen} userHistory={true}/>
+                <Order key={i} data={order} userHistory={true}/>
               ))
             }
           </ul>
